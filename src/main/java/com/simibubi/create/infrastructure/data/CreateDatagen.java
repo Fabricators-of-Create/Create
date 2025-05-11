@@ -77,7 +77,7 @@ public class CreateDatagen implements DataGeneratorEntrypoint {
 			AllAdvancements.provideLang(langConsumer);
 			AllSoundEvents.provideLang(langConsumer);
 			AllKeys.provideLang(langConsumer);
-			// providePonderLang(langConsumer);
+			providePonderLang(langConsumer);
 		});
 	}
 
@@ -96,9 +96,7 @@ public class CreateDatagen implements DataGeneratorEntrypoint {
 	}
 
 	private static void providePonderLang(BiConsumer<String, String> consumer) {
-		// Register this since FMLClientSetupEvent does not run during datagen
 		PonderIndex.addPlugin(new CreatePonderPlugin());
-
 		PonderIndex.getLangAccess().provideLang(Create.ID, consumer);
 	}
 }
