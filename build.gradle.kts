@@ -8,7 +8,7 @@ val fapiVersion = "0.92.5+1.20.1"
 
 // in-house dependencies
 val flywheelVersion = "1.0.0-217"
-val ponderVersion = "1.0.73"
+val ponderVersion = "1.0.78"
 val registrateVersion = "1.3.79-MC1.20.1"
 val milkLibVersion = "1.2.60"
 val portLibVersion = "2.3.8+1.20.1"

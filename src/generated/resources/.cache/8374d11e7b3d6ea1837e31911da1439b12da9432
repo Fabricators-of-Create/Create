@@ -1,5 +1,5 @@
-// 1.20.1	2025-05-06T20:30:51.122727877	Create/Create's Mechanical Crafting Recipes
-d2cc0e77f2d9864d6aa373e7be7ac83ef9bf357a data/create/recipes/mechanical_crafting/wand_of_symmetry.json
-b24b97d694f24fa366e5e559af45ec8c5ade90ae data/create/recipes/mechanical_crafting/potato_cannon.json
-d588edebb9150f6c857c0415a2099404db8fa383 data/create/recipes/mechanical_crafting/extendo_grip.json
-75ed217b219788ede2145726272f0ab2bb747edc data/create/recipes/mechanical_crafting/crushing_wheel.json
+// 1.20.1	2025-05-23T15:03:29.5910113	Create/Create's Mechanical Crafting Recipes
+75ed217b219788ede2145726272f0ab2bb747edc data\create\recipes\mechanical_crafting\crushing_wheel.json
+d2cc0e77f2d9864d6aa373e7be7ac83ef9bf357a data\create\recipes\mechanical_crafting\wand_of_symmetry.json
+d588edebb9150f6c857c0415a2099404db8fa383 data\create\recipes\mechanical_crafting\extendo_grip.json
+b24b97d694f24fa366e5e559af45ec8c5ade90ae data\create\recipes\mechanical_crafting\potato_cannon.json

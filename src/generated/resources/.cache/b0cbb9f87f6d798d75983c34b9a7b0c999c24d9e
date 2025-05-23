@@ -1,4 +1,4 @@
-// 1.20.1	2025-05-06T20:30:51.124189051	Create/Create's Damage Type Tags
-6c42f67b7df8da8b794bf022e107da6165955562 data/minecraft/tags/damage_type/is_explosion.json
-0d45b252ce5ce3ab75ee9853ee11f763242b957f data/minecraft/tags/damage_type/bypasses_armor.json
-b0c99a98cd0f25aa2117c75e74ed8f59a132b471 data/minecraft/tags/damage_type/is_fire.json
+// 1.20.1	2025-05-23T15:03:29.5936472	Create/Create's Damage Type Tags
+0d45b252ce5ce3ab75ee9853ee11f763242b957f data\minecraft\tags\damage_type\bypasses_armor.json
+b0c99a98cd0f25aa2117c75e74ed8f59a132b471 data\minecraft\tags\damage_type\is_fire.json
+6c42f67b7df8da8b794bf022e107da6165955562 data\minecraft\tags\damage_type\is_explosion.json
