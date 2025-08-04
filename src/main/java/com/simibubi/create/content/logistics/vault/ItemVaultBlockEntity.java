@@ -161,12 +161,15 @@ public class ItemVaultBlockEntity extends SmartBlockEntity implements IMultiBloc
 			return;
 		}
 
+		//Will ignore any modded comparator-like blocks that mixin to updateNeighbourForOutputSignal
+		//Not really fixable without removing the optimisation
 		BlockState blockstate = level.getBlockState(updatePos);
-		blockstate.onNeighborChange(level, updatePos, provokingPos);
-		if (blockstate.isRedstoneConductor(level, updatePos)) {
+		if (blockstate.is(Blocks.COMPARATOR)) {
+			level.neighborChanged(blockstate, updatePos, provokingBlock, provokingPos, false);
+		} else if (blockstate.isRedstoneConductor(level, updatePos)) {
 			updatePos.move(direction);
 			blockstate = level.getBlockState(updatePos);
-			if (blockstate.getWeakChanges(level, updatePos)) {
+			if (blockstate.is(Blocks.COMPARATOR)) {
 				level.neighborChanged(blockstate, updatePos, provokingBlock, provokingPos, false);
 			}
 		}

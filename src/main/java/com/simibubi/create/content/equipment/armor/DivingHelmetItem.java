@@ -68,7 +68,7 @@ public class DivingHelmetItem extends BaseArmorItem implements CustomEnchantingB
 		return stack;
 	}
 
-	public static void breatheUnderwater(LivingEntity entity) {
+	public static boolean breatheUnderwater(LivingEntity entity) {
 //		LivingEntity entity = event.getEntityLiving();
 		Level world = entity.level();
 		boolean second = world.getGameTime() % 20 == 0;
@@ -79,19 +79,19 @@ public class DivingHelmetItem extends BaseArmorItem implements CustomEnchantingB
 
 		ItemStack helmet = getWornItem(entity);
 		if (helmet.isEmpty())
-			return;
+			return false;
 
 		boolean lavaDiving = entity.isInLava();
 		if (!helmet.getItem().isFireResistant() && lavaDiving)
-			return;
+			return false;
 		if (!entity.isEyeInFluid(AllFluidTags.DIVING_FLUIDS.tag) && !lavaDiving)
-			return;
+			return false;
 		if (entity instanceof Player player && (player.isSpectator() || player.isCreative()))
-			return;
+			return false;
 
 		List<ItemStack> backtanks = BacktankUtil.getAllWithAir(entity);
 		if (backtanks.isEmpty())
-			return;
+			return false;
 
 		if (lavaDiving) {
 			if (entity instanceof ServerPlayer sp)
@@ -99,7 +99,7 @@ public class DivingHelmetItem extends BaseArmorItem implements CustomEnchantingB
 			if (backtanks.stream()
 				.noneMatch(backtank -> backtank.getItem()
 					.isFireResistant()))
-				return;
+				return false;
 		}
 
 		float visualBacktankAir = 0f;
@@ -114,12 +114,11 @@ public class DivingHelmetItem extends BaseArmorItem implements CustomEnchantingB
 			BacktankUtil.consumeAir(entity, backtanks.get(0), 1);
 
 		if (lavaDiving)
-			return;
+			return false;
 
 		if (entity instanceof ServerPlayer sp)
 			AllAdvancements.DIVING_SUIT.awardTo(sp);
 
-		event.setCanBreathe(true);
-		event.setCanRefillAir(true);
+		return true;
 	}
 }
