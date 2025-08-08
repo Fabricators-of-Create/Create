@@ -4,6 +4,10 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import com.simibubi.create.content.redstone.thresholdSwitch.ThresholdSwitchBlockEntity;
+
+import io.github.fabricators_of_create.porting_lib.block.NeighborChangeListeningBlock;
+
 import org.jetbrains.annotations.Nullable;
 
 import com.simibubi.create.AllBlockEntityTypes;
@@ -161,17 +165,25 @@ public class ItemVaultBlockEntity extends SmartBlockEntity implements IMultiBloc
 			return;
 		}
 
-		//Will ignore any modded comparator-like blocks that mixin to updateNeighbourForOutputSignal
+		//Will ignore modded comparator-like blocks that don't use Porting Lib
 		//Not really fixable without removing the optimisation
 		BlockState blockstate = level.getBlockState(updatePos);
-		if (blockstate.is(Blocks.COMPARATOR)) {
-			level.neighborChanged(blockstate, updatePos, provokingBlock, provokingPos, false);
-		} else if (blockstate.isRedstoneConductor(level, updatePos)) {
+		updateComparatorAt(level, blockstate, updatePos, provokingBlock, provokingPos);
+		if (blockstate.isRedstoneConductor(level, updatePos)) {
 			updatePos.move(direction);
 			blockstate = level.getBlockState(updatePos);
+			//Porting Lib doesn't update here, in contrast to Forge
 			if (blockstate.is(Blocks.COMPARATOR)) {
 				level.neighborChanged(blockstate, updatePos, provokingBlock, provokingPos, false);
 			}
+		}
+	}
+
+	private static void updateComparatorAt(Level level, BlockState blockstate, BlockPos updatePos, Block provokingBlock, BlockPos provokingPos) {
+		if (blockstate.is(Blocks.COMPARATOR)) {
+			level.neighborChanged(blockstate, updatePos, provokingBlock, provokingPos, false);
+		} else if (blockstate.getBlock() instanceof NeighborChangeListeningBlock listener) {
+			listener.onNeighborChange(blockstate, level, updatePos, provokingPos);
 		}
 	}
 
