@@ -10,10 +10,12 @@ import net.createmod.catnip.theme.Color;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.player.LocalPlayer;
+import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.util.StringUtil;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.GameType;
+import net.minecraft.world.level.material.FluidState;
 
 public class RemainingAirOverlay {
 	public static void render(GuiGraphics graphics, int width, int height) {
@@ -29,7 +31,23 @@ public class RemainingAirOverlay {
 		if (!player.getCustomData()
 			.contains("VisualBacktankAir"))
 			return;
-		if (!player.isEyeInFluid(FluidTags.WATER) && !player.isInLava())
+
+		//Code from Entity#updateFluidOnEyes
+		double breatheY = player.getEyeY() - 0.11111111F;
+		BlockPos blockPos = BlockPos.containing(player.getX(), breatheY, player.getZ());
+		FluidState fluidState = player.level().getFluidState(blockPos);
+		double fluidMaxY = blockPos.getY() + fluidState.getHeight(player.level(), blockPos);
+
+		boolean canDrown = false;
+		if(fluidMaxY > breatheY) {
+			if(fluidState.is(FluidTags.WATER)) {
+				canDrown = true;
+			} else if(fluidState.getFluidType() != null) {
+				canDrown = fluidState.getFluidType().canDrownIn(player);
+			}
+		}
+
+		if (!canDrown && !player.isInLava())
 			return;
 
 		int timeLeft = player.getCustomData()
