@@ -51,6 +51,7 @@ local.properties
 /linkie-cache/
 
 .DS_Store
+*.md
 #/libs/
 
 # don't push local Ponder

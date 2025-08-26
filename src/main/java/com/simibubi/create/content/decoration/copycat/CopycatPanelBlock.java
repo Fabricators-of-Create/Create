@@ -171,7 +171,9 @@ public class CopycatPanelBlock extends WaterloggedCopycatBlock {
 
 	@Override
 	public boolean skipRendering(BlockState state, BlockState adjacentState, Direction direction) {
-		return state.equals(adjacentState) && direction.getAxis().isHorizontal();
+		// Rely on hidesNeighborFace for correctness as panels do not occupy full blocks
+		// This prevents the flat face from disappearing when two upright panels are adjacent.
+		return false;
 	}
 
 	@Override
@@ -182,12 +184,14 @@ public class CopycatPanelBlock extends WaterloggedCopycatBlock {
 	@Override
 	public boolean hidesNeighborFace(BlockGetter level, BlockPos pos, BlockState state, BlockState neighborState,
 									 Direction dir) {
-		if (state.is(this) == neighborState.is(this)) {
+		if (neighborState.is(this)) {
+			// Matching orientations should merge visually
 			if (CopycatSpecialCases.isBarsMaterial(getMaterial(level, pos))
 				&& CopycatSpecialCases.isBarsMaterial(getMaterial(level, pos.relative(dir))))
 				return state.getValue(FACING) == neighborState.getValue(FACING);
-			if (getMaterial(level, pos).skipRendering(getMaterial(level, pos.relative(dir)), dir.getOpposite()))
-				return isOccluded(state, neighborState, dir.getOpposite());
+
+			// Otherwise let connected textures handle blending without hiding.
+			return false;
 		}
 
 		return state.getValue(FACING) == dir.getOpposite()
