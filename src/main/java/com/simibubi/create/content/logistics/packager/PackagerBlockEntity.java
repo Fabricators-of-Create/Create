@@ -374,6 +374,7 @@ public class PackagerBlockEntity extends SmartBlockEntity implements SidedStorag
 		// note: handler may modify the passed items
 		boolean unpacked = toUse.unpack(level, target, targetState, facing, items, orderContext, ctx);
 
+		// Only proceed if unpacking was successful (all items were placed)
 		if (unpacked) {
 			TransactionCallback.onSuccess(ctx, () -> {
 				previouslyUnwrapped = box;
@@ -381,9 +382,11 @@ public class PackagerBlockEntity extends SmartBlockEntity implements SidedStorag
 				animationTicks = CYCLE;
 				notifyUpdate();
 			});
+			return true;
+		} else {
+			// Unpacking failed, return false to prevent the package from being consumed
+			return false;
 		}
-
-		return true;
 	}
 
 	public void attemptToSend(List<PackagingRequest> queuedRequests) {
