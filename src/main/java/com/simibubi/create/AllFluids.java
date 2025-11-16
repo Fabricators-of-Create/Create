@@ -20,6 +20,11 @@ import com.simibubi.create.foundation.fluid.FluidHelper;
 import com.tterrag.registrate.fabric.SimpleFlowableFluid;
 import com.tterrag.registrate.util.entry.FluidEntry;
 
+import io.github.fabricators_of_create.porting_lib.fluids.FluidInteractionRegistry;
+
+import io.github.fabricators_of_create.porting_lib.fluids.FluidInteractionRegistry.InteractionInformation;
+import io.github.fabricators_of_create.porting_lib.fluids.PortingLibFluids;
+
 import net.createmod.catnip.data.Iterate;
 import net.createmod.catnip.nbt.NBTHelper;
 import net.minecraft.core.BlockPos;
@@ -165,7 +170,15 @@ public class AllFluids {
 	}
 
 	public static void registerFluidInteractions() {
-		// fabric: no fluid interaction API, use legacy method
+		FluidInteractionRegistry.addInteraction(PortingLibFluids.LAVA_TYPE, new InteractionInformation(
+			((level, currentPos, relativePos, currentState) -> level.getFluidState(relativePos).getType().isSame(HONEY.get())),
+			AllPaletteStoneTypes.LIMESTONE.getBaseBlock().get().defaultBlockState()
+		));
+		FluidInteractionRegistry.addInteraction(PortingLibFluids.LAVA_TYPE, new InteractionInformation(
+			((level, currentPos, relativePos, currentState) -> level.getFluidState(relativePos).getType().isSame(CHOCOLATE.get())),
+			AllPaletteStoneTypes.SCORIA.getBaseBlock().get().defaultBlockState()
+		));
+
 		FluidPlaceBlockCallback.EVENT.register(AllFluids::whenFluidsMeet);
 	}
 

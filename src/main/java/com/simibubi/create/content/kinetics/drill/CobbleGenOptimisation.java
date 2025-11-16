@@ -58,7 +58,7 @@ public class CobbleGenOptimisation {
 			FluidState fluidState = config.statesAroundDrill.get(i)
 				.getFluidState();
 			FluidType fluidType = fluidState.getFluidType();
-			if (!fluidType.isAir() && interactions.get(fluidType) != null)
+			if (fluidType != null && !fluidType.isAir() && interactions.get(fluidType) != null)
 				presentFluidTypes.put(fluidType, Pair.of(Iterate.directions[i], fluidState));
 		}
 
@@ -93,7 +93,7 @@ public class CobbleGenOptimisation {
 		ServerLevel owLevel = level.getServer().getLevel(Level.OVERWORLD);
 		if (owLevel == null)
 			owLevel = level;
-		
+
 		if (cachedLevel == null || cachedLevel.getLevel() != owLevel)
 			cachedLevel = new CobbleGenLevel(level);
 
