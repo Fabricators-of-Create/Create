@@ -103,19 +103,34 @@ public class ItemHelper {
 		float f = 0.0F;
 		int totalSlots = 0;
 
-		try (Transaction t = TransferUtil.getTransaction()) {
-			for (StorageView<ItemVariant> view : inv) {
-				long slotLimit = view.getCapacity();
-				if (slotLimit == 0) {
-					continue;
+			// Try to open a transaction for stable reads. If we're inside a Transaction.close() callback,
+			// Fabric forbids starting/inspecting the current transaction and will throw IllegalStateException.
+			// In that case, fall back to reading without creating a new transaction.
+			try {
+				try (Transaction t = TransferUtil.getTransaction()) {
+					for (StorageView<ItemVariant> view : inv) {
+						long slotLimit = view.getCapacity();
+						if (slotLimit == 0) {
+							continue;
+						}
+						totalSlots++;
+						if (!view.isResourceBlank()) {
+							f += (float) view.getAmount() / (float) Math.min(slotLimit, view.getResource().getItem().getMaxStackSize());
+							++i;
+						}
+					}
 				}
-				totalSlots++;
-				if (!view.isResourceBlank()) {
-					f += (float) view.getAmount() / (float) Math.min(slotLimit, view.getResource().getItem().getMaxStackSize());
-					++i;
+			} catch (IllegalStateException e) {
+				for (StorageView<ItemVariant> view : inv) {
+					long slotLimit = view.getCapacity();
+					if (slotLimit == 0) continue;
+					totalSlots++;
+					if (!view.isResourceBlank()) {
+						f += (float) view.getAmount() / (float) Math.min(slotLimit, view.getResource().getItem().getMaxStackSize());
+						++i;
+					}
 				}
 			}
-		}
 
 		if (totalSlots == 0)
 			return 0;
