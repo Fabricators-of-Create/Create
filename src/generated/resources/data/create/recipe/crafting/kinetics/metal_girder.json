@@ -15,7 +15,7 @@
   ],
   "result": {
     "count": 8,
-    "item": "create:metal_girder"
+    "id": "create:metal_girder"
   },
   "show_notification": true
 }

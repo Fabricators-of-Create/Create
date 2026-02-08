@@ -16,7 +16,9 @@
   "results": [
     {
       "count": 9,
-      "item": "immersiveengineering:nugget_aluminum"
+      "item": {
+        "id": "immersiveengineering:nugget_aluminum"
+      }
     }
   ]
 }

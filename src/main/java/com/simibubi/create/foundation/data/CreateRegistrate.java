@@ -24,12 +24,7 @@ import com.tterrag.registrate.util.nullness.NonNullUnaryOperator;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 
-import net.neoforged.neoforge.data.event.GatherDataEvent;
-import net.neoforged.neoforge.fluids.BaseFlowingFluid;
-import net.neoforged.neoforge.registries.DeferredHolder;
-
 import org.jetbrains.annotations.ApiStatus;
-import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import com.simibubi.create.CreateClient;
@@ -72,12 +67,11 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockBehaviour.Properties;
 
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.client.rendering.v1.BuiltinItemRendererRegistry;
+import io.github.fabricators_of_create.porting_lib.util.DeferredHolder;
 
 public class CreateRegistrate extends AbstractRegistrate<CreateRegistrate> {
-	private static final Map<RegistryEntry<?>, ResourceKey<CreativeModeTab>> TAB_LOOKUP = Collections.synchronizedMap(new IdentityHashMap<>());
+	private static final Map<RegistryEntry<?, ?>, ResourceKey<CreativeModeTab>> TAB_LOOKUP = Collections.synchronizedMap(new IdentityHashMap<>());
 
 	@Nullable
 	protected Function<Item, TooltipModifier> currentTooltipModifierFactory;
@@ -92,7 +86,7 @@ public class CreateRegistrate extends AbstractRegistrate<CreateRegistrate> {
 		return new CreateRegistrate(modid);
 	}
 
-	public static boolean isInCreativeTab(RegistryEntry<?> entry, ResourceKey<CreativeModeTab> tab) {
+	public static boolean isInCreativeTab(RegistryEntry<?, ?> entry, ResourceKey<CreativeModeTab> tab) {
 		return TAB_LOOKUP.get(entry) == tab;
 	}
 
@@ -231,7 +225,7 @@ public class CreateRegistrate extends AbstractRegistrate<CreateRegistrate> {
 																						  NonNullFunction<SimpleFlowableFluid.Properties, T> sourceFactory,
 																						  NonNullFunction<SimpleFlowableFluid.Properties, T> flowingFactory) {
 		return entry(name,
-			c -> new VirtualFluidBuilder<>(self(), self(), name, c, new ResourceLocation(getModid(), "fluid/" + name + "_still"),
+			c -> new VirtualFluidBuilder<>(self(), self(), name, c, ResourceLocation.fromNamespaceAndPath(getModid(), "fluid/" + name + "_still"),
 				ResourceLocation.fromNamespaceAndPath(getModid(), "fluid/" + name + "_flow"), sourceFactory, flowingFactory));
 	}
 
@@ -243,7 +237,7 @@ public class CreateRegistrate extends AbstractRegistrate<CreateRegistrate> {
 
 	public FluidBuilder<VirtualFluid, CreateRegistrate> virtualFluid(String name) {
 		return entry(name,
-			c -> new VirtualFluidBuilder<>(self(), self(), name, c, new ResourceLocation(getModid(), "fluid/" + name + "_still"),
+			c -> new VirtualFluidBuilder<>(self(), self(), name, c, ResourceLocation.fromNamespaceAndPath(getModid(), "fluid/" + name + "_still"),
 				ResourceLocation.fromNamespaceAndPath(getModid(), "fluid/" + name + "_flow"), /*null, */VirtualFluid::createSource, VirtualFluid::createFlowing));
 	}
 
@@ -288,91 +282,84 @@ public class CreateRegistrate extends AbstractRegistrate<CreateRegistrate> {
 
 	public static <T extends Block> NonNullConsumer<? super T> casingConnectivity(
 		BiConsumer<T, CasingConnectivity> consumer) {
-		return entry -> CatnipServices.PLATFORM.executeOnClientOnly(() -> () -> registerCasingConnectivity(entry, consumer));
+		return entry -> CatnipServices.PLATFORM.executeOnClientOnly(() -> () -> ClientHooks.registerCasingConnectivity(entry, consumer));
 	}
 
-	public static <T extends Block> NonNullConsumer<? super T> blockModel(
-		Supplier<NonNullFunction<BakedModel, ? extends BakedModel>> func) {
-		return entry -> CatnipServices.PLATFORM.executeOnClientOnly(() -> () -> registerBlockModel(entry, func));
+	public static <T extends Block, M> NonNullConsumer<? super T> blockModel(
+		Supplier<? extends NonNullFunction<M, ? extends M>> func) {
+		return entry -> CatnipServices.PLATFORM.executeOnClientOnly(() -> () -> ClientHooks.registerBlockModel(entry, func));
 	}
 
-	public static <T extends Item> NonNullConsumer<? super T> itemModel(
-		Supplier<NonNullFunction<BakedModel, ? extends BakedModel>> func) {
-		return entry -> CatnipServices.PLATFORM.executeOnClientOnly(() -> () -> registerItemModel(entry, func));
+	public static <T extends Item, M> NonNullConsumer<? super T> itemModel(
+		Supplier<? extends NonNullFunction<M, ? extends M>> func) {
+		return entry -> CatnipServices.PLATFORM.executeOnClientOnly(() -> () -> ClientHooks.registerItemModel(entry, func));
 	}
 
 	public static NonNullConsumer<? super Block> connectedTextures(
-		Supplier<ConnectedTextureBehaviour> behavior) {
-		return entry -> CatnipServices.PLATFORM.executeOnClientOnly(() -> () -> registerCTBehviour(entry, behavior));
+		Supplier<?> behavior) {
+		return entry -> CatnipServices.PLATFORM.executeOnClientOnly(() -> () -> ClientHooks.registerCTBehaviour(entry, behavior));
 	}
 
 	public static <T extends Item, P> NonNullUnaryOperator<ItemBuilder<T, P>> customRenderedItem(
-		Supplier<Supplier<CustomRenderedItemModelRenderer>> supplier) {
+		Supplier<? extends Supplier<?>> supplier) {
 		return b -> {
-			CatnipServices.PLATFORM.executeOnClientOnly(() -> () -> customRenderedItem(b, supplier));
+			CatnipServices.PLATFORM.executeOnClientOnly(() -> () -> ClientHooks.customRenderedItem(b, supplier));
 			return b;
 		};
 	}
 
 	@Environment(EnvType.CLIENT)
-	private static <T extends Block> void registerCasingConnectivity(T entry,
-																	 BiConsumer<T, CasingConnectivity> consumer) {
-		consumer.accept(entry, CreateClient.CASING_CONNECTIVITY);
-	}
+	private static final class ClientHooks {
+		private ClientHooks() {
+		}
 
-	@Environment(EnvType.CLIENT)
-	private static void registerBlockModel(Block entry,
-										   Supplier<NonNullFunction<BakedModel, ? extends BakedModel>> func) {
-		CreateClient.MODEL_SWAPPER.getCustomBlockModels()
-			.register(RegisteredObjectsHelper.getKeyOrThrow(entry), func.get());
-	}
+		private static <T extends Block> void registerCasingConnectivity(T entry,
+																		 BiConsumer<T, CasingConnectivity> consumer) {
+			consumer.accept(entry, CreateClient.CASING_CONNECTIVITY);
+		}
 
-	@Environment(EnvType.CLIENT)
-	private static void registerItemModel(Item entry,
-										  Supplier<NonNullFunction<BakedModel, ? extends BakedModel>> func) {
-		CreateClient.MODEL_SWAPPER.getCustomItemModels()
-			.register(RegisteredObjectsHelper.getKeyOrThrow(entry), func.get());
-	}
+		@SuppressWarnings("unchecked")
+		private static <M> void registerBlockModel(Block entry,
+												   Supplier<? extends NonNullFunction<M, ? extends M>> func) {
+			NonNullFunction<BakedModel, ? extends BakedModel> modelFunc =
+				(NonNullFunction<BakedModel, ? extends BakedModel>) func.get();
+			CreateClient.MODEL_SWAPPER.getCustomBlockModels()
+				.register(RegisteredObjectsHelper.getKeyOrThrow(entry), modelFunc);
+		}
 
-	@Environment(EnvType.CLIENT)
-	private static void registerCTBehviour(Block entry, Supplier<ConnectedTextureBehaviour> behaviorSupplier) {
-		ConnectedTextureBehaviour behavior = behaviorSupplier.get();
-		CreateClient.MODEL_SWAPPER.getCustomBlockModels()
-			.register(RegisteredObjectsHelper.getKeyOrThrow(entry), model -> new CTModel(model, behavior));
-	}
+		@SuppressWarnings("unchecked")
+		private static <M> void registerItemModel(Item entry,
+												  Supplier<? extends NonNullFunction<M, ? extends M>> func) {
+			NonNullFunction<BakedModel, ? extends BakedModel> modelFunc =
+				(NonNullFunction<BakedModel, ? extends BakedModel>) func.get();
+			CreateClient.MODEL_SWAPPER.getCustomItemModels()
+				.register(RegisteredObjectsHelper.getKeyOrThrow(entry), modelFunc);
+		}
 
-	@Override
-	protected void onData(@NotNull GatherDataEvent event) {} // NO-OP so this doesn't run before create can add its generators
+		private static void registerCTBehaviour(Block entry, Supplier<?> behaviorSupplier) {
+			ConnectedTextureBehaviour behavior = (ConnectedTextureBehaviour) behaviorSupplier.get();
+			CreateClient.MODEL_SWAPPER.getCustomBlockModels()
+				.register(RegisteredObjectsHelper.getKeyOrThrow(entry), model -> new CTModel(model, behavior));
+		}
+
+		private static <T extends Item, P> void customRenderedItem(ItemBuilder<T, P> b,
+																   Supplier<? extends Supplier<?>> supplier) {
+			b.onRegister(new CustomRendererRegistrationHelper(supplier));
+		}
+
+		private record CustomRendererRegistrationHelper(Supplier<? extends Supplier<?>> supplier) implements NonNullConsumer<Item> {
+			@Override
+			public void accept(Item entry) {
+				CustomRenderedItemModelRenderer renderer = (CustomRenderedItemModelRenderer) supplier.get().get();
+				BuiltinItemRendererRegistry.INSTANCE.register(entry, renderer);
+				CustomRenderedItems.register(entry);
+			}
+		}
+	}
 
 	@ApiStatus.Internal
 	public RegistrateDataProvider setDataProvider(RegistrateDataProvider provider) {
 		((AbstractRegistrateAccessor) this).create$setProvider(provider);
 		return provider;
-	}
-
-	@Environment(EnvType.CLIENT)
-	private static <T extends Item, P> void customRenderedItem(ItemBuilder<T, P> b,
-															   Supplier<Supplier<CustomRenderedItemModelRenderer>> supplier) {
-		b.onRegister(new CustomRendererRegistrationHelper(supplier));
-	}
-
-	// fabric: these records are required jank since @Environment doesn't strip lambdas
-
-	@Environment(EnvType.CLIENT)
-	private record CTModelProvider(ConnectedTextureBehaviour behavior) implements NonNullFunction<BakedModel, BakedModel> {
-		@Override
-		public BakedModel apply(BakedModel bakedModel) {
-			return new CTModel(bakedModel, behavior);
-		}
-	}
-
-	@Environment(EnvType.CLIENT)
-	private record CustomRendererRegistrationHelper(Supplier<Supplier<CustomRenderedItemModelRenderer>> supplier) implements NonNullConsumer<Item> {
-		@Override
-		public void accept(Item entry) {
-			CustomRenderedItemModelRenderer renderer = supplier.get().get();
-			BuiltinItemRendererRegistry.INSTANCE.register(entry, renderer);
-			CustomRenderedItems.register(entry);
-		}
 	}
 }

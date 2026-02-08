@@ -9,7 +9,6 @@ import java.util.Map.Entry;
 import javax.annotation.Nullable;
 
 import com.simibubi.create.foundation.fluid.FluidHelper;
-import com.simibubi.create.foundation.mixin.accessor.FluidInteractionRegistryAccessor;
 
 import net.createmod.catnip.data.Iterate;
 import net.createmod.catnip.data.Pair;
@@ -49,7 +48,7 @@ public class CobbleGenOptimisation {
 	}
 
 	public static BlockState determineOutput(ServerLevel level, BlockPos pos, CobbleGenBlockConfiguration config) {
-		Map<FluidType, List<InteractionInformation>> interactions = FluidInteractionRegistryAccessor.getInteractions();
+		Map<FluidType, List<InteractionInformation>> interactions = new HashMap<>();
 		Map<FluidType, Pair<Direction, FluidState>> presentFluidTypes = new HashMap<>();
 
 		for (int i = 0; i < Iterate.directions.length; i++) {

@@ -12,7 +12,6 @@ import com.mojang.datafixers.schemas.Schema;
 import com.mojang.datafixers.types.templates.TypeTemplate;
 import com.simibubi.create.foundation.utility.DataFixerHelper;
 
-import net.minecraft.util.datafix.fixes.References;
 import net.minecraft.util.datafix.schemas.V1460;
 
 @Mixin(V1460.class)
@@ -22,7 +21,7 @@ public class V1460Mixin {
 		Map<String, Supplier<TypeTemplate>> map = ci.getReturnValue();
 
 		for (DataFixerHelper.BlockPosFixer fixer : DataFixerHelper.BLOCK_POS_FIXERS_VIEW)
-			if (fixer.reference() == References.ENTITY)
+			if (DataFixerHelper.isEntityReference(fixer.reference()))
 				schema.registerSimple(map, fixer.id());
 	}
 
@@ -31,7 +30,7 @@ public class V1460Mixin {
 		Map<String, Supplier<TypeTemplate>> map = ci.getReturnValue();
 
 		for (DataFixerHelper.BlockPosFixer fixer : DataFixerHelper.BLOCK_POS_FIXERS_VIEW)
-			if (fixer.reference() == References.BLOCK_ENTITY)
+			if (DataFixerHelper.isBlockEntityReference(fixer.reference()))
 				schema.registerSimple(map, fixer.id());
 	}
 }

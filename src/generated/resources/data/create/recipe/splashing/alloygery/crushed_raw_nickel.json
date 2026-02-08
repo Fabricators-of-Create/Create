@@ -16,7 +16,9 @@
   "results": [
     {
       "count": 9,
-      "item": "alloygery:nickel_nugget"
+      "item": {
+        "id": "alloygery:nickel_nugget"
+      }
     }
   ]
 }

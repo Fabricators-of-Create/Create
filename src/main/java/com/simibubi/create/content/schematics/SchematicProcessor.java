@@ -61,7 +61,7 @@ public class SchematicProcessor extends StructureProcessor implements StructureP
 
 	@Override
 	protected StructureProcessorType<?> getType() {
-		return AllStructureProcessorTypes.SCHEMATIC.get();
+		return AllStructureProcessorTypes.SCHEMATIC.value();
 	}
 
 }

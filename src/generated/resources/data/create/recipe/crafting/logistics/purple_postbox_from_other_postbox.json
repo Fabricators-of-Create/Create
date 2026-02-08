@@ -3,13 +3,13 @@
   "category": "building",
   "ingredients": [
     {
-      "tag": "c:purple_dyes"
+      "tag": "c:dyes/purple"
     },
     {
       "tag": "create:postboxes"
     }
   ],
   "result": {
-    "item": "create:purple_postbox"
+    "id": "create:purple_postbox"
   }
 }

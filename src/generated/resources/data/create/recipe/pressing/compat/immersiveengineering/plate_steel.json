@@ -15,7 +15,9 @@
   ],
   "results": [
     {
-      "item": "immersiveengineering:plate_steel"
+      "item": {
+        "id": "immersiveengineering:plate_steel"
+      }
     }
   ]
 }

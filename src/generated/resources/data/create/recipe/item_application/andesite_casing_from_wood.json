@@ -10,7 +10,9 @@
   ],
   "results": [
     {
-      "item": "create:andesite_casing"
+      "item": {
+        "id": "create:andesite_casing"
+      }
     }
   ]
 }

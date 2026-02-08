@@ -1,14 +1,9 @@
 package com.simibubi.create.compat.computercraft;
 
-import static com.simibubi.create.compat.computercraft.implementation.ComputerBehaviour.peripheralProvider;
-
 import java.util.function.Function;
 
 import com.simibubi.create.compat.Mods;
-import com.simibubi.create.compat.computercraft.implementation.ComputerBehaviour;
 import com.simibubi.create.foundation.blockEntity.SmartBlockEntity;
-
-import dan200.computercraft.api.peripheral.PeripheralLookup;
 
 public class ComputerCraftProxy {
 
@@ -18,10 +13,9 @@ public class ComputerCraftProxy {
 	}
 
 	private static void registerWithDependency() {
-		/* Comment if computercraft.implementation is not in the source set */
-		computerFactory = ComputerBehaviour::new;
-
-		PeripheralLookup.get().registerFallback((level, blockPos, blockState, blockEntity, direction) -> peripheralProvider(level, blockPos));
+		// Optional implementation classes are currently excluded in this port branch.
+		// Keep compat API stable by falling back to the no-op behavior.
+		computerFactory = fallbackFactory;
 	}
 
 	private static Function<SmartBlockEntity, ? extends AbstractComputerBehaviour> fallbackFactory;

@@ -69,7 +69,7 @@ public class MechanicalCrafterRenderer extends SafeBlockEntityRenderer<Mechanica
 		MultiBufferSource buffer, int light, int overlay) {
 		if (be.phase == Phase.IDLE) {
 			ItemStack stack = be.getInventory()
-				.getItem(0);
+				.getStackInSlot(0);
 			if (!stack.isEmpty()) {
 				ms.pushPose();
 				ms.translate(0, 0, -1 / 256f);

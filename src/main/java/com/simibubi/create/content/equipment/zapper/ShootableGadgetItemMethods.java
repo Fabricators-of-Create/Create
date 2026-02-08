@@ -52,9 +52,9 @@ public class ShootableGadgetItemMethods {
 
 		// (#574) fabric: on forge, this condition is patched into startUsingItem
 		// skipping it causes an item to be used forever, only allowing 1 use before releasing and re-pressing the use button.
-		if (item.getUseDuration() > 0) {
-			player.startUsingItem(hand);
-		}
+			if (item.getUseDuration(player) > 0) {
+				player.startUsingItem(hand);
+			}
 
 		return false;
 	}

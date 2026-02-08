@@ -22,7 +22,7 @@ public class StructureUtilsMixin {
  	 */
 	@Inject(method = "getStructureTemplate", at = @At("HEAD"), cancellable = true)
 	private static void useStructureManager(String name, ServerLevel level, CallbackInfoReturnable<StructureTemplate> cir) {
-		ResourceLocation id = new ResourceLocation(name);
+		ResourceLocation id = ResourceLocation.parse(name);
 		level.getStructureManager().get(id).ifPresent(cir::setReturnValue);
 	}
 

@@ -10,7 +10,6 @@ import java.util.Optional;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.simibubi.create.AllDataComponents;
 import com.simibubi.create.AllItems;
-import com.simibubi.create.content.equipment.blueprint.BlueprintEntity.BlueprintCraftingInventory;
 import com.simibubi.create.content.equipment.blueprint.BlueprintEntity.BlueprintSection;
 import com.simibubi.create.content.logistics.BigItemStack;
 import com.simibubi.create.content.logistics.filter.AttributeFilterWhitelistMode;
@@ -41,12 +40,12 @@ import net.minecraft.core.Holder;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.inventory.CraftingContainer;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Item.TooltipContext;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.item.crafting.CraftingInput;
 import net.minecraft.world.item.crafting.CraftingRecipe;
 import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.item.crafting.RecipeType;
@@ -261,16 +260,19 @@ public class BlueprintOverlayRenderer {
 
 					success = false;
 					newlyMissing.add(requestedItem.item());
-				}
+					}
 
-				if (success) {
-					CraftingContainer craftingInventory = new BlueprintCraftingInventory(craftingGrid);
-					if (!recipe.isPresent())
-						recipe = mc.level.getRecipeManager()
-								.getRecipeFor(RecipeType.CRAFTING, craftingInventory, mc.level);
-					ItemStack resultFromRecipe = recipe.filter(r -> r.matches(craftingInventory, mc.level))
-							.map(r -> r.value().assemble(craftingInventory, mc.level.registryAccess()))
-							.orElse(ItemStack.EMPTY);
+					if (success) {
+						CraftingInput craftingInventory = CraftingInput.of(3, 3,
+							java.util.stream.IntStream.range(0, 9)
+								.mapToObj(i -> craftingGrid.getOrDefault(i, ItemStack.EMPTY))
+								.toList());
+						if (!recipe.isPresent())
+							recipe = mc.level.getRecipeManager()
+									.getRecipeFor(RecipeType.CRAFTING, craftingInventory, mc.level);
+						ItemStack resultFromRecipe = recipe.filter(r -> r.value().matches(craftingInventory, mc.level))
+								.map(r -> r.value().assemble(craftingInventory, mc.level.registryAccess()))
+								.orElse(ItemStack.EMPTY);
 
 					if (resultFromRecipe.isEmpty()) {
 						if (!recipe.isPresent())
@@ -344,11 +346,10 @@ public class BlueprintOverlayRenderer {
 		}
 
 		int x = (guiGraphics.guiWidth() - w) / 2;
-		int y = guiGraphics.guiHeight() - 100;
+			int y = guiGraphics.guiHeight() - 100;
 
-		if (shopContext != null) {
-			TooltipRenderUtil.renderTooltipBackground(guiGraphics, x - 2, y + 1, w + 4, 19, 0, 0x55_000000, 0x55_000000, 0,
-				0);
+			if (shopContext != null) {
+				TooltipRenderUtil.renderTooltipBackground(guiGraphics, x - 2, y + 1, w + 4, 19, 0);
 
 			AllGuiTextures.TRADE_OVERLAY.render(guiGraphics, guiGraphics.guiWidth() / 2 - 48, y - 19);
 			if (shopContext.purchases() > 0) {

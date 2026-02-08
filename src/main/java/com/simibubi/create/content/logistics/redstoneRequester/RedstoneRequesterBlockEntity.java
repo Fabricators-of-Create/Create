@@ -128,7 +128,7 @@ public class RedstoneRequesterBlockEntity extends StockCheckingBlockEntity imple
 		if (!behaviour.mayInteractMessage(player))
 			return InteractionResult.SUCCESS;
 
-		player.openMenu(this, worldPosition);
+		player.openMenu(this);
 		return InteractionResult.SUCCESS;
 	}
 

@@ -83,9 +83,9 @@ public class BeltBlockEntity extends KineticBlockEntity implements SidedStorageB
 		color = Optional.empty();
 	}
 
-	public static void registerCapabilities(RegisterCapabilitiesEvent event) {
+	public static void registerCapabilities(net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent event) {
 		event.registerBlockEntity(
-				Capabilities.ItemHandler.BLOCK,
+				net.neoforged.neoforge.capabilities.Capabilities.ItemHandler.BLOCK,
 				AllBlockEntityTypes.BELT.get(),
 				(be, context) -> {
 						if (!BeltBlock.canTransportObjects(be.getBlockState()))

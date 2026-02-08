@@ -79,19 +79,11 @@ public class StockTickerInteractionHandler {
 			return true;
 		}
 
-		if (player instanceof ServerPlayer sp) {
-			boolean showLockOption =
-				stbe.behaviour.mayAdministrate(player) && Create.LOGISTICS.isLockable(stbe.behaviour.freqId);
-			boolean isCurrentlyLocked = Create.LOGISTICS.isLocked(stbe.behaviour.freqId);
-
-			sp.openMenu(stbe.new RequestMenuProvider(), buf -> {
-				buf.writeBoolean(showLockOption);
-				buf.writeBoolean(isCurrentlyLocked);
-				buf.writeBlockPos(targetPos);
-			});
-			stbe.getRecentSummary()
-				.divideAndSendTo(sp, targetPos);
-		}
+			if (player instanceof ServerPlayer sp) {
+				sp.openMenu(stbe.new RequestMenuProvider());
+				stbe.getRecentSummary()
+					.divideAndSendTo(sp, targetPos);
+			}
 
 		return true;
 	}

@@ -37,8 +37,6 @@ public class MechanicalCraftingRecipe extends ShapedRecipe {
 
 	@Override
 	public boolean matches(CraftingInput input, Level worldIn) {
-		if (!(input instanceof MechanicalCraftingInput))
-			return false;
 		if (acceptsMirrored())
 			return super.matches(input, worldIn);
 

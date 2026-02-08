@@ -15,7 +15,9 @@
   ],
   "results": [
     {
-      "item": "infernalexp:crimson_nylium_path"
+      "item": {
+        "id": "infernalexp:crimson_nylium_path"
+      }
     }
   ]
 }

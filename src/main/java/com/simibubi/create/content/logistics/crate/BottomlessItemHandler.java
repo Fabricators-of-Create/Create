@@ -6,47 +6,30 @@ import java.util.function.Supplier;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 
-import com.simibubi.create.infrastructure.fabric.transfer.item.ItemStackHandler;
-
-import io.github.fabricators_of_create.porting_lib.transfer.item.ItemStackHandlerSlot;
-
 import net.fabricmc.fabric.api.transfer.v1.item.ItemVariant;
 import net.fabricmc.fabric.api.transfer.v1.storage.StorageView;
 import net.fabricmc.fabric.api.transfer.v1.storage.base.SingleSlotStorage;
-
 import net.fabricmc.fabric.api.transfer.v1.transaction.TransactionContext;
-
-import net.minecraft.nbt.CompoundTag;
-
-import org.jetbrains.annotations.Nullable;
-
 import net.minecraft.MethodsReturnNonnullByDefault;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.item.ItemStack;
-
-import net.fabricmc.fabric.api.transfer.v1.item.ItemVariant;
-import net.fabricmc.fabric.api.transfer.v1.storage.StorageView;
-import net.fabricmc.fabric.api.transfer.v1.storage.base.SingleSlotStorage;
-import net.fabricmc.fabric.api.transfer.v1.transaction.TransactionContext;
-
-import com.simibubi.create.infrastructure.fabric.transfer.item.ItemStackHandler;
-import io.github.fabricators_of_create.porting_lib.transfer.item.ItemStackHandlerSlot;
 
 @MethodsReturnNonnullByDefault
 @ParametersAreNonnullByDefault
-public class BottomlessItemHandler extends ItemStackHandler implements SingleSlotStorage<ItemVariant> { // must extend ItemStackHandler for mounted storages
+public class BottomlessItemHandler implements SingleSlotStorage<ItemVariant> {
 
-	private Supplier<ItemStack> suppliedItemStack;
+	private final Supplier<ItemStack> suppliedItemStack;
 
 	public BottomlessItemHandler(Supplier<ItemStack> suppliedItemStack) {
-		super(0);
 		this.suppliedItemStack = suppliedItemStack;
-		setSize(1); // create slot after setting supplier
 	}
 
-	@Override
-	protected ItemStackHandlerSlot makeSlot(int index, ItemStack stack) {
-		return new BottomlessSlot();
+	public ItemStack getStackInSlot(int slot) {
+		return slot == 0 ? getStack() : ItemStack.EMPTY;
+	}
+
+	protected ItemStack getStack() {
+		ItemStack stack = suppliedItemStack.get();
+		return stack == null || stack.isEmpty() ? ItemStack.EMPTY : stack;
 	}
 
 	@Override
@@ -59,14 +42,9 @@ public class BottomlessItemHandler extends ItemStackHandler implements SingleSlo
 		ItemStack stack = getStack();
 		if (!resource.matches(stack))
 			return 0;
-		if (!stack.isEmpty())
-			return Math.min(stack.getMaxStackSize(), maxAmount);
-		return 0;
-	}
-
-	protected ItemStack getStack() {
-		ItemStack stack = suppliedItemStack.get();
-		return stack == null || stack.isEmpty() ? ItemStack.EMPTY : stack;
+		if (stack.isEmpty())
+			return 0;
+		return Math.min(stack.getMaxStackSize(), maxAmount);
 	}
 
 	@Override
@@ -89,11 +67,9 @@ public class BottomlessItemHandler extends ItemStackHandler implements SingleSlo
 		return Long.MAX_VALUE;
 	}
 
-	// shortcuts
-
 	@Override
 	public Iterator<StorageView<ItemVariant>> iterator() {
-		return SingleSlotStorage.super.iterator(); // singleton iterator on this
+		return SingleSlotStorage.super.iterator();
 	}
 
 	@Override
@@ -104,40 +80,5 @@ public class BottomlessItemHandler extends ItemStackHandler implements SingleSlo
 	@Override
 	public Iterator<StorageView<ItemVariant>> nonEmptyIterator() {
 		return isResourceBlank() ? Collections.emptyIterator() : iterator();
-	}
-
-	private class BottomlessSlot extends ItemStackHandlerSlot {
-		public BottomlessSlot() {
-			super(0, BottomlessItemHandler.this, ItemStack.EMPTY);
-		}
-
-		@Override
-		public ItemStack getStack() {
-			return BottomlessItemHandler.this.getStack();
-		}
-
-		@Override
-		public ItemVariant getResource() {
-			return BottomlessItemHandler.this.getResource();
-		}
-
-		@Override
-		public long getAmount() {
-			return BottomlessItemHandler.this.getAmount();
-		}
-
-		@Override
-		protected void setStack(ItemStack stack) {
-		}
-
-		@Override
-		@Nullable
-		public CompoundTag save() {
-			return null;
-		}
-
-		@Override
-		protected void onFinalCommit() {
-		}
 	}
 }

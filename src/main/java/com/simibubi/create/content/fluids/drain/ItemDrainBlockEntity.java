@@ -81,19 +81,19 @@ public class ItemDrainBlockEntity extends SmartBlockEntity implements IHaveGoggl
 		}
 	}
 
-	public static void registerCapabilities(RegisterCapabilitiesEvent event) {
-		event.registerBlockEntity(
-				Capabilities.ItemHandler.BLOCK,
-				AllBlockEntityTypes.ITEM_DRAIN.get(),
-				(be, context) -> {
-					if (context != null && context.getAxis().isHorizontal())
-						return be.itemHandlers.get(context);
-					return null;
-				}
-		);
+	public static void registerCapabilities(net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent event) {
+			event.registerBlockEntity(
+					net.neoforged.neoforge.capabilities.Capabilities.ItemHandler.BLOCK,
+					AllBlockEntityTypes.ITEM_DRAIN.get(),
+					(be, context) -> {
+						if (context instanceof Direction side && side.getAxis().isHorizontal())
+							return be.itemHandlers.get(side);
+						return null;
+					}
+			);
 
 		event.registerBlockEntity(
-				Capabilities.FluidHandler.BLOCK,
+				net.neoforged.neoforge.capabilities.Capabilities.FluidHandler.BLOCK,
 				AllBlockEntityTypes.ITEM_DRAIN.get(),
 				(be, context) -> {
 					if (context != Direction.UP)

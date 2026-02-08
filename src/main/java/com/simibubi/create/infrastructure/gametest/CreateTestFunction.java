@@ -115,11 +115,7 @@ public class CreateTestFunction {
 
 	public static Consumer<GameTestHelper> run(String fullName, @NotNull Consumer<GameTestHelper> helper) {
 		return consumer -> {
-			helper.andThen(gameTestHelper -> {
-				// give structure block test info
-				StructureBlockEntity be = gameTestHelper.getBlockEntity(BlockPos.ZERO);
-				be.getCustomData().putString("CreateTestFunction", fullName);
-			}).accept(CreateGameTestHelper.of(consumer));
+			helper.accept(CreateGameTestHelper.of(consumer));
 		};
 	}
 }

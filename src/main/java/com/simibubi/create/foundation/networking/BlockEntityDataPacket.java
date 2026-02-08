@@ -3,6 +3,8 @@ package com.simibubi.create.foundation.networking;
 import com.simibubi.create.foundation.blockEntity.SyncedBlockEntity;
 
 import net.createmod.catnip.net.base.ClientboundPacketPayload;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.block.entity.BlockEntity;

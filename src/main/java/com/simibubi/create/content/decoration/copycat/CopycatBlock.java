@@ -122,7 +122,7 @@ public abstract class CopycatBlock extends Block implements IBE<CopycatBlockEnti
 
 	@Override
 	protected ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hitResult) {
-								 if (player == null || AdventureUtil.isAdventure(pPlayer))
+								 if (player == null || AdventureUtil.isAdventure(player))
 			return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
 
 		Direction face = hitResult.getDirection();
@@ -352,11 +352,11 @@ public abstract class CopycatBlock extends Block implements IBE<CopycatBlockEnti
 		BlockState material = getMaterial(level, pos);
 		if (AllBlocks.COPYCAT_BASE.has(material) || player != null && player.isShiftKeyDown())
 			return new ItemStack(this);
-		return maybeMaterialAs(
-				level, pos, BlockPickInteractionAware.class,
-				(mat, block) -> block.getPickedStack(mat, level, pos, player, result),
-				mat -> mat.getBlock().getCloneItemStack(level, pos, mat)
-		);
+			return maybeMaterialAs(
+					level, pos, BlockPickInteractionAware.class,
+					(mat, block) -> block.getPickedStack(mat, level, pos, player, result),
+					mat -> level instanceof LevelReader reader ? mat.getBlock().getCloneItemStack(reader, pos, mat) : new ItemStack(mat.getBlock())
+			);
 	}
 
 	@Override

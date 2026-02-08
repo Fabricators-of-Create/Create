@@ -3,6 +3,7 @@ package com.simibubi.create.content.equipment.toolbox;
 import org.apache.commons.lang3.mutable.MutableBoolean;
 
 import com.simibubi.create.AllPackets;
+import com.simibubi.create.foundation.utility.PersistentDataHelper;
 
 import net.createmod.catnip.nbt.NBTHelper;
 import net.createmod.catnip.net.base.ServerboundPacketPayload;
@@ -44,7 +45,7 @@ public record ToolboxDisposeAllPacket(BlockPos toolboxPos) implements Serverboun
 		if (!(blockEntity instanceof ToolboxBlockEntity toolbox))
 			return;
 
-		CompoundTag compound = player.getPersistentData()
+		CompoundTag compound = PersistentDataHelper.get(player)
 				.getCompound("CreateToolboxData");
 		MutableBoolean sendData = new MutableBoolean(false);
 

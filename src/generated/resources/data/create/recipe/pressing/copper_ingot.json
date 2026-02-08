@@ -7,7 +7,9 @@
   ],
   "results": [
     {
-      "item": "create:copper_sheet"
+      "item": {
+        "id": "create:copper_sheet"
+      }
     }
   ]
 }

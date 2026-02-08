@@ -26,6 +26,8 @@ import com.simibubi.create.infrastructure.fabric.transfer.item.ItemStackHandler;
 import com.simibubi.create.infrastructure.fabric.transfer.item.SlotItemHandler;
 
 import java.util.Optional;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 
 public class BlueprintMenu extends GhostItemMenu<BlueprintSection> {
 

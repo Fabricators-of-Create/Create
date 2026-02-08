@@ -14,5 +14,7 @@
   "ingredient": {
     "item": "create:crushed_raw_nickel"
   },
-  "result": "thermal:nickel_ingot"
+  "result": {
+    "id": "thermal:nickel_ingot"
+  }
 }

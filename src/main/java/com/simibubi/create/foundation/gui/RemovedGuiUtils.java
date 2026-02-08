@@ -22,9 +22,11 @@ import net.minecraft.network.chat.Style;
 import net.minecraft.util.FormattedCharSequence;
 import net.minecraft.world.item.ItemStack;
 
-import io.github.fabricators_of_create.porting_lib.util.client.ScreenUtils;
-
 public class RemovedGuiUtils {
+	private static final int DEFAULT_BACKGROUND_COLOR = 0xF0100010;
+	private static final int DEFAULT_BORDER_COLOR_START = 0x505000FF;
+	private static final int DEFAULT_BORDER_COLOR_END = 0x5028007F;
+
 	@Nonnull
 	private static ItemStack cachedTooltipStack = ItemStack.EMPTY;
 
@@ -39,7 +41,7 @@ public class RemovedGuiUtils {
 	public static void drawHoveringText(GuiGraphics graphics, List<? extends FormattedText> textLines, int mouseX,
 										int mouseY, int screenWidth, int screenHeight, int maxTextWidth, Font font) {
 		drawHoveringText(graphics, textLines, mouseX, mouseY, screenWidth, screenHeight, maxTextWidth,
-			ScreenUtils.DEFAULT_BACKGROUND_COLOR, ScreenUtils.DEFAULT_BORDER_COLOR_START, ScreenUtils.DEFAULT_BORDER_COLOR_END,
+			DEFAULT_BACKGROUND_COLOR, DEFAULT_BORDER_COLOR_START, DEFAULT_BORDER_COLOR_END,
 			font);
 	}
 
@@ -54,7 +56,7 @@ public class RemovedGuiUtils {
 										List<? extends FormattedText> textLines, int mouseX, int mouseY, int screenWidth, int screenHeight,
 										int maxTextWidth, Font font) {
 		drawHoveringText(stack, graphics, textLines, mouseX, mouseY, screenWidth, screenHeight, maxTextWidth,
-			ScreenUtils.DEFAULT_BACKGROUND_COLOR, ScreenUtils.DEFAULT_BORDER_COLOR_START, ScreenUtils.DEFAULT_BORDER_COLOR_END,
+			DEFAULT_BACKGROUND_COLOR, DEFAULT_BORDER_COLOR_START, DEFAULT_BORDER_COLOR_END,
 			font);
 	}
 

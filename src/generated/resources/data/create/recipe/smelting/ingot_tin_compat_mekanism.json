@@ -14,5 +14,7 @@
   "ingredient": {
     "item": "create:crushed_raw_tin"
   },
-  "result": "mekanism:ingot_tin"
+  "result": {
+    "id": "mekanism:ingot_tin"
+  }
 }

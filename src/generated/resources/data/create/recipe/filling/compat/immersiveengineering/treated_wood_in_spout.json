@@ -14,12 +14,15 @@
     },
     {
       "amount": 125,
-      "fluidTag": "c:creosote"
+      "fluid_tag": "c:creosote",
+      "type": "fluid_tag"
     }
   ],
   "results": [
     {
-      "item": "immersiveengineering:treated_wood_horizontal"
+      "item": {
+        "id": "immersiveengineering:treated_wood_horizontal"
+      }
     }
   ]
 }

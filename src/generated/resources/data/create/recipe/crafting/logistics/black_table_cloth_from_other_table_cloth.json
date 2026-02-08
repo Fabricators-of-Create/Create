@@ -3,13 +3,13 @@
   "category": "building",
   "ingredients": [
     {
-      "tag": "c:black_dyes"
+      "tag": "c:dyes/black"
     },
     {
       "tag": "create:dyed_table_cloths"
     }
   ],
   "result": {
-    "item": "create:black_table_cloth"
+    "id": "create:black_table_cloth"
   }
 }

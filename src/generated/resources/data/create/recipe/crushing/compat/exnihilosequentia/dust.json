@@ -13,10 +13,12 @@
       "item": "minecraft:sand"
     }
   ],
-  "processingTime": 200,
+  "processing_time": 200,
   "results": [
     {
-      "item": "exnihilosequentia:dust"
+      "item": {
+        "id": "exnihilosequentia:dust"
+      }
     }
   ]
 }

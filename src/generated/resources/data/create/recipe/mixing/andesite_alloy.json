@@ -10,7 +10,9 @@
   ],
   "results": [
     {
-      "item": "create:andesite_alloy"
+      "item": {
+        "id": "create:andesite_alloy"
+      }
     }
   ]
 }

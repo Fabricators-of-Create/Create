@@ -1,8 +1,10 @@
 {
   "type": "minecraft:stonecutting",
-  "count": 2,
   "ingredient": {
     "tag": "c:iron_ingots"
   },
-  "result": "create:industrial_iron_block"
+  "result": {
+    "id": "create:industrial_iron_block",
+    "count": 2
+  }
 }

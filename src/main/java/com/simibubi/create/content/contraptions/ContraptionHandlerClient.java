@@ -8,15 +8,13 @@ import javax.annotation.Nullable;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 
-import net.neoforged.neoforge.event.tick.PlayerTickEvent;
-
 import org.apache.commons.lang3.mutable.MutableObject;
 
-import com.jamieswhiteshirt.reachentityattributes.ReachEntityAttributes;
 import com.simibubi.create.AllItems;
 import com.simibubi.create.content.contraptions.sync.ContraptionInteractionPacket;
 import com.simibubi.create.content.trains.entity.CarriageContraptionEntity;
 import com.simibubi.create.content.trains.entity.TrainRelocator;
+import com.simibubi.create.foundation.utility.PersistentDataHelper;
 import com.simibubi.create.foundation.utility.RaycastHelper;
 import com.simibubi.create.foundation.utility.RaycastHelper.PredicateTraceResult;
 
@@ -41,9 +39,6 @@ import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
-
 public class ContraptionHandlerClient {
 
 	@Environment(EnvType.CLIENT)
@@ -51,7 +46,7 @@ public class ContraptionHandlerClient {
 		if (!(player instanceof RemotePlayer remotePlayer))
 			return;
 
-		CompoundTag data = remotePlayer.getPersistentData();
+		CompoundTag data = PersistentDataHelper.get(remotePlayer);
 		if (!data.contains("LastOverrideLimbSwingUpdate"))
 			return;
 

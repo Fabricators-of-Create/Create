@@ -1,25 +1,29 @@
 {
-  "neoforge:conditions": [
-    {
-      "type": "neoforge:mod_loaded",
-      "modid": "ae2"
-    }
-  ],
   "type": "create:milling",
   "ingredients": [
     {
-      "type": "neoforge:compound",
       "ingredients": [
         {
           "item": "ae2:fluix_crystal"
         }
-      ]
+      ],
+      "fabric:type": "fabric:any"
     }
   ],
   "processing_time": 200,
   "results": [
     {
-      "item": "ae2:fluix_dust"
+      "item": {
+        "id": "ae2:fluix_dust"
+      }
+    }
+  ],
+  "fabric:load_conditions": [
+    {
+      "condition": "fabric:all_mods_loaded",
+      "values": [
+        "ae2"
+      ]
     }
   ]
 }

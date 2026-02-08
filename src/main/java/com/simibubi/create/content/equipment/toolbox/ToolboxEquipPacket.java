@@ -1,6 +1,7 @@
 package com.simibubi.create.content.equipment.toolbox;
 
 import com.simibubi.create.AllPackets;
+import com.simibubi.create.foundation.utility.PersistentDataHelper;
 import net.createmod.catnip.net.base.ServerboundPacketPayload;
 
 import net.createmod.catnip.codecs.stream.CatnipStreamCodecBuilders;
@@ -69,7 +70,7 @@ public record ToolboxEquipPacket(BlockPos toolboxPos, int slot, int hotbarSlot) 
 			});
 		}
 
-		CompoundTag compound = player.getPersistentData()
+		CompoundTag compound = PersistentDataHelper.get(player)
 				.getCompound("CreateToolboxData");
 		String key = String.valueOf(hotbarSlot);
 
@@ -78,7 +79,7 @@ public record ToolboxEquipPacket(BlockPos toolboxPos, int slot, int hotbarSlot) 
 		data.put("Pos", NbtUtils.writeBlockPos(toolboxPos));
 		compound.put(key, data);
 
-		player.getPersistentData()
+		PersistentDataHelper.get(player)
 				.put("CreateToolboxData", compound);
 
 		toolboxBlockEntity.connectPlayer(slot, player, hotbarSlot);

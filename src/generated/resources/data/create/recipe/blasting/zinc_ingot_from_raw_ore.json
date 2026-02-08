@@ -6,5 +6,7 @@
   "ingredient": {
     "tag": "c:raw_zinc_ores"
   },
-  "result": "create:zinc_ingot"
+  "result": {
+    "id": "create:zinc_ingot"
+  }
 }

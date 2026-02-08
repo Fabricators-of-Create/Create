@@ -13,22 +13,30 @@
       "item": "aether:ambrosium_ore"
     }
   ],
-  "processingTime": 150,
+  "processing_time": 150,
   "results": [
     {
-      "item": "aether:ambrosium_shard"
+      "item": {
+        "id": "aether:ambrosium_shard"
+      }
     },
     {
       "chance": 0.75,
-      "item": "aether:ambrosium_shard"
+      "item": {
+        "id": "aether:ambrosium_shard"
+      }
     },
     {
       "chance": 0.125,
-      "item": "aether:holystone"
+      "item": {
+        "id": "aether:holystone"
+      }
     },
     {
       "chance": 0.75,
-      "item": "create:experience_nugget"
+      "item": {
+        "id": "create:experience_nugget"
+      }
     }
   ]
 }

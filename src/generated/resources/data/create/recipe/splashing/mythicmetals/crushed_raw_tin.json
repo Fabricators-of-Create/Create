@@ -16,7 +16,9 @@
   "results": [
     {
       "count": 9,
-      "item": "mythicmetals:tin_nugget"
+      "item": {
+        "id": "mythicmetals:tin_nugget"
+      }
     }
   ]
 }

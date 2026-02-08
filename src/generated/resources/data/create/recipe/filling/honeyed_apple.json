@@ -6,12 +6,15 @@
     },
     {
       "amount": 20250,
-      "fluidTag": "c:honey"
+      "fluid_tag": "c:honey",
+      "type": "fluid_tag"
     }
   ],
   "results": [
     {
-      "item": "create:honeyed_apple"
+      "item": {
+        "id": "create:honeyed_apple"
+      }
     }
   ]
 }

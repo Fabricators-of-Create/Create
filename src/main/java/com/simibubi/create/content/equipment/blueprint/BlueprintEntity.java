@@ -16,6 +16,7 @@ import com.simibubi.create.content.schematics.requirement.ItemRequirement;
 import com.simibubi.create.content.schematics.requirement.ItemRequirement.ItemUseType;
 import com.simibubi.create.foundation.networking.ISyncPersistentData;
 import com.simibubi.create.foundation.utility.IInteractionChecker;
+import com.simibubi.create.foundation.utility.PersistentDataHelper;
 
 import net.createmod.catnip.data.Couple;
 import net.createmod.catnip.math.VecHelper;
@@ -48,9 +49,9 @@ import net.minecraft.world.entity.decoration.HangingEntity;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
-import net.minecraft.world.inventory.CraftingContainer;
 import net.minecraft.world.inventory.TransientCraftingContainer;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.CraftingInput;
 import net.minecraft.world.item.crafting.CraftingRecipe;
 import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.item.crafting.RecipeType;
@@ -69,6 +70,8 @@ import net.fabricmc.fabric.api.transfer.v1.item.PlayerInventoryStorage;
 import net.fabricmc.fabric.api.transfer.v1.storage.StorageUtil;
 import net.fabricmc.fabric.api.transfer.v1.storage.base.ResourceAmount;
 import net.fabricmc.fabric.api.transfer.v1.transaction.Transaction;
+
+import io.github.fabricators_of_create.porting_lib.entity.IEntityWithComplexSpawn;
 
 import com.simibubi.create.infrastructure.fabric.transfer.item.ItemStackHandler;
 
@@ -144,7 +147,7 @@ public class BlueprintEntity extends HangingEntity
 
 		this.xRotO = getXRot();
 		this.yRotO = getYRot();
-		this.recalculateBoundingBox();
+			this.updateBoundingBox();
 	}
 
 	@Override
@@ -203,8 +206,7 @@ public class BlueprintEntity extends HangingEntity
 		return new AABB(d1 - d4, d2 - d5, d3 - d6, d1 + d4, d2 + d5, d3 + d6);
 	}
 
-	@Override
-	protected void recalculateBoundingBox() {
+	private void updateBoundingBox() {
 		if (this.direction != null && this.verticalOrientation != null) {
 			setBoundingBox(calculateBoundingBox(pos, direction));
 		}
@@ -335,13 +337,13 @@ public class BlueprintEntity extends HangingEntity
 		CompoundTag compound = new CompoundTag();
 		addAdditionalSaveData(compound);
 		registryFriendlyByteBuf.writeNbt(compound);
-		registryFriendlyByteBuf.writeNbt(getPersistentData());
+		registryFriendlyByteBuf.writeNbt(PersistentDataHelper.get(this));
 	}
 
 	@Override
 	public void readSpawnData(RegistryFriendlyByteBuf registryFriendlyByteBuf) {
 		readAdditionalSaveData(registryFriendlyByteBuf.readNbt());
-		getPersistentData().merge(registryFriendlyByteBuf.readNbt());
+		PersistentDataHelper.get(this).merge(registryFriendlyByteBuf.readNbt());
 	}
 
 	@Override
@@ -357,11 +359,10 @@ public class BlueprintEntity extends HangingEntity
 			.isEmpty()) {
 
 
-			PlayerInventoryStorage playerInv = PlayerInventoryStorage.of(player);
-			boolean firstPass = true;
-			int amountCrafted = 0;
-			CommonHooks.setCraftingPlayer(player);
-			Optional<RecipeHolder<CraftingRecipe>> recipe = Optional.empty();
+				PlayerInventoryStorage playerInv = PlayerInventoryStorage.of(player);
+				boolean firstPass = true;
+				int amountCrafted = 0;
+				Optional<RecipeHolder<CraftingRecipe>> recipe = Optional.empty();
 
 			do {
 				try (Transaction t = Transaction.openOuter()) {
@@ -386,17 +387,20 @@ public class BlueprintEntity extends HangingEntity
 
 						success = false;
 						break;
-					}
+						}
 
-					if (success) {
-						CraftingContainer craftingInventory = new BlueprintCraftingInventory(craftingGrid);
+						if (success) {
+							CraftingInput craftingInventory = CraftingInput.of(3, 3,
+								java.util.stream.IntStream.range(0, 9)
+									.mapToObj(i -> craftingGrid.getOrDefault(i, ItemStack.EMPTY))
+									.toList());
 
-						if (!recipe.isPresent())
-							recipe = level().getRecipeManager()
-									.getRecipeFor(RecipeType.CRAFTING, craftingInventory, level());
-						ItemStack result = recipe.filter(r -> r.matches(craftingInventory, level()))
-								.map(r -> r.assemble(craftingInventory, level().registryAccess()))
-								.orElse(ItemStack.EMPTY);
+							if (!recipe.isPresent())
+								recipe = level().getRecipeManager()
+										.getRecipeFor(RecipeType.CRAFTING, craftingInventory, level());
+							ItemStack result = recipe.filter(r -> r.value().matches(craftingInventory, level()))
+									.map(r -> r.value().assemble(craftingInventory, level().registryAccess()))
+									.orElse(ItemStack.EMPTY);
 
 						if (result.isEmpty()) {
 							success = false;
@@ -406,8 +410,8 @@ public class BlueprintEntity extends HangingEntity
 							amountCrafted += result.getCount();
 							result.onCraftedBy(player.level(), player, 1);
 //						ForgeEventFactory.firePlayerCraftingEvent(player, result, craftingInventory);
-							NonNullList<ItemStack> nonnulllist = level().getRecipeManager()
-									.getRemainingItemsFor(RecipeType.CRAFTING, craftingInventory, level());
+								NonNullList<ItemStack> nonnulllist = level().getRecipeManager()
+										.getRemainingItemsFor(RecipeType.CRAFTING, craftingInventory, level());
 
 							if (firstPass)
 								level().playSound(null, player.blockPosition(), SoundEvents.ITEM_PICKUP, SoundSource.PLAYERS,
@@ -432,12 +436,8 @@ public class BlueprintEntity extends HangingEntity
 			return InteractionResult.SUCCESS;
 		}
 
-		int i = section.index;
 		if (!level().isClientSide && player instanceof ServerPlayer) {
-			player.openMenu(section, buf -> {
-				buf.writeVarInt(getId());
-				buf.writeVarInt(i);
-			});
+			player.openMenu(section);
 		}
 
 		return InteractionResult.SUCCESS;

@@ -14,5 +14,7 @@
   "ingredient": {
     "item": "create:crushed_raw_lead"
   },
-  "result": "modern_industrialization:lead_ingot"
+  "result": {
+    "id": "modern_industrialization:lead_ingot"
+  }
 }

@@ -14,7 +14,7 @@ public class FanBlastingEmiRecipe extends FanEmiRecipe<AbstractCookingRecipe> {
 	public FanBlastingEmiRecipe(AbstractCookingRecipe recipe) {
 		super(CreateEmiPlugin.FAN_BLASTING, recipe);
 		ResourceLocation rid = recipe.getId();
-		this.id = new ResourceLocation("emi", "create/fan_blasting/" + rid.getNamespace() + "/" + rid.getPath());
+		this.id = ResourceLocation.fromNamespaceAndPath("emi", "create/fan_blasting/" + rid.getNamespace() + "/" + rid.getPath());
 	}
 
 	@Override

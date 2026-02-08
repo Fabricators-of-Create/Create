@@ -12,7 +12,7 @@ import net.minecraft.server.MinecraftServer;
 
 import net.fabricmc.api.EnvType;
 
-import io.github.fabricators_of_create.porting_lib.util.EnvExecutor;
+import io.github.fabricators_of_create.porting_lib.common.util.EnvExecutor;
 import io.github.fabricators_of_create.porting_lib.util.ServerLifecycleHooks;
 
 public final class GlobalRegistryAccess {

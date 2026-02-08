@@ -16,7 +16,9 @@
   "results": [
     {
       "count": 9,
-      "item": "mekanism:nugget_osmium"
+      "item": {
+        "id": "mekanism:nugget_osmium"
+      }
     }
   ]
 }

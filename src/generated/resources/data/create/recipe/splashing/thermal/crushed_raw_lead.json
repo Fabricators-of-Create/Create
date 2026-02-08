@@ -16,7 +16,9 @@
   "results": [
     {
       "count": 9,
-      "item": "thermal:lead_nugget"
+      "item": {
+        "id": "thermal:lead_nugget"
+      }
     }
   ]
 }

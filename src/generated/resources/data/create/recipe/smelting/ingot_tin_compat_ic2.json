@@ -14,5 +14,7 @@
   "ingredient": {
     "item": "create:crushed_raw_tin"
   },
-  "result": "ic2:ingot_tin"
+  "result": {
+    "id": "ic2:ingot_tin"
+  }
 }

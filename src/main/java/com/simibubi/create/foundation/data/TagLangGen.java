@@ -115,7 +115,7 @@ public class TagLangGen {
 
 	public record TagLangHelper(String namespace, BaseLangProvider prov) {
 		public TagLangHelper auto(String path) {
-			ResourceLocation id = new ResourceLocation(namespace, path);
+			ResourceLocation id = ResourceLocation.fromNamespaceAndPath(namespace, path);
 			String key = key(id);
 			String name = translate(id);
 			prov.add(key, name);
@@ -123,14 +123,14 @@ public class TagLangGen {
 		}
 
 		public TagLangHelper put(String path, String translated) {
-			ResourceLocation id = new ResourceLocation(namespace, path);
+			ResourceLocation id = ResourceLocation.fromNamespaceAndPath(namespace, path);
 			String key = key(id);
 			prov.add(key, translated);
 			return this;
 		}
 
 		public TagLangHelper plural(String path) {
-			ResourceLocation id = new ResourceLocation(namespace, path);
+			ResourceLocation id = ResourceLocation.fromNamespaceAndPath(namespace, path);
 			String key = key(id);
 			String name = translate(id) + 's';
 			prov.add(key, name);
@@ -163,7 +163,7 @@ public class TagLangGen {
 		}
 
 		public SubDirHelper ignoreDir(String path) {
-			ResourceLocation id = new ResourceLocation(parent.namespace, path);
+			ResourceLocation id = ResourceLocation.fromNamespaceAndPath(parent.namespace, path);
 			return put(path, translate(id));
 		}
 
@@ -172,13 +172,13 @@ public class TagLangGen {
 		}
 
 		public SubDirHelper autoRoot() {
-			ResourceLocation id = new ResourceLocation(parent.namespace, dir);
+			ResourceLocation id = ResourceLocation.fromNamespaceAndPath(parent.namespace, dir);
 			parent.prov.add(key(id), translate(id));
 			return this;
 		}
 
 		public ResourceLocation tagId(String path) {
-			return new ResourceLocation(parent.namespace, dir + '/' + path);
+			return ResourceLocation.fromNamespaceAndPath(parent.namespace, dir + '/' + path);
 		}
 	}
 
@@ -199,14 +199,14 @@ public class TagLangGen {
 		}
 
 		public CategoryHelper autoRoot() {
-			ResourceLocation id = new ResourceLocation(parent.namespace, category);
+			ResourceLocation id = ResourceLocation.fromNamespaceAndPath(parent.namespace, category);
 			parent.prov.add(key(id), translate(id));
 			return this;
 		}
 
 		public ResourceLocation tagId(String name) {
 			String path = suffix ? name + '_' + category : category + '_' + name;
-			return new ResourceLocation(parent.namespace, path);
+			return ResourceLocation.fromNamespaceAndPath(parent.namespace, path);
 		}
 	}
 

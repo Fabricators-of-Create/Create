@@ -8,8 +8,6 @@ import java.util.stream.Collectors;
 import com.simibubi.create.AllBlocks;
 import com.simibubi.create.AllSoundEvents;
 import com.simibubi.create.Create;
-import com.simibubi.create.compat.Mods;
-import com.simibubi.create.compat.sandwichable.SequencedSandwiching;
 import com.simibubi.create.content.equipment.sandPaper.SandPaperPolishingRecipe;
 import com.simibubi.create.content.kinetics.belt.BeltHelper;
 import com.simibubi.create.content.kinetics.belt.behaviour.BeltProcessingBehaviour.ProcessingResult;
@@ -57,14 +55,8 @@ public class BeltDeployerCallbacks {
 
 		if (held.isEmpty())
 			return ProcessingResult.HOLD;
-		if (blockEntity.getRecipe(s.stack) == null) {
-			if (Mods.SANDWICHABLE.isLoaded()) {
-				if (!SequencedSandwiching.shouldSandwich(s.stack, held, blockEntity.getLevel()))
-					return ProcessingResult.PASS;
-			} else {
-				return ProcessingResult.PASS;
-			}
-		}
+		if (blockEntity.getRecipe(s.stack) == null)
+			return ProcessingResult.PASS;
 
 		blockEntity.start();
 		return ProcessingResult.HOLD;
@@ -85,16 +77,11 @@ public class BeltDeployerCallbacks {
 			return ProcessingResult.HOLD;
 
 		RecipeHolder<? extends Recipe<?>> recipeHolder = blockEntity.getRecipe(s.stack);
-		boolean shouldSandwich = Mods.SANDWICHABLE.isLoaded() && SequencedSandwiching.shouldSandwich(s.stack, held, blockEntity.getLevel());
 		if (recipeHolder == null)
 			return ProcessingResult.PASS;
 
 		if (blockEntity.state == State.RETRACTING && blockEntity.timer == 1000) {
-			if (recipeHolder != null) {
-				activate(s, i, blockEntity, recipeHolder.value());
-			} else {
-				SequencedSandwiching.activateSandwich(s, i, blockEntity);
-			}
+			activate(s, i, blockEntity, recipeHolder.value());
 			return ProcessingResult.HOLD;
 		}
 

@@ -13,12 +13,14 @@
     {
       "amount": 8100,
       "fluid": "minecraft:lava",
-      "nbt": {}
+      "type": "fluid_stack"
     }
   ],
   "results": [
     {
-      "item": "minecraft:granite"
+      "item": {
+        "id": "minecraft:granite"
+      }
     }
   ]
 }

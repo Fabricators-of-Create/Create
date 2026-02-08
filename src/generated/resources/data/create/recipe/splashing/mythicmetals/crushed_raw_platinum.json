@@ -16,7 +16,9 @@
   "results": [
     {
       "count": 9,
-      "item": "mythicmetals:platinum_nugget"
+      "item": {
+        "id": "mythicmetals:platinum_nugget"
+      }
     }
   ]
 }

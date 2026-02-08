@@ -15,7 +15,9 @@
   ],
   "results": [
     {
-      "item": "betterend:end_mycelium_path"
+      "item": {
+        "id": "betterend:end_mycelium_path"
+      }
     }
   ]
 }

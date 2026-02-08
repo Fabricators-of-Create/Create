@@ -76,6 +76,7 @@ public class CreateMainMenuScreen extends AbstractSimiScreen {
 
 	public CreateMainMenuScreen(Screen parent) {
 		this.parent = parent;
+		this.fromTitleOrMods = parent instanceof TitleScreen || parent instanceof ModsScreen;
 		returnOnClose = true;
 		if (parent instanceof TitleScreen)
 			vanillaPanorama = Screen.PANORAMA;

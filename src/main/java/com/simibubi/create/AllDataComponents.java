@@ -4,8 +4,6 @@ import java.util.List;
 import java.util.UUID;
 import java.util.function.UnaryOperator;
 
-import org.jetbrains.annotations.ApiStatus.Internal;
-
 import com.mojang.serialization.Codec;
 import com.simibubi.create.content.equipment.clipboard.ClipboardEntry;
 import com.simibubi.create.content.equipment.clipboard.ClipboardOverrides.ClipboardType;
@@ -34,7 +32,8 @@ import net.minecraft.core.UUIDUtil;
 import net.minecraft.core.Vec3i;
 import net.minecraft.core.component.DataComponentType;
 import net.minecraft.core.component.DataComponentType.Builder;
-import net.minecraft.core.registries.Registries;
+import net.minecraft.core.Registry;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
@@ -46,12 +45,8 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Mirror;
 import net.minecraft.world.level.block.Rotation;
 import net.minecraft.world.level.block.state.BlockState;
-import net.neoforged.bus.api.IEventBus;
-import net.neoforged.neoforge.registries.DeferredRegister;
 
 public class AllDataComponents {
-	private static final DeferredRegister.DataComponents DATA_COMPONENTS = DeferredRegister.createDataComponents(Registries.DATA_COMPONENT_TYPE, Create.ID);
-
 	public static final DataComponentType<Integer> BACKTANK_AIR = register(
 			"banktank_air",
 			builder -> builder.persistent(ExtraCodecs.NON_NEGATIVE_INT).networkSynchronized(ByteBufCodecs.VAR_INT)
@@ -336,12 +331,9 @@ public class AllDataComponents {
 
 	private static <T> DataComponentType<T> register(String name, UnaryOperator<Builder<T>> builder) {
 		DataComponentType<T> type = builder.apply(DataComponentType.builder()).build();
-		DATA_COMPONENTS.register(name, () -> type);
-		return type;
+		return Registry.register(BuiltInRegistries.DATA_COMPONENT_TYPE, Create.asResource(name), type);
 	}
 
-	@Internal
-	public static void register(IEventBus modEventBus) {
-		DATA_COMPONENTS.register(modEventBus);
+	public static void register() {
 	}
 }

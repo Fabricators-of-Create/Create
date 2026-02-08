@@ -48,8 +48,6 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 
 import net.fabricmc.fabric.api.entity.FakePlayer;
 
-import io.github.fabricators_of_create.porting_lib.util.LazyOptional;
-
 public class ItemHatchBlock extends HorizontalDirectionalBlock
 	implements IBE<ItemHatchBlockEntity>, IWrenchable, ProperWaterloggedBlock, SecondaryUseBypassingBlock {
 	public static final MapCodec<ItemHatchBlock> CODEC = simpleCodec(ItemHatchBlock::new);
@@ -101,9 +99,9 @@ public class ItemHatchBlock extends HorizontalDirectionalBlock
 		if (player instanceof FakePlayer)
 			return ItemInteractionResult.SUCCESS;
 
-		Direction facing = pState.getValue(FACING);
-		BlockPos targetPos = pPos.relative(facing);
-		Storage<ItemVariant> storage = ItemStorage.SIDED.find(pLevel, targetPos, facing.getOpposite());
+		Direction facing = state.getValue(FACING);
+		BlockPos targetPos = pos.relative(facing);
+		Storage<ItemVariant> storage = ItemStorage.SIDED.find(level, targetPos, facing.getOpposite());
 		if (storage == null)
 			return ItemInteractionResult.FAIL;
 

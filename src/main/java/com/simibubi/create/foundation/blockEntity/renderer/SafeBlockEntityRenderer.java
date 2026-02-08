@@ -3,9 +3,6 @@ package com.simibubi.create.foundation.blockEntity.renderer;
 import org.jetbrains.annotations.NotNull;
 
 import com.mojang.blaze3d.vertex.PoseStack;
-import com.simibubi.create.foundation.blockEntity.CachedRenderBBBlockEntity;
-import com.simibubi.create.foundation.mixin.accessor.LevelRendererAccessor;
-
 import com.simibubi.create.foundation.mixin.accessor.LevelRendererAccessor;
 
 import net.createmod.ponder.api.level.PonderLevel;
@@ -54,14 +51,6 @@ public abstract class SafeBlockEntityRenderer<T extends BlockEntity> implements 
 				itemPos.z + 0.25
 		);
 
-		return !frustum.isVisible(itemBB);
-	}
-
-	@Override
-	public @NotNull AABB getRenderBoundingBox(@NotNull T blockEntity) {
-		if (blockEntity instanceof CachedRenderBBBlockEntity cbe)
-			return cbe.getRenderBoundingBox();
-
-		return BlockEntityRenderer.super.getRenderBoundingBox(blockEntity);
+			return !frustum.isVisible(itemBB);
 	}
 }

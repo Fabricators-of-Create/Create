@@ -16,7 +16,9 @@
   "results": [
     {
       "count": 9,
-      "item": "modern_industrialization:tin_nugget"
+      "item": {
+        "id": "modern_industrialization:tin_nugget"
+      }
     }
   ]
 }

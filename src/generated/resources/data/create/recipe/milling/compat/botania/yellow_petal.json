@@ -13,10 +13,12 @@
       "tag": "botania:petals/yellow"
     }
   ],
-  "processingTime": 50,
+  "processing_time": 50,
   "results": [
     {
-      "item": "minecraft:yellow_dye"
+      "item": {
+        "id": "minecraft:yellow_dye"
+      }
     }
   ]
 }

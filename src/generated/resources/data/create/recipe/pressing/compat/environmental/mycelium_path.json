@@ -15,7 +15,9 @@
   ],
   "results": [
     {
-      "item": "environmental:mycelium_path"
+      "item": {
+        "id": "environmental:mycelium_path"
+      }
     }
   ]
 }

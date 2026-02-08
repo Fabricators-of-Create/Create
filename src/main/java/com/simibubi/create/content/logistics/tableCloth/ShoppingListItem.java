@@ -20,6 +20,7 @@ import net.createmod.catnip.codecs.stream.CatnipStreamCodecBuilders;
 import net.createmod.catnip.data.Couple;
 import net.createmod.catnip.data.IntAttached;
 import net.minecraft.ChatFormatting;
+import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.UUIDUtil;
 import net.minecraft.network.chat.Component;
@@ -133,7 +134,7 @@ public class ShoppingListItem extends Item {
 		ShoppingList list = getList(stack);
 
 		if (list != null) {
-			Couple<InventorySummary> lists = list.bakeEntries(context.level(), null);
+			Couple<InventorySummary> lists = list.bakeEntries(Minecraft.getInstance().level, null);
 
 			if (lists != null) {
 				for (InventorySummary items : lists) {

@@ -9,7 +9,7 @@
       "item": "minecraft:barrel"
     },
     "D": {
-      "tag": "c:lime_dyes"
+      "tag": "c:dyes/lime"
     }
   },
   "pattern": [
@@ -18,7 +18,7 @@
     "A"
   ],
   "result": {
-    "item": "create:lime_postbox"
+    "id": "create:lime_postbox"
   },
   "show_notification": true
 }

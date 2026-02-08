@@ -3,13 +3,13 @@
   "category": "misc",
   "ingredients": [
     {
-      "tag": "c:green_dyes"
+      "tag": "c:dyes/green"
     },
     {
       "tag": "create:valve_handles"
     }
   ],
   "result": {
-    "item": "create:green_valve_handle"
+    "id": "create:green_valve_handle"
   }
 }

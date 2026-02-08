@@ -18,7 +18,7 @@
     " C "
   ],
   "result": {
-    "item": "create:mechanical_harvester"
+    "id": "create:mechanical_harvester"
   },
   "show_notification": true
 }

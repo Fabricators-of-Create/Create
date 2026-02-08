@@ -71,8 +71,7 @@ public class TableClothModel extends BakedModelWrapperWithData {
 		PartialModel pm) {
 		List<BakedQuad> quads = new ArrayList<>();
 
-		for (BakedQuad quad : pm.get()
-			.getQuads(null, null, rand, ModelData.EMPTY, renderType)) {
+		for (BakedQuad quad : pm.get().getQuads(null, null, rand)) {
 			TextureAtlasSprite original = quad.getSprite();
 			BakedQuad newQuad = BakedQuadHelper.clone(quad);
 			int[] vertexData = newQuad.getVertices();

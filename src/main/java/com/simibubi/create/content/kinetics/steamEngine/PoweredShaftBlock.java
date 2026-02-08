@@ -72,7 +72,6 @@ public class PoweredShaftBlock extends AbstractShaftBlock {
 				.setValue(WATERLOGGED, pState.getValue(WATERLOGGED)), 3);
 	}
 
-	@Override
 	public ItemStack getCloneItemStack(BlockState state, HitResult target, LevelReader level, BlockPos pos, Player player) {
 		return AllBlocks.SHAFT.asStack();
 	}

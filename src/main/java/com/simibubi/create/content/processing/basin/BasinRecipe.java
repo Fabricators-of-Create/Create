@@ -16,7 +16,6 @@ import com.simibubi.create.foundation.blockEntity.behaviour.filtering.FilteringB
 import com.simibubi.create.foundation.blockEntity.behaviour.fluid.SmartFluidTankBehaviour;
 import com.simibubi.create.foundation.blockEntity.behaviour.fluid.SmartFluidTankBehaviour.TankSegment;
 import com.simibubi.create.foundation.fluid.FluidIngredient;
-import com.simibubi.create.foundation.recipe.DummyCraftingContainer;
 import com.simibubi.create.foundation.recipe.IRecipeTypeInfo;
 
 import com.simibubi.create.infrastructure.fabric.transfer.TransactionSuccessCallback;
@@ -140,8 +139,10 @@ public class BasinRecipe extends ProcessingRecipe<RecipeInput> {
 				});
 			}
 
-			CraftingInput remainderInput = new DummyCraftingContainer(availableItems, extractedItemsFromSlot)
-					.asCraftInput();
+				NonNullList<ItemStack> craftingRemainderStacks = NonNullList.withSize(9, ItemStack.EMPTY);
+				for (int i = 0; i < consumedItems.size() && i < 9; i++)
+					craftingRemainderStacks.set(i, consumedItems.get(i).copyWithCount(1));
+				CraftingInput remainderInput = CraftingInput.of(3, 3, craftingRemainderStacks);
 
 			if (recipe instanceof BasinRecipe basinRecipe) {
 				recipeOutputItems.addAll(basinRecipe.rollResults());

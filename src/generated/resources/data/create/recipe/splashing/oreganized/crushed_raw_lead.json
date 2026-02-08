@@ -16,7 +16,9 @@
   "results": [
     {
       "count": 9,
-      "item": "oreganized:lead_nugget"
+      "item": {
+        "id": "oreganized:lead_nugget"
+      }
     }
   ]
 }

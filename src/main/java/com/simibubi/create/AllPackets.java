@@ -3,8 +3,6 @@ package com.simibubi.create;
 import java.util.Locale;
 
 import com.simibubi.create.compat.computercraft.AttachedComputerPacket;
-import com.simibubi.create.compat.trainmap.TrainMapSyncPacket;
-import com.simibubi.create.compat.trainmap.TrainMapSyncRequestPacket;
 import com.simibubi.create.content.contraptions.ContraptionBlockChangedPacket;
 import com.simibubi.create.content.contraptions.ContraptionColliderLockPacket;
 import com.simibubi.create.content.contraptions.ContraptionColliderLockPacket.ContraptionColliderLockPacketRequest;
@@ -114,7 +112,12 @@ import com.simibubi.create.infrastructure.debugInfo.ServerDebugInfoPacket;
 
 import net.createmod.catnip.net.base.BasePacketPayload;
 import net.createmod.catnip.net.base.CatnipPacketRegistry;
+import net.createmod.catnip.net.base.ServerboundPacketPayload;
 import net.createmod.catnip.net.packets.ClientboundSimpleActionPacket;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.fabric.api.networking.v1.PayloadTypeRegistry;
+import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
+import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
@@ -179,7 +182,6 @@ public enum AllPackets implements BasePacketPayload.PacketTypeProvider {
 	CHAIN_CONVEYOR_RIDING(ServerboundChainConveyorRidingPacket.class, ServerboundChainConveyorRidingPacket.STREAM_CODEC),
 	CHAIN_PACKAGE_INTERACTION(ChainPackageInteractionPacket.class, ChainPackageInteractionPacket.STREAM_CODEC),
 	PACKAGE_PORT_CONFIGURATION(PackagePortConfigurationPacket.class, PackagePortConfigurationPacket.STREAM_CODEC),
-	TRAIN_MAP_REQUEST(TrainMapSyncRequestPacket.class, TrainMapSyncRequestPacket.STREAM_CODEC),
 	CONNECT_FACTORY_PANEL(FactoryPanelConnectionPacket.class, FactoryPanelConnectionPacket.STREAM_CODEC),
 	CONFIGURE_FACTORY_PANEL(FactoryPanelConfigurationPacket.class, FactoryPanelConfigurationPacket.STREAM_CODEC),
 	CONFIGURE_REDSTONE_REQUESTER(RedstoneRequesterConfigurationPacket.class, RedstoneRequesterConfigurationPacket.STREAM_CODEC),
@@ -238,7 +240,6 @@ public enum AllPackets implements BasePacketPayload.PacketTypeProvider {
 	PACKAGER_LINK_EFFECT(WiFiEffectPacket.class, WiFiEffectPacket.STREAM_CODEC),
 	REDSTONE_REQUESTER_EFFECT(RedstoneRequesterEffectPacket.class, RedstoneRequesterEffectPacket.STREAM_CODEC),
 	KNOCKBACK(KnockbackPacket.class, KnockbackPacket.STREAM_CODEC),
-	TRAIN_MAP_SYNC(TrainMapSyncPacket.class, TrainMapSyncPacket.STREAM_CODEC),
 	CLIENTBOUND_CHAIN_CONVEYOR(ClientboundChainConveyorRidingPacket.class, ClientboundChainConveyorRidingPacket.STREAM_CODEC),
 	;
 
@@ -274,6 +275,23 @@ public enum AllPackets implements BasePacketPayload.PacketTypeProvider {
 		for (AllPackets packet : AllPackets.values()) {
 			packetRegistry.registerPacket(packet.type);
 		}
+		if (FabricLoader.getInstance().getEnvironmentType() == EnvType.SERVER) {
+			registerServerOnly(packetRegistry);
+			return;
+		}
 		packetRegistry.registerAllPackets();
+	}
+
+	@SuppressWarnings({ "rawtypes", "unchecked" })
+	private static void registerServerOnly(CatnipPacketRegistry packetRegistry) {
+		for (CatnipPacketRegistry.PacketType packet : packetRegistry.packetsView) {
+			if (ServerboundPacketPayload.class.isAssignableFrom(packet.clazz())) {
+				PayloadTypeRegistry.playC2S().register(packet.type(), packet.codec());
+				ServerPlayNetworking.registerGlobalReceiver(packet.type(),
+					(payload, context) -> ((ServerboundPacketPayload) payload).handle(context.player()));
+				continue;
+			}
+			PayloadTypeRegistry.playS2C().register(packet.type(), packet.codec());
+		}
 	}
 }

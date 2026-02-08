@@ -13,12 +13,14 @@
       "tag": "create:stone_types/galosphere/amethyst"
     }
   ],
-  "processingTime": 300,
+  "processing_time": 300,
   "results": [
     {
       "chance": 0.8,
       "count": 4,
-      "item": "minecraft:amethyst_shard"
+      "item": {
+        "id": "minecraft:amethyst_shard"
+      }
     }
   ]
 }

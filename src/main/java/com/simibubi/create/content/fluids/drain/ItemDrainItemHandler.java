@@ -30,7 +30,7 @@ public class ItemDrainItemHandler extends SnapshotParticipant<Unit> implements S
 		ItemStack stack = resource.toStack();
 		int toInsert = GenericItemEmptying.canItemBeEmptied(blockEntity.getLevel(), stack)
 				? 1
-				: Math.min((int) maxAmount, resource.getItem().getMaxStackSize());
+				: Math.min((int) maxAmount, resource.getItem().getDefaultMaxStackSize());
 		stack.setCount(toInsert);
 		TransportedItemStack heldItem = new TransportedItemStack(stack);
 		heldItem.prevBeltPosition = 0;

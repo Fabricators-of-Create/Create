@@ -3,13 +3,13 @@
   "category": "building",
   "ingredients": [
     {
-      "tag": "c:magenta_dyes"
+      "tag": "c:dyes/magenta"
     },
     {
       "tag": "create:postboxes"
     }
   ],
   "result": {
-    "item": "create:magenta_postbox"
+    "id": "create:magenta_postbox"
   }
 }

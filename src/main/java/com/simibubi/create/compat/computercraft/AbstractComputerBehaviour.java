@@ -37,6 +37,11 @@ public class AbstractComputerBehaviour extends BlockEntityBehaviour {
 		return null;
 	}
 
+	@Nullable
+	public Object getPeripheralCapability() {
+		return getPeripheral();
+	}
+
 	public void setHasAttachedComputer(boolean hasAttachedComputer) {
 		this.hasAttachedComputer = hasAttachedComputer;
 	}

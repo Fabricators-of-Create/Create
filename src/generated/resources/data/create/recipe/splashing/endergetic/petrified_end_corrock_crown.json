@@ -15,7 +15,9 @@
   ],
   "results": [
     {
-      "item": "endergetic:petrified_end_corrock_crown"
+      "item": {
+        "id": "endergetic:petrified_end_corrock_crown"
+      }
     }
   ]
 }

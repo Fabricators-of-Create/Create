@@ -14,7 +14,7 @@
     " S "
   ],
   "result": {
-    "item": "create:copper_valve_handle"
+    "id": "create:copper_valve_handle"
   },
   "show_notification": true
 }

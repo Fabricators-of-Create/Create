@@ -2,20 +2,18 @@ package com.simibubi.create.infrastructure.worldgen;
 
 import com.simibubi.create.Create;
 
+import net.minecraft.core.Holder;
+import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.level.levelgen.feature.Feature;
 
-import io.github.fabricators_of_create.porting_lib.util.LazyRegistrar;
-
-import org.jetbrains.annotations.ApiStatus.Internal;
-
 public class AllFeatures {
-	private static final LazyRegistrar<Feature<?>> REGISTER = LazyRegistrar.create(BuiltInRegistries.FEATURE, Create.ID);
+	public static final Holder.Reference<Feature<?>> LAYERED_ORE = Registry.registerForHolder(
+		BuiltInRegistries.FEATURE,
+		Create.asResource("layered_ore"),
+		new LayeredOreFeature()
+	);
 
-	public static final DeferredHolder<Feature<?>, LayeredOreFeature> LAYERED_ORE = REGISTER.register("layered_ore", () -> new LayeredOreFeature());
-
-	@Internal
 	public static void register() {
-		REGISTER.register();
 	}
 }

@@ -7,12 +7,14 @@
     {
       "amount": 27000,
       "fluid": "create:chocolate",
-      "nbt": {}
+      "type": "fluid_stack"
     }
   ],
   "results": [
     {
-      "item": "create:chocolate_glazed_berries"
+      "item": {
+        "id": "create:chocolate_glazed_berries"
+      }
     }
   ]
 }

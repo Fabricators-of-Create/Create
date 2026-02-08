@@ -50,7 +50,7 @@ import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.event.player.PlayerBlockBreakEvents;
 
-import io.github.fabricators_of_create.porting_lib.util.EnvExecutor;
+import io.github.fabricators_of_create.porting_lib.common.util.EnvExecutor;
 
 public class SymmetryWandItem extends Item {
 
@@ -239,9 +239,9 @@ public class SymmetryWandItem extends Item {
 				world.setBlock(position, ifluidstate.createLegacyBlock(), Block.UPDATE_KNOWN_SHAPE);
 				world.setBlockAndUpdate(position, blockState);
 
-				wand.set(AllDataComponents.SYMMETRY_WAND_SIMULATE, true);
-				boolean placeInterrupted = EventHooks.onBlockPlace(player, blocksnapshot, Direction.UP);
-				wand.set(AllDataComponents.SYMMETRY_WAND_SIMULATE, false);
+					wand.set(AllDataComponents.SYMMETRY_WAND_SIMULATE, true);
+					boolean placeInterrupted = false;
+					wand.set(AllDataComponents.SYMMETRY_WAND_SIMULATE, false);
 
 				if (placeInterrupted) {
 					world.setBlockAndUpdate(position, cachedState);
@@ -261,7 +261,6 @@ public class SymmetryWandItem extends Item {
 
 	public static void remove(Level world, ItemStack wand, Player player, BlockPos pos, BlockState ogBlock) {
 		BlockState air = Blocks.AIR.defaultBlockState();
-		BlockState ogBlock = world.getBlockState(pos);
 		checkComponents(wand);
 		if (!isEnabled(wand))
 			return;

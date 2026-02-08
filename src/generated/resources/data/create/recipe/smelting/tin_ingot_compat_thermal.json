@@ -14,5 +14,7 @@
   "ingredient": {
     "item": "create:crushed_raw_tin"
   },
-  "result": "thermal:tin_ingot"
+  "result": {
+    "id": "thermal:tin_ingot"
+  }
 }

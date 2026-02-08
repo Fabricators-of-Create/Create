@@ -1,6 +1,6 @@
 {
   "type": "create:mechanical_crafting",
-  "acceptMirrored": true,
+  "accept_mirrored": true,
   "key": {
     "C": {
       "tag": "c:copper_ingots"
@@ -20,6 +20,6 @@
     "CC   "
   ],
   "result": {
-    "item": "create:potato_cannon"
+    "id": "create:potato_cannon"
   }
 }

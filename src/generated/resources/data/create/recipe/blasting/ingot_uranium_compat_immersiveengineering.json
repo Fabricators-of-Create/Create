@@ -14,5 +14,7 @@
   "ingredient": {
     "item": "create:crushed_raw_uranium"
   },
-  "result": "immersiveengineering:ingot_uranium"
+  "result": {
+    "id": "immersiveengineering:ingot_uranium"
+  }
 }

@@ -5,6 +5,7 @@ import java.util.function.Supplier;
 
 import com.simibubi.create.AllDataComponents;
 import com.simibubi.create.foundation.item.LayeredArmorItem;
+import org.jetbrains.annotations.Nullable;
 
 import net.minecraft.core.Holder;
 import net.minecraft.resources.ResourceLocation;

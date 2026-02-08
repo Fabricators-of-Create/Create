@@ -190,14 +190,14 @@ public class MechanicalMixerBlockEntity extends BasinOperatingBlockEntity {
 		if (!basin.isPresent() || level == null)
 			return;
 
-		for (SmartInventory inv : basin.get()
-			.getInvs()) {
-			for (int slot = 0; slot < inv.getSlotCount(); slot++) {
-				ItemStack stackInSlot = inv.getItem(slot);
-				if (stackInSlot.isEmpty())
-					continue;
-				ItemParticleOption data = new ItemParticleOption(ParticleTypes.ITEM, stackInSlot);
-				spillParticle(data);
+			for (SmartInventory inv : basin.get()
+				.getInvs()) {
+				for (int slot = 0; slot < inv.getSlotCount(); slot++) {
+					ItemStack stackInSlot = inv.getStackInSlot(slot);
+					if (stackInSlot.isEmpty())
+						continue;
+					ItemParticleOption data = new ItemParticleOption(ParticleTypes.ITEM, stackInSlot);
+					spillParticle(data);
 			}
 		}
 

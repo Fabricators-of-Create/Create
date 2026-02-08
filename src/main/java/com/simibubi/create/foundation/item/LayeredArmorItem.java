@@ -34,7 +34,7 @@ public interface LayeredArmorItem extends CustomRenderedArmorItem {
 		if (!(stack.getItem() instanceof ArmorItem item)) {
 			return;
 		}
-		if (LivingEntity.getEquipmentSlotForItem(stack) != slot) {
+		if (entity.getEquipmentSlotForItem(stack) != slot) {
 			return;
 		}
 

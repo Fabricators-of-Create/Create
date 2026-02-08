@@ -3,11 +3,11 @@ package com.simibubi.create.content.fluids.pipes;
 import static net.minecraft.world.level.block.state.properties.BlockStateProperties.LEVEL_HONEY;
 
 import com.simibubi.create.AllFluids;
+import com.simibubi.create.foundation.fluid.FluidHelper;
 
 import com.simibubi.create.infrastructure.fabric.transfer.fluid.FluidStack;
 
 import net.fabricmc.fabric.api.transfer.v1.fluid.CauldronFluidContent;
-
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidConstants;
 import net.fabricmc.fabric.api.transfer.v1.transaction.TransactionContext;
 
@@ -19,12 +19,6 @@ import net.minecraft.world.level.block.LayeredCauldronBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.material.Fluids;
-
-import net.fabricmc.fabric.api.transfer.v1.fluid.CauldronFluidContent;
-import net.fabricmc.fabric.api.transfer.v1.fluid.FluidConstants;
-import net.fabricmc.fabric.api.transfer.v1.transaction.TransactionContext;
-
-import com.simibubi.create.infrastructure.fabric.transfer.fluid.FluidStack;
 
 public class VanillaFluidTargets {
 
@@ -40,8 +34,7 @@ public class VanillaFluidTargets {
 		if (state.hasProperty(BlockStateProperties.LEVEL_HONEY) && state.getValue(LEVEL_HONEY) >= 5) {
 			level.updateSnapshots(ctx);
 			level.setBlock(pos, state.setValue(LEVEL_HONEY, 0), 3);
-			return new FluidStack(AllFluids.HONEY.get()
-				.getSource(), FluidConstants.BOTTLE);
+			return new FluidStack(FluidHelper.convertToStill(AllFluids.HONEY.get()), FluidConstants.BOTTLE);
 		}
 
 		if (state.is(Blocks.LAVA_CAULDRON)) {

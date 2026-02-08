@@ -3,13 +3,13 @@
   "category": "building",
   "ingredients": [
     {
-      "tag": "c:red_dyes"
+      "tag": "c:dyes/red"
     },
     {
       "tag": "create:seats"
     }
   ],
   "result": {
-    "item": "create:red_seat"
+    "id": "create:red_seat"
   }
 }

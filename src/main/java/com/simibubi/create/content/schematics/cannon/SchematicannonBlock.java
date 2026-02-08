@@ -24,8 +24,6 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
-import io.github.fabricators_of_create.porting_lib.util.NetworkHooks;
-
 public class SchematicannonBlock extends Block implements IBE<SchematicannonBlockEntity> {
 
 	public SchematicannonBlock(Properties properties) {
@@ -51,7 +49,7 @@ public class SchematicannonBlock extends Block implements IBE<SchematicannonBloc
 		if (level.isClientSide)
 			return InteractionResult.SUCCESS;
 		withBlockEntityDo(level, pos,
-				be -> player.openMenu(be, be::sendToMenu));
+			be -> player.openMenu(be));
 		return InteractionResult.SUCCESS;
 	}
 

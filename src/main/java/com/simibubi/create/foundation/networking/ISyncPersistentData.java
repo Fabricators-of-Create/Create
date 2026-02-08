@@ -3,9 +3,12 @@ package com.simibubi.create.foundation.networking;
 import java.util.HashSet;
 
 import com.simibubi.create.AllPackets;
+import com.simibubi.create.foundation.utility.PersistentDataHelper;
 
 import net.createmod.catnip.net.base.ClientboundPacketPayload;
 import net.createmod.catnip.platform.CatnipServices;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
@@ -29,14 +32,16 @@ public interface ISyncPersistentData {
 		);
 
 		public PersistentDataPacket(Entity entity) {
-			this(entity.getId(), entity.getPersistentData());
+			this(entity.getId(), PersistentDataHelper.get(entity));
 		}
 
 		@Override
 		@Environment(EnvType.CLIENT)
 		public void handle(LocalPlayer player) {
 			Entity entityByID = player.clientLevel.getEntity(entityId);
-			CompoundTag data = entityByID.getPersistentData();
+			if (entityByID == null)
+				return;
+			CompoundTag data = PersistentDataHelper.get(entityByID);
 			new HashSet<>(data.getAllKeys()).forEach(data::remove);
 			data.merge(readData);
 			if (!(entityByID instanceof ISyncPersistentData))

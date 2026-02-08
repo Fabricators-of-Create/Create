@@ -14,5 +14,7 @@
   "ingredient": {
     "item": "create:crushed_raw_aluminum"
   },
-  "result": "ic2:ingot_aluminium"
+  "result": {
+    "id": "ic2:ingot_aluminium"
+  }
 }

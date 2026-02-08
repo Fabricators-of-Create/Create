@@ -31,9 +31,6 @@
     "fabric-gametest": [
       "com.simibubi.create.infrastructure.gametest.CreateGameTests"
     ],
-    "emi": [
-      "com.simibubi.create.compat.emi.CreateEmiPlugin"
-    ],
     "rei_client": [
       "com.simibubi.create.compat.rei.CreateREI"
     ],
@@ -57,16 +54,13 @@
     "porting_lib_base": ">=${port_lib_base_version}",
     "porting_lib_entity": ">=${port_lib_entity_version}",
     "porting_lib_extensions": ">=${port_lib_extensions_version}",
-    "porting_lib_networking": ">=${port_lib_networking_version}",
     "porting_lib_obj_loader": ">=${port_lib_obj_loader_version}",
     "porting_lib_tags": ">=${port_lib_tags_version}",
     "porting_lib_transfer": ">=${port_lib_transfer_version}",
     "porting_lib_models": ">=${port_lib_models_version}",
     "porting_lib_client_events": ">=${port_lib_client_events_version}",
 
-    "forgeconfigapiport": ">=${forge_config_version}",
-    "milk": ">=${milk_lib_version}",
-    "reach-entity-attributes": ">=${reach_entity_attributes_version}"
+    "forgeconfigapiport": ">=${forge_config_version}"
   },
 
   "breaks": {

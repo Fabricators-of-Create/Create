@@ -1,19 +1,13 @@
 {
-  "neoforge:conditions": [
-    {
-      "type": "neoforge:mod_loaded",
-      "modid": "atmospheric"
-    }
-  ],
   "type": "create:milling",
   "ingredients": [
     {
-      "type": "neoforge:compound",
       "ingredients": [
         {
           "item": "atmospheric:yucca_flower"
         }
-      ]
+      ],
+      "fabric:type": "fabric:any"
     }
   ],
   "processing_time": 50,
@@ -29,6 +23,14 @@
       "item": {
         "id": "minecraft:white_dye"
       }
+    }
+  ],
+  "fabric:load_conditions": [
+    {
+      "condition": "fabric:all_mods_loaded",
+      "values": [
+        "atmospheric"
+      ]
     }
   ]
 }

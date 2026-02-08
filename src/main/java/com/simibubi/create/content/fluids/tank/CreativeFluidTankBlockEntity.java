@@ -9,8 +9,6 @@ import com.simibubi.create.AllBlockEntityTypes;
 import com.simibubi.create.foundation.codec.CreateCodecs;
 import com.simibubi.create.foundation.fluid.SmartFluidTank;
 
-import com.simibubi.create.infrastructure.fabric.transfer.fluid.FluidStack;
-
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariant;
 import net.fabricmc.fabric.api.transfer.v1.transaction.TransactionContext;
 
@@ -18,9 +16,6 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
-
-import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariant;
-import net.fabricmc.fabric.api.transfer.v1.transaction.TransactionContext;
 
 import com.simibubi.create.infrastructure.fabric.transfer.fluid.FluidStack;
 import com.simibubi.create.infrastructure.fabric.transfer.fluid.FluidTank;
@@ -31,14 +26,14 @@ public class CreativeFluidTankBlockEntity extends FluidTankBlockEntity {
 		super(type, pos, state);
 	}
 
-	public static void registerCapabilities(RegisterCapabilitiesEvent event) {
+	public static void registerCapabilities(net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent event) {
 		event.registerBlockEntity(
-				Capabilities.FluidHandler.BLOCK,
+				net.neoforged.neoforge.capabilities.Capabilities.FluidHandler.BLOCK,
 				AllBlockEntityTypes.CREATIVE_FLUID_TANK.get(),
 				(be, context) -> {
-					if (be.fluidCapability == null)
+					if (be.exposedTank == null)
 						be.refreshCapability();
-					return be.fluidCapability;
+					return be.exposedTank;
 				}
 		);
 	}

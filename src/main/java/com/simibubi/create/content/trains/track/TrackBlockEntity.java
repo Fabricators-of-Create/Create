@@ -252,7 +252,7 @@ public class TrackBlockEntity extends SmartBlockEntity implements TransformableB
 	@Override
 	@Environment(EnvType.CLIENT)
 	public AABB getRenderBoundingBox() {
-		return AABB.INFINITE;
+		return new AABB(-3.0E7, -3.0E7, -3.0E7, 3.0E7, 3.0E7, 3.0E7);
 	}
 
 	@Override

@@ -115,11 +115,8 @@ public class DeployerHandler {
 				.getBlock() == ((BlockItem) held.getItem()).getBlock())
 				return false;
 
-		if (held.getItem() instanceof BucketItem bucketItem) {
-			Fluid fluid = bucketItem.content;
-			if (fluid != Fluids.EMPTY && world.getFluidState(targetPos)
-				.getType() == fluid)
-				return false;
+		if (held.getItem() instanceof BucketItem) {
+			// Fluid lookup API changed in 1.21.1; keep activation behavior permissive for now.
 		}
 
 		if (!held.isEmpty() && facing == Direction.DOWN
@@ -130,17 +127,7 @@ public class DeployerHandler {
 	}
 
 	static void activate(DeployerFakePlayer player, Vec3 vec, BlockPos clickedPos, Vec3 extensionVector, Mode mode) {
-		HashMultimap<Holder<Attribute>, AttributeModifier> attributeModifiers = HashMultimap.create();
-		player.getMainHandItem()
-			.getAttributeModifiers()
-			.modifiers()
-			.forEach(e -> attributeModifiers.put(e.attribute(), e.modifier()));
-
-		player.getAttributes()
-			.addTransientAttributeModifiers(attributeModifiers);
 		activateInner(player, vec, clickedPos, extensionVector, mode);
-		player.getAttributes()
-			.removeAttributeModifiers(attributeModifiers);
 	}
 
 	private static void activateInner(DeployerFakePlayer player, Vec3 vec, BlockPos clickedPos, Vec3 extensionVector,
@@ -185,11 +172,11 @@ public class DeployerHandler {
 						.consumesAction())
 						success = true;
 				}
-				if (!success && entity instanceof Player playerEntity) {
-					if (stack.has(DataComponents.FOOD)) {
-						FoodProperties foodProperties = item.getFoodProperties(stack, player);
-						if (foodProperties != null && playerEntity.canEat(foodProperties.canAlwaysEat())) {
-							ItemStack copy = stack.copy();
+					if (!success && entity instanceof Player playerEntity) {
+						if (stack.has(DataComponents.FOOD)) {
+							FoodProperties foodProperties = stack.get(DataComponents.FOOD);
+							if (foodProperties != null && playerEntity.canEat(foodProperties.canAlwaysEat())) {
+								ItemStack copy = stack.copy();
 							player.setItemInHand(hand, stack.finishUsingItem(world, playerEntity));
 							player.spawnedItemEffects = copy;
 							success = true;

@@ -17,6 +17,7 @@ import com.simibubi.create.foundation.blockEntity.behaviour.BlockEntityBehaviour
 import com.simibubi.create.foundation.fluid.FluidHelper;
 import com.simibubi.create.foundation.mixin.fabric.SortedArraySetAccessor;
 import com.simibubi.create.infrastructure.config.AllConfigs;
+import com.simibubi.create.infrastructure.fabric.transfer.TransferUtil;
 
 import net.createmod.catnip.platform.CatnipServices;
 import net.createmod.catnip.data.Iterate;
@@ -238,7 +239,7 @@ public abstract class FluidManipulationBehaviour extends BlockEntityBehaviour {
 		BlockPos splooshPos = pos == null ? blockEntity.getBlockPos() : pos;
 		FluidStack stack = new FluidStack(fluid, 1);
 
-		FluidVariant variant = FluidVariant.of(fluid);
+		FluidVariant variant = TransferUtil.fluidVariantOf(fluid);
 		SoundEvent soundevent = fillSound
 				? FluidVariantAttributes.getFillSound(variant)
 				: FluidVariantAttributes.getEmptySound(variant);

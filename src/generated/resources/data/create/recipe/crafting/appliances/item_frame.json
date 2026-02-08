@@ -6,7 +6,7 @@
       "item": "create:cardboard"
     },
     "S": {
-      "tag": "c:wooden_rods"
+      "tag": "c:rods/wooden"
     }
   },
   "pattern": [
@@ -15,7 +15,7 @@
     "SSS"
   ],
   "result": {
-    "item": "minecraft:item_frame"
+    "id": "minecraft:item_frame"
   },
   "show_notification": true
 }

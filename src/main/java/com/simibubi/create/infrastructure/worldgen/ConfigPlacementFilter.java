@@ -16,11 +16,17 @@ public class ConfigPlacementFilter extends PlacementFilter {
 
 	@Override
 	protected boolean shouldPlace(PlacementContext context, RandomSource random, BlockPos pos) {
-		return !AllConfigs.common().worldGen.disable.get();
+		try {
+			return !AllConfigs.common().worldGen.disable.get();
+		} catch (IllegalStateException e) {
+			// During early integrated-server startup on Fabric, config values can be queried
+			// before they are fully loaded. Default to enabled worldgen in that window.
+			return true;
+		}
 	}
 
 	@Override
 	public PlacementModifierType<?> type() {
-		return AllPlacementModifiers.CONFIG_FILTER.get();
+		return AllPlacementModifiers.CONFIG_FILTER.value();
 	}
 }

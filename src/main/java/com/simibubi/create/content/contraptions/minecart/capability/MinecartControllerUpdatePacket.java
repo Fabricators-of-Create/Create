@@ -36,11 +36,11 @@ public record MinecartControllerUpdatePacket(int entityId, @Nullable CompoundTag
 		Entity entityByID = player.clientLevel.getEntity(entityId);
 		if (entityByID == null)
 			return;
-		if (entityByID.hasData(AllAttachmentTypes.MINECART_CONTROLLER)) {
+		if (entityByID.hasAttached(AllAttachmentTypes.MINECART_CONTROLLER)) {
 			if (nbt == null) {
-				entityByID.removeData(AllAttachmentTypes.MINECART_CONTROLLER);
+				entityByID.removeAttached(AllAttachmentTypes.MINECART_CONTROLLER);
 			} else {
-				MinecartController controller = entityByID.getData(AllAttachmentTypes.MINECART_CONTROLLER);
+				MinecartController controller = entityByID.getAttached(AllAttachmentTypes.MINECART_CONTROLLER);
 				controller.deserializeNBT(player.registryAccess(), nbt);
 			}
 		}

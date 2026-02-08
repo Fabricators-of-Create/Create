@@ -216,7 +216,7 @@ public class LinkedControllerClientHandler {
 
 	public static void renderOverlay(GuiGraphics guiGraphics, DeltaTracker deltaTracker) {
 		int width1 = guiGraphics.guiWidth();
-									 int height1 = guiGraphics.guiHeight();
+		int height1 = guiGraphics.guiHeight();
 		Minecraft mc = Minecraft.getInstance();
 		if (mc.options.hideGui)
 			return;
@@ -227,7 +227,7 @@ public class LinkedControllerClientHandler {
 		poseStack.pushPose();
 		Screen tooltipScreen = new Screen(CommonComponents.EMPTY) {
 		};
-		tooltipScreen.init(mc, window.getGuiScaledWidth(), window.getGuiScaledHeight());
+		tooltipScreen.init(mc, width1, height1);
 
 		Object[] keys = new Object[6];
 		List<KeyMapping> controls = ControlsUtil.getControls();

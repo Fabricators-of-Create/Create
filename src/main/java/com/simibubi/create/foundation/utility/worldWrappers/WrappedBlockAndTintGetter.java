@@ -57,9 +57,8 @@ public class WrappedBlockAndTintGetter implements BlockAndTintGetter {
 		return wrapped.getBlockTint(pBlockPos, pColorResolver);
 	}
 	
-	@Override
 	public ModelData getModelData(BlockPos pPos) {
-		return wrapped.getModelData(pPos);
+		return ModelData.EMPTY;
 	}
 	
 }

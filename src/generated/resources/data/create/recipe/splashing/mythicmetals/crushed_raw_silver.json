@@ -16,7 +16,9 @@
   "results": [
     {
       "count": 9,
-      "item": "mythicmetals:silver_nugget"
+      "item": {
+        "id": "mythicmetals:silver_nugget"
+      }
     }
   ]
 }

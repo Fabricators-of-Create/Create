@@ -15,7 +15,7 @@
     "B"
   ],
   "result": {
-    "item": "create:fluid_tank"
+    "id": "create:fluid_tank"
   },
   "show_notification": true
 }

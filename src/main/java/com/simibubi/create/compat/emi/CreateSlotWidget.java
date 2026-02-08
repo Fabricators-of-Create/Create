@@ -5,6 +5,7 @@ import java.util.List;
 import com.simibubi.create.foundation.mixin.fabric.ClientTextTooltipAccessor;
 import com.simibubi.create.foundation.utility.CreateLang;
 import com.simibubi.create.infrastructure.config.AllConfigs;
+import com.simibubi.create.infrastructure.fabric.transfer.TransferUtil;
 
 import dev.emi.emi.api.stack.EmiIngredient;
 import dev.emi.emi.api.stack.EmiStack;
@@ -34,7 +35,7 @@ public class CreateSlotWidget extends SlotWidget {
 		List<ClientTooltipComponent> tooltip = super.getTooltip(mouseX, mouseY);
 		if (stack instanceof EmiStack emiStack && emiStack.getKey() instanceof Fluid fluid) {
 			// add custom fluid tooltip
-			FluidVariant variant = FluidVariant.of(fluid, emiStack.getNbt());
+			FluidVariant variant = TransferUtil.fluidVariantOf(fluid, emiStack.getNbt());
 			addCreateAmount(tooltip, variant);
 			removeEmiAmount(tooltip, variant);
 		}

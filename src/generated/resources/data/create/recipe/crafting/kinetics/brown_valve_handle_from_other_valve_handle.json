@@ -3,13 +3,13 @@
   "category": "misc",
   "ingredients": [
     {
-      "tag": "c:brown_dyes"
+      "tag": "c:dyes/brown"
     },
     {
       "tag": "create:valve_handles"
     }
   ],
   "result": {
-    "item": "create:brown_valve_handle"
+    "id": "create:brown_valve_handle"
   }
 }

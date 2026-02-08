@@ -15,7 +15,7 @@
   ],
   "result": {
     "count": 2,
-    "item": "create:spruce_window"
+    "id": "create:spruce_window"
   },
   "show_notification": true
 }

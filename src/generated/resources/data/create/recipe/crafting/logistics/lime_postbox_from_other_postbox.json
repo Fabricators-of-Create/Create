@@ -3,13 +3,13 @@
   "category": "building",
   "ingredients": [
     {
-      "tag": "c:lime_dyes"
+      "tag": "c:dyes/lime"
     },
     {
       "tag": "create:postboxes"
     }
   ],
   "result": {
-    "item": "create:lime_postbox"
+    "id": "create:lime_postbox"
   }
 }

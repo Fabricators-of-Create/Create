@@ -9,7 +9,7 @@
       "item": "minecraft:barrel"
     },
     "D": {
-      "tag": "c:light_blue_dyes"
+      "tag": "c:dyes/light_blue"
     }
   },
   "pattern": [

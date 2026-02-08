@@ -5,13 +5,9 @@
       "conditions": {
         "items": [
           {
-<<<<<<<< HEAD:src/generated/resources/data/create/advancement/recipes/misc/blasting/silver_ingot_compat_bewitchment.json
             "items": [
               "create:crushed_raw_silver"
             ]
-========
-            "items": "#c:ingots/copper"
->>>>>>>> forge/mc1.21.1/dev:src/generated/resources/data/create/advancement/recipes/building_blocks/copper_shingles_from_ingots_copper_stonecutting.json
           }
         ]
       },
@@ -26,13 +22,8 @@
   },
   "requirements": [
     [
-<<<<<<<< HEAD:src/generated/resources/data/create/advancement/recipes/misc/blasting/silver_ingot_compat_bewitchment.json
       "has_item",
       "has_the_recipe"
-========
-      "has_the_recipe",
-      "has_ingots_copper"
->>>>>>>> forge/mc1.21.1/dev:src/generated/resources/data/create/advancement/recipes/building_blocks/copper_shingles_from_ingots_copper_stonecutting.json
     ]
   ],
   "rewards": {

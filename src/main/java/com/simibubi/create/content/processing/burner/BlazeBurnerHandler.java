@@ -82,7 +82,7 @@ public class BlazeBurnerHandler {
 		ItemStack stack = entity.getItem();
 		PotionContents potionContents = stack.get(DataComponents.POTION_CONTENTS);
 		if (potionContents != null && potionContents.is(Potions.WATER) && !potionContents.hasEffects()) {
-			BlockHitResult result = (BlockHitResult) event.getRayTraceResult();
+				BlockHitResult result = (BlockHitResult) hitResult;
 			Level world = entity.level();
 			Direction face = result.getDirection();
 			BlockPos pos = result.getBlockPos()

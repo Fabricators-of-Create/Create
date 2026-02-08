@@ -18,7 +18,7 @@
     " C "
   ],
   "result": {
-    "item": "create:mechanical_drill"
+    "id": "create:mechanical_drill"
   },
   "show_notification": true
 }

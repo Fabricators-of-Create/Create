@@ -1,6 +1,8 @@
 package com.simibubi.create.api.behaviour.display;
 
+import java.util.Map;
 import java.util.List;
+import java.util.WeakHashMap;
 
 import org.jetbrains.annotations.Nullable;
 
@@ -34,6 +36,7 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 public abstract class DisplayTarget {
 	public static final SimpleRegistry<Block, DisplayTarget> BY_BLOCK = SimpleRegistry.create();
 	public static final SimpleRegistry<BlockEntityType<?>, DisplayTarget> BY_BLOCK_ENTITY = SimpleRegistry.create();
+	private static final Map<BlockEntity, CompoundTag> RESERVATION_DATA = new WeakHashMap<>();
 
 	public abstract void acceptText(int line, List<MutableComponent> text, DisplayLinkContext context);
 
@@ -56,7 +59,7 @@ public abstract class DisplayTarget {
 		if (line == 0)
 			return;
 
-		CompoundTag tag = target.getCustomData();
+		CompoundTag tag = RESERVATION_DATA.computeIfAbsent(target, be -> new CompoundTag());
 		CompoundTag compound = tag.getCompound("DisplayLink");
 		compound.putLong("Line" + line, context.blockEntity()
 			.getBlockPos()
@@ -65,7 +68,7 @@ public abstract class DisplayTarget {
 	}
 
 	public boolean isReserved(int line, BlockEntity target, DisplayLinkContext context) {
-		CompoundTag tag = target.getCustomData();
+		CompoundTag tag = RESERVATION_DATA.computeIfAbsent(target, be -> new CompoundTag());
 		CompoundTag compound = tag.getCompound("DisplayLink");
 
 		if (!compound.contains("Line" + line))

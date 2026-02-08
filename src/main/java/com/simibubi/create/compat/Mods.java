@@ -6,7 +6,6 @@ import java.util.function.Supplier;
 import net.createmod.catnip.lang.Lang;
 import net.createmod.catnip.registry.RegisteredObjectsHelper;
 import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.ItemLike;
@@ -45,7 +44,6 @@ public enum Mods {
 	TRINKETS,
 	MODMENU,
 	BOTANIA,
-	SODIUM,
 	INDIUM;
 
 	private final String id;

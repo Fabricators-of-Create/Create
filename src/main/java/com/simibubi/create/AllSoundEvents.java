@@ -644,7 +644,7 @@ public class AllSoundEvents {
 
 		@Override
 		public Holder<SoundEvent> getMainEventHolder() {
-			return compiledEvents.getFirst().event();
+			return Holder.direct(compiledEvents.getFirst().event());
 		}
 
 		@Override
@@ -722,7 +722,7 @@ public class AllSoundEvents {
 
 		@Override
 		public Holder<SoundEvent> getMainEventHolder() {
-			return event;
+			return Holder.direct(event);
 		}
 
 		@Override

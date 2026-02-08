@@ -1,25 +1,29 @@
 {
-  "neoforge:conditions": [
-    {
-      "type": "neoforge:mod_loaded",
-      "modid": "immersiveengineering"
-    }
-  ],
   "type": "create:crushing",
   "ingredients": [
     {
-      "type": "neoforge:compound",
       "ingredients": [
         {
           "item": "immersiveengineering:coal_coke"
         }
-      ]
+      ],
+      "fabric:type": "fabric:any"
     }
   ],
   "processing_time": 200,
   "results": [
     {
-      "item": "immersiveengineering:dust_coke"
+      "item": {
+        "id": "immersiveengineering:dust_coke"
+      }
+    }
+  ],
+  "fabric:load_conditions": [
+    {
+      "condition": "fabric:all_mods_loaded",
+      "values": [
+        "immersiveengineering"
+      ]
     }
   ]
 }

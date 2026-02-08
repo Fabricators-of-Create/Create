@@ -57,7 +57,6 @@ import net.minecraft.core.particles.ItemParticleOption;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.Mth;
 import net.minecraft.world.Containers;
 import net.minecraft.world.entity.item.ItemEntity;
@@ -107,7 +106,7 @@ public class ChuteBlockEntity extends SmartBlockEntity implements IHaveGoggleInf
 
 	VersionedInventoryTrackerBehaviour invVersionTracker;
 
-	private final EnumMap<Direction, BlockCapabilityCache<IItemHandler, @Nullable Direction>> capCaches = new EnumMap<>(Direction.class);
+	private final EnumMap<Direction, StorageProvider<ItemVariant>> capCaches = new EnumMap<>(Direction.class);
 
 	public ChuteBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState state) {
 		super(type, pos, state);
@@ -123,8 +122,6 @@ public class ChuteBlockEntity extends SmartBlockEntity implements IHaveGoggleInf
 	@Override
 	public void setLevel(Level level) {
 		super.setLevel(level);
-		capAbove = StorageProvider.createForItems(level, worldPosition.above());
-		capBelow = StorageProvider.createForItems(level, worldPosition.below());
 	}
 
 	@Override
@@ -537,7 +534,7 @@ public class ChuteBlockEntity extends SmartBlockEntity implements IHaveGoggleInf
 		return true;
 	}
 
-	private @Nullable IItemHandler grabCapability(@NotNull Direction side) {
+	private @Nullable Storage<ItemVariant> grabCapability(@NotNull Direction side) {
 		BlockPos pos = this.worldPosition.relative(side);
 		if (level == null)
 			return null;
@@ -546,22 +543,10 @@ public class ChuteBlockEntity extends SmartBlockEntity implements IHaveGoggleInf
 			if (side != Direction.DOWN || !(be instanceof SmartChuteBlockEntity) || getItemMotion() > 0)
 				return null;
 		}
-		if (capCaches.get(side) == null) {
-			if (level instanceof ServerLevel serverLevel) {
-				BlockCapabilityCache<IItemHandler, @Nullable Direction> cache = BlockCapabilityCache.create(
-						Capabilities.ItemHandler.BLOCK,
-						serverLevel,
-						pos,
-						side.getOpposite()
-				);
-				capCaches.put(side, cache);
-				return cache.getCapability();
-			} else {
-				return level.getCapability(Capabilities.ItemHandler.BLOCK, pos, side.getOpposite());
-			}
-		} else {
-			return capCaches.get(side).getCapability();
-		}
+		if (capCaches.get(side) == null)
+			capCaches.put(side, StorageProvider.createForItems(level, pos));
+		return capCaches.get(side)
+			.get(side.getOpposite());
 	}
 
 	public void setItem(ItemStack stack) {

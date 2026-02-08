@@ -15,7 +15,7 @@
   ],
   "result": {
     "count": 2,
-    "item": "create:mangrove_window"
+    "id": "create:mangrove_window"
   },
   "show_notification": true
 }

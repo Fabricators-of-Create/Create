@@ -355,14 +355,14 @@ public class CreateEmiPlugin implements EmiPlugin {
 					ResourceLocation iid = BuiltInRegistries.ITEM.getKey(i);
 					ResourceLocation pid = BuiltInRegistries.POTION.getKey(PotionUtils.getPotion(is));
 					consumer.accept(new SpoutEmiRecipe(new ProcessingRecipeBuilder<>(FillingRecipe::new,
-						new ResourceLocation("emi", "create/potion_filling/" + pid.getNamespace() + "/" + pid.getPath()
+						ResourceLocation.fromNamespaceAndPath("emi", "create/potion_filling/" + pid.getNamespace() + "/" + pid.getPath()
 							+ "/from/" + iid.getNamespace() + "/" + iid.getPath()))
 								.withItemIngredients(bottle)
 								.withFluidIngredients(FluidIngredient.fromFluidStack(potion))
 								.withSingleItemOutput(is.copy())
 								.build()));
 					consumer.accept(new DrainEmiRecipe(new ProcessingRecipeBuilder<>(EmptyingRecipe::new,
-						new ResourceLocation("emi", "create/potion_draining/" + pid.getNamespace() + "/" + pid.getPath()
+						ResourceLocation.fromNamespaceAndPath("emi", "create/potion_draining/" + pid.getNamespace() + "/" + pid.getPath()
 							+ "/from/" + iid.getNamespace() + "/" + iid.getPath()))
 								.withItemIngredients(Ingredient.of(is))
 								.withFluidOutputs(potion)
@@ -392,7 +392,7 @@ public class CreateEmiPlugin implements EmiPlugin {
 							ResourceLocation itemId = BuiltInRegistries.ITEM.getKey(is.getItem());
 							ResourceLocation fluidId = BuiltInRegistries.FLUID.getKey(fs.getFluid());
 							consumer.accept(new SpoutEmiRecipe(new ProcessingRecipeBuilder<>(FillingRecipe::new,
-							new ResourceLocation("emi", "create/filling/" + itemId.getNamespace() + "/" + itemId.getPath()
+							ResourceLocation.fromNamespaceAndPath("emi", "create/filling/" + itemId.getNamespace() + "/" + itemId.getPath()
 									+ "/with/" + fluidId.getNamespace() + "/" + fluidId.getPath()))
 								.withItemIngredients(bucket)
 								.withFluidIngredients(FluidIngredient.fromFluidStack(fs))
@@ -411,7 +411,7 @@ public class CreateEmiPlugin implements EmiPlugin {
 						ResourceLocation itemId = BuiltInRegistries.ITEM.getKey(is.getItem());
 						ResourceLocation fluidId = BuiltInRegistries.FLUID.getKey(extracted.getFluid());
 						consumer.accept(new DrainEmiRecipe(new ProcessingRecipeBuilder<>(EmptyingRecipe::new,
-							new ResourceLocation("emi", "create/draining/" + itemId.getNamespace() + "/" + itemId.getPath()
+							ResourceLocation.fromNamespaceAndPath("emi", "create/draining/" + itemId.getNamespace() + "/" + itemId.getPath()
 								+ "/from/" + fluidId.getNamespace() + "/" + fluidId.getPath()))
 							.withItemIngredients(Ingredient.of(is))
 							.withFluidOutputs(extracted)
@@ -444,7 +444,7 @@ public class CreateEmiPlugin implements EmiPlugin {
 					.formatted(toolboxId.getNamespace(), toolboxId.getPath(), dyeId.getNamespace(), dyeId.getPath());
 			registry.addRecipe(new EmiCraftingRecipe(
 					r.getIngredients().stream().map(EmiIngredient::of).toList(),
-					CreateEmiRecipe.getResultEmi(r), new ResourceLocation("emi", recipeName)));
+					CreateEmiRecipe.getResultEmi(r), ResourceLocation.fromNamespaceAndPath("emi", recipeName)));
 		});
 		// for EMI we don't do this since it already has a category, World Interaction
 //		LogStrippingFakeRecipes.createRecipes().forEach(r -> {

@@ -28,9 +28,9 @@ public class DepotBlockEntity extends SmartBlockEntity implements SidedStorageBl
 		super(type, pos, state);
 	}
 
-	public static void registerCapabilities(RegisterCapabilitiesEvent event) {
+	public static void registerCapabilities(net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent event) {
 		event.registerBlockEntity(
-				Capabilities.ItemHandler.BLOCK,
+				net.neoforged.neoforge.capabilities.Capabilities.ItemHandler.BLOCK,
 				AllBlockEntityTypes.DEPOT.get(),
 				(be, context) -> be.depotBehaviour.itemHandler
 		);

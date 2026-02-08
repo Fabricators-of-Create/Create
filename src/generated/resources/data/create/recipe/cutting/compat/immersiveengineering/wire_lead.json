@@ -13,11 +13,13 @@
       "tag": "c:plates/lead"
     }
   ],
-  "processingTime": 50,
+  "processing_time": 50,
   "results": [
     {
       "count": 2,
-      "item": "immersiveengineering:wire_lead"
+      "item": {
+        "id": "immersiveengineering:wire_lead"
+      }
     }
   ]
 }

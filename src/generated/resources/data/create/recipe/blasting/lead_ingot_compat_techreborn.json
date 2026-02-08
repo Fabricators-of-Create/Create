@@ -14,5 +14,7 @@
   "ingredient": {
     "item": "create:crushed_raw_lead"
   },
-  "result": "techreborn:lead_ingot"
+  "result": {
+    "id": "techreborn:lead_ingot"
+  }
 }

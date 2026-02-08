@@ -29,9 +29,11 @@ public class TestCommandMixin {
 			require = 0 // don't crash if this fails. non-critical
 	)
 	private static TestFunction create$getCorrectTestFunction(String testName,
-															  ServerLevel level, BlockPos pos, @Nullable MultipleTestTracker tracker) {
+																  ServerLevel level, BlockPos pos, @Nullable MultipleTestTracker tracker) {
 		StructureBlockEntity be = (StructureBlockEntity) level.getBlockEntity(pos);
-		CompoundTag data = be.getCustomData();
+		if (be == null)
+			return GameTestRegistry.getTestFunction(testName);
+		CompoundTag data = be.saveWithoutMetadata(level.registryAccess());
 		if (!data.contains("CreateTestFunction", Tag.TAG_STRING))
 			return GameTestRegistry.getTestFunction(testName);
 		String name = data.getString("CreateTestFunction");

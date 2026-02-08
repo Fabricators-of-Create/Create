@@ -16,7 +16,7 @@ public final class NetheriteDivingHandler {
 	public static final String FIRE_IMMUNE_KEY = "CreateFireImmune";
 
 	public static void onLivingEquipmentChange(LivingEntity entity, EquipmentSlot slot, @NotNull ItemStack from, @NotNull ItemStack to) {
-		if (slot.getType() != EquipmentSlot.Type.ARMOR) {
+		if (slot.getType() != EquipmentSlot.Type.HUMANOID_ARMOR) {
 			return;
 		}
 

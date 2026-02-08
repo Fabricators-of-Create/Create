@@ -3,13 +3,13 @@
   "category": "misc",
   "ingredients": [
     {
-      "tag": "c:orange_dyes"
+      "tag": "c:dyes/orange"
     },
     {
       "tag": "create:valve_handles"
     }
   ],
   "result": {
-    "item": "create:orange_valve_handle"
+    "id": "create:orange_valve_handle"
   }
 }

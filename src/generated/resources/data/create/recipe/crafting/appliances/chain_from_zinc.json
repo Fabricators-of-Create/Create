@@ -15,7 +15,7 @@
     "S"
   ],
   "result": {
-    "item": "minecraft:chain"
+    "id": "minecraft:chain"
   },
   "show_notification": true
 }

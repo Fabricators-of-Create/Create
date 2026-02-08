@@ -8,12 +8,14 @@
     {
       "amount": 27000,
       "fluid": "minecraft:water",
-      "nbt": {}
+      "type": "fluid_stack"
     }
   ],
   "results": [
     {
-      "item": "minecraft:mud"
+      "item": {
+        "id": "minecraft:mud"
+      }
     }
   ]
 }

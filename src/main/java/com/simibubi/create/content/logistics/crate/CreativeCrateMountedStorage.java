@@ -106,6 +106,11 @@ public class CreativeCrateMountedStorage extends MountedItemStorage implements S
 	}
 
 	@Override
+	public boolean isItemValid(int slot, ItemStack stack) {
+		return slot == 0 && (this.suppliedStack.isEmpty() || ItemStack.isSameItemSameComponents(this.suppliedStack, stack));
+	}
+
+	@Override
 	public Iterator<StorageView<ItemVariant>> iterator() {
 		return SingleSlotStorage.super.iterator();
 	}

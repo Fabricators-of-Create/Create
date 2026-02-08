@@ -6,6 +6,7 @@ import java.util.UUID;
 
 import com.simibubi.create.AllPackets;
 import com.simibubi.create.content.contraptions.AbstractContraptionEntity;
+import com.simibubi.create.foundation.utility.PersistentDataHelper;
 import net.createmod.catnip.net.base.ClientboundPacketPayload;
 
 import io.netty.buffer.ByteBuf;
@@ -42,7 +43,7 @@ public record ContraptionSeatMappingPacket(int entityId, Map<UUID, Integer> mapp
 		if (dismountedId == player.getId()) {
 			Vec3 transformedVector = contraptionEntity.getPassengerPosition(player, 1);
 			if (transformedVector != null)
-				player.getPersistentData()
+				PersistentDataHelper.get(player)
 						.put("ContraptionDismountLocation", VecHelper.writeNBT(transformedVector));
 		}
 

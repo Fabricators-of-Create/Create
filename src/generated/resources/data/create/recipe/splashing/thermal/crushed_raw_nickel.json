@@ -16,7 +16,9 @@
   "results": [
     {
       "count": 9,
-      "item": "thermal:nickel_nugget"
+      "item": {
+        "id": "thermal:nickel_nugget"
+      }
     }
   ]
 }

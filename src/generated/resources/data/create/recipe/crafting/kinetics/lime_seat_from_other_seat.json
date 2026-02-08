@@ -3,13 +3,13 @@
   "category": "building",
   "ingredients": [
     {
-      "tag": "c:lime_dyes"
+      "tag": "c:dyes/lime"
     },
     {
       "tag": "create:seats"
     }
   ],
   "result": {
-    "item": "create:lime_seat"
+    "id": "create:lime_seat"
   }
 }

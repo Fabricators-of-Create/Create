@@ -194,22 +194,22 @@ public class MechanicalCrafterBlock extends HorizontalKineticBlock
 
 				if (stack.isEmpty()) // fabric: can't insert empty
 					return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
-				Storage<ItemVariant> capability = crafter.getItemStorage(null);
-				if (capability == null)
-					return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
-				try (Transaction t = Transaction.openOuter()) {
-					long inserted = capability.insert(ItemVariant.of(heldItem), heldItem.getCount(), t);
-					if (inserted <= 0)
+					Storage<ItemVariant> capability = crafter.getItemStorage(null);
+					if (capability == null)
 						return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
+					try (Transaction t = Transaction.openOuter()) {
+						long inserted = capability.insert(ItemVariant.of(stack), stack.getCount(), t);
+						if (inserted <= 0)
+							return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
 
-					player.setItemInHand(handIn, ItemHandlerHelper.copyStackWithSize(heldItem, (int) (heldItem.getCount() - inserted)));
-					t.commit();
-					return ItemInteractionResult.SUCCESS;
+						player.setItemInHand(hand, stack.copyWithCount((int) (stack.getCount() - inserted)));
+						t.commit();
+						return ItemInteractionResult.SUCCESS;
+					}
 				}
-			}
 
-			ItemStack inSlot = crafter.getInventory()
-				.getItem(0);
+				ItemStack inSlot = crafter.getInventory()
+					.getStackInSlot(0);
 			if (inSlot.isEmpty()) {
 				if (crafter.covered && !wrenched) {
 					if (level.isClientSide)

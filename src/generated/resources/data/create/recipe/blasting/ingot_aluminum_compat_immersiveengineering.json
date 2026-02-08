@@ -14,5 +14,7 @@
   "ingredient": {
     "item": "create:crushed_raw_aluminum"
   },
-  "result": "immersiveengineering:ingot_aluminum"
+  "result": {
+    "id": "immersiveengineering:ingot_aluminum"
+  }
 }

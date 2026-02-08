@@ -15,7 +15,9 @@
   ],
   "results": [
     {
-      "item": "betterend:chorus_nylium_path"
+      "item": {
+        "id": "betterend:chorus_nylium_path"
+      }
     }
   ]
 }

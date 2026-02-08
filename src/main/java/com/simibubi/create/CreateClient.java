@@ -1,10 +1,8 @@
 package com.simibubi.create;
 
 import com.mojang.blaze3d.platform.GlStateManager;
-import com.mojang.blaze3d.platform.Window;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.simibubi.create.compat.Mods;
-import com.simibubi.create.compat.ftb.FTBIntegration;
 import com.simibubi.create.compat.sodium.SodiumCompat;
 import com.simibubi.create.compat.trinkets.Trinkets;
 import com.simibubi.create.content.contraptions.glue.SuperGlueSelectionHandler;
@@ -33,7 +31,6 @@ import com.simibubi.create.foundation.blockEntity.behaviour.ValueSettingsClient;
 import com.simibubi.create.foundation.model.ModelSwapper;
 import com.simibubi.create.foundation.events.ClientEvents;
 import com.simibubi.create.foundation.events.InputEvents;
-import com.simibubi.create.foundation.ponder.CreatePonderPlugin;
 import com.simibubi.create.foundation.render.AllInstanceTypes;
 import com.simibubi.create.foundation.render.RenderTypes;
 import com.simibubi.create.infrastructure.config.AllConfigs;
@@ -47,7 +44,6 @@ import net.createmod.ponder.foundation.PonderIndex;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.GraphicsStatus;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.Gui;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.ClickEvent;
 import net.minecraft.network.chat.Component;
@@ -85,7 +81,6 @@ public class CreateClient implements ClientModInitializer {
 		ZAPPER_RENDER_HANDLER.registerListeners();
 		POTATO_CANNON_RENDER_HANDLER.registerListeners();
 
-		Mods.FTBLIBRARY.executeIfInstalled(() -> () -> FTBIntegration.init());
 		Mods.SODIUM.executeIfInstalled(() -> () -> SodiumCompat.init());
 
 		// clientInit start
@@ -110,7 +105,7 @@ public class CreateClient implements ClientModInitializer {
 
 		//AllPonderTags.register();
 		//PonderIndex.register();
-		PonderIndex.addPlugin(new CreatePonderPlugin());
+		// Ponder integration is temporarily disabled during the 1.21.1 Fabric port.
 
 		setupConfigUIBackground();
 
@@ -128,23 +123,19 @@ public class CreateClient implements ClientModInitializer {
 	private static void initCompat() {
 		Mods.TRINKETS.executeIfInstalled(() -> () -> Trinkets.clientInit());
 		Mods.SODIUM.executeIfInstalled(() -> () -> SodiumCompat.init());
-		Mods.FTBCHUNKS.executeIfInstalled(() -> () -> FTBIntegration.init());
 	}
 
 	private static void registerOverlays() {
-		HudRenderCallback.EVENT.register((graphics, partialTicks) -> {
-			Window window = Minecraft.getInstance().getWindow();
-			Gui gui = Minecraft.getInstance().gui;
-
-			RemainingAirOverlay.render(graphics, window.getGuiScaledWidth(), window.getGuiScaledHeight()); // Create's Remaining Air
-			TrainHUD.renderOverlay(graphics, partialTicks, window); // Create's Train Driver HUD
-			GoggleOverlayRenderer.renderOverlay(graphics, partialTicks, window.getGuiScaledWidth(), window.getGuiScaledHeight()); // Create's Goggle Information
-			BlueprintOverlayRenderer.renderOverlay(gui, graphics, partialTicks, window); // Create's Blueprints
-			LinkedControllerClientHandler.renderOverlay(graphics, partialTicks, window); // Create's Linked Controller
-			SCHEMATIC_HANDLER.renderOverlay(graphics, partialTicks, window); // Create's Schematics
-			ToolboxHandlerClient.renderOverlay(graphics, partialTicks, window); // Create's Toolboxes
-			VALUE_SETTINGS_HANDLER.render(graphics, window.getGuiScaledWidth(), window.getGuiScaledHeight()); // Create's Value Settings
-			TrackPlacementOverlay.renderOverlay(gui, graphics); // Create's Track Placement
+		HudRenderCallback.EVENT.register((graphics, deltaTracker) -> {
+			RemainingAirOverlay.INSTANCE.render(graphics, deltaTracker);
+			TrainHUD.OVERLAY.render(graphics, deltaTracker);
+			GoggleOverlayRenderer.OVERLAY.render(graphics, deltaTracker);
+			BlueprintOverlayRenderer.OVERLAY.render(graphics, deltaTracker);
+			LinkedControllerClientHandler.OVERLAY.render(graphics, deltaTracker);
+			SCHEMATIC_HANDLER.render(graphics, deltaTracker);
+			ToolboxHandlerClient.OVERLAY.render(graphics, deltaTracker);
+			VALUE_SETTINGS_HANDLER.render(graphics, deltaTracker);
+			TrackPlacementOverlay.INSTANCE.render(graphics, deltaTracker);
 		});
 	}
 

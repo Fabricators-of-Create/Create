@@ -108,15 +108,13 @@ public class ExtendoGripRenderHandler {
 			ItemInHandRenderer firstPersonRenderer = mc.getEntityRenderDispatcher().getItemInHandRenderer();
 			ItemDisplayContext transform =
 				rightHand ? ItemDisplayContext.FIRST_PERSON_RIGHT_HAND : ItemDisplayContext.FIRST_PERSON_LEFT_HAND;
-			firstPersonRenderer.renderItem(mc.player, notInOffhand ? heldItem : offhandItem, transform, !rightHand,
-				event.getPoseStack(), event.getMultiBufferSource(), event.getPackedLight());
+				firstPersonRenderer.renderItem(mc.player, notInOffhand ? heldItem : offhandItem, transform, !rightHand,
+					event.getPoseStack(), event.getMultiBufferSource(), event.getPackedLight());
 
-			if (!notInOffhand) {
-				ClientHooks.handleCameraTransforms(ms, mc.getItemRenderer()
-					.getModel(offhandItem, null, null, 0), transform, !rightHand);
-				ms.translate(flip * -.05f, .15f, -1.2f);
-				ms.translate(0, 0, -animation * 2.25f);
-				if (blockItem && mc.getItemRenderer()
+				if (!notInOffhand) {
+					ms.translate(flip * -.05f, .15f, -1.2f);
+					ms.translate(0, 0, -animation * 2.25f);
+					if (blockItem && mc.getItemRenderer()
 					.getModel(heldItem, null, null, 0)
 					.isGui3d()) {
 					msr.rotateYDegrees(flip * 45);

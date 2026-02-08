@@ -87,12 +87,13 @@ public class BasinBlock extends Block implements IBE<BasinBlockEntity>, IWrencha
 
 	@Override
 	protected ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hitResult) {
-								 return onBlockEntityUseItemOn(level, pos, be -> {
-			if (!stack.isEmpty()) {
-				if (FluidHelper.tryEmptyItemIntoBE(level, player, hand, stack, be))
-					return ItemInteractionResult.SUCCESS;
-				if (FluidHelper.tryFillItemFromBE(level, player, hand, stack, be))
-					return ItemInteractionResult.SUCCESS;
+									 return onBlockEntityUseItemOn(level, pos, be -> {
+				Direction direction = hitResult.getDirection();
+				if (!stack.isEmpty()) {
+					if (FluidHelper.tryEmptyItemIntoBE(level, player, hand, stack, be, direction))
+						return ItemInteractionResult.SUCCESS;
+					if (FluidHelper.tryFillItemFromBE(level, player, hand, stack, be, direction))
+						return ItemInteractionResult.SUCCESS;
 
 				if (GenericItemEmptying.canItemBeEmptied(level, stack)
 					|| GenericItemFilling.canItemBeFilled(level, stack))
@@ -104,12 +105,12 @@ public class BasinBlock extends Block implements IBE<BasinBlockEntity>, IWrencha
 					}
 				}
 				return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
-			}
+				}
 
-			Storage<ItemVariant> inv = be.itemCapability;
-			if (inv == null) return InteractionResult.PASS;
-			List<ItemStack> extracted = TransferUtil.extractAllAsStacks(inv);
-			if (extracted.size() > 0) {
+				Storage<ItemVariant> inv = be.itemCapability;
+				if (inv == null) return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
+				List<ItemStack> extracted = TransferUtil.extractAllAsStacks(inv);
+				if (extracted.size() > 0) {
 				extracted.forEach(s -> player.getInventory().placeItemBackInInventory(s));
 				level.playSound(null, pos, SoundEvents.ITEM_PICKUP, SoundSource.PLAYERS, .2f,
 					1f + level.getRandom().nextFloat());

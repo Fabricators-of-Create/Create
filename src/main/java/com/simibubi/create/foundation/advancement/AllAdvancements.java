@@ -21,6 +21,7 @@ import com.simibubi.create.AllItems;
 import com.simibubi.create.AllTags.AllItemTags;
 import com.simibubi.create.content.logistics.box.PackageStyles;
 import com.simibubi.create.foundation.advancement.CreateAdvancement.Builder;
+import com.simibubi.create.foundation.fluid.FluidHelper;
 
 import net.minecraft.advancements.Advancement;
 import net.minecraft.advancements.AdvancementHolder;
@@ -361,7 +362,7 @@ public class AllAdvancements implements DataProvider {
 		.description("Lower a Hose Pulley and watch it drain or fill a body of fluid")
 		.after(WATER_SUPPLY)),
 
-	CHOCOLATE_BUCKET = create("chocolate_bucket", b -> b.icon(AllFluids.CHOCOLATE.get()
+	CHOCOLATE_BUCKET = create("chocolate_bucket", b -> b.icon(FluidHelper.convertToStill(AllFluids.CHOCOLATE.get())
 			.getBucket())
 		.title("A World of Imagination")
 		.description("Obtain a bucket of molten chocolate")
@@ -730,6 +731,7 @@ public class AllAdvancements implements DataProvider {
 	}
 
 	public static void register() {
+		AllTriggers.register();
 	}
 
 }

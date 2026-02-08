@@ -20,7 +20,7 @@
     "CRC"
   ],
   "result": {
-    "item": "create:sticker"
+    "id": "create:sticker"
   },
   "show_notification": true
 }

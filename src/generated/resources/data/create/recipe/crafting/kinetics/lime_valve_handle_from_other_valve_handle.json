@@ -3,13 +3,13 @@
   "category": "misc",
   "ingredients": [
     {
-      "tag": "c:lime_dyes"
+      "tag": "c:dyes/lime"
     },
     {
       "tag": "create:valve_handles"
     }
   ],
   "result": {
-    "item": "create:lime_valve_handle"
+    "id": "create:lime_valve_handle"
   }
 }

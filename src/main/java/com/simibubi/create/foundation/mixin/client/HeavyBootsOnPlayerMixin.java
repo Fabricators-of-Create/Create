@@ -6,6 +6,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import com.mojang.authlib.GameProfile;
+import com.simibubi.create.foundation.utility.PersistentDataHelper;
 
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.player.AbstractClientPlayer;
@@ -24,7 +25,7 @@ public abstract class HeavyBootsOnPlayerMixin extends AbstractClientPlayer {
 
 	@Inject(method = "isUnderWater()Z", at = @At("HEAD"), cancellable = true)
 	private void create$noSwimmingWithHeavyBootsOn(CallbackInfoReturnable<Boolean> cir) {
-		CompoundTag persistentData = getPersistentData();
+		CompoundTag persistentData = PersistentDataHelper.get((LocalPlayer) (Object) this);
 		if (persistentData.contains("HeavyBoots"))
 			cir.setReturnValue(false);
 	}

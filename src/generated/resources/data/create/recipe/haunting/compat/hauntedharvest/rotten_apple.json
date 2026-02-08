@@ -15,7 +15,9 @@
   ],
   "results": [
     {
-      "item": "hauntedharvest:rotten_apple"
+      "item": {
+        "id": "hauntedharvest:rotten_apple"
+      }
     }
   ]
 }

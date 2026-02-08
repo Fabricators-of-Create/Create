@@ -3,13 +3,13 @@
   "category": "building",
   "ingredients": [
     {
-      "tag": "c:magenta_dyes"
+      "tag": "c:dyes/magenta"
     },
     {
       "tag": "create:dyed_table_cloths"
     }
   ],
   "result": {
-    "item": "create:magenta_table_cloth"
+    "id": "create:magenta_table_cloth"
   }
 }

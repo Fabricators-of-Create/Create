@@ -15,7 +15,9 @@
   ],
   "results": [
     {
-      "item": "infernalexp:warped_nylium_path"
+      "item": {
+        "id": "infernalexp:warped_nylium_path"
+      }
     }
   ]
 }

@@ -21,7 +21,7 @@
     " P "
   ],
   "result": {
-    "item": "create:copper_backtank"
+    "id": "create:copper_backtank"
   },
   "show_notification": true
 }

@@ -1,8 +1,10 @@
 {
   "type": "minecraft:stonecutting",
-  "count": 1,
   "ingredient": {
     "tag": "c:colorless_glass_panes"
   },
-  "result": "create:horizontal_framed_glass_pane"
+  "result": {
+    "id": "create:horizontal_framed_glass_pane",
+    "count": 1
+  }
 }

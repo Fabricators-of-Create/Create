@@ -15,7 +15,7 @@
     "B"
   ],
   "result": {
-    "item": "create:item_vault"
+    "id": "create:item_vault"
   },
   "show_notification": true
 }

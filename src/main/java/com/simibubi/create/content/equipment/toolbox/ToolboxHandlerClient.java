@@ -9,23 +9,17 @@ import java.util.Comparator;
 import java.util.List;
 
 import com.google.common.collect.ImmutableList;
-import com.mojang.blaze3d.platform.Window;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.simibubi.create.AllKeys;
 import com.simibubi.create.foundation.gui.AllGuiTextures;
-import com.simibubi.create.infrastructure.config.AllConfigs;
-
-import com.simibubi.create.infrastructure.fabric.transfer.TransferUtil;
 
 import net.createmod.catnip.gui.ScreenOpener;
 import net.createmod.catnip.nbt.NBTHelper;
 import net.createmod.catnip.platform.CatnipServices;
 
 import net.fabricmc.fabric.api.block.BlockPickInteractionAware;
-
 import net.fabricmc.fabric.api.entity.EntityPickInteractionAware;
-
 import net.fabricmc.fabric.api.transfer.v1.transaction.Transaction;
 
 import net.minecraft.client.DeltaTracker;
@@ -35,7 +29,6 @@ import net.minecraft.client.gui.LayeredDraw;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.nbt.NbtUtils;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -47,12 +40,6 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.HitResult;
-
-import net.fabricmc.fabric.api.block.BlockPickInteractionAware;
-import net.fabricmc.fabric.api.entity.EntityPickInteractionAware;
-import net.fabricmc.fabric.api.transfer.v1.transaction.Transaction;
-
-import com.simibubi.create.infrastructure.fabric.transfer.TransferUtil;
 
 public class ToolboxHandlerClient {
 
@@ -185,11 +172,13 @@ public class ToolboxHandlerClient {
 		if (mc.options.hideGui || mc.gameMode.getPlayerMode() == GameType.SPECTATOR)
 			return;
 
-		int x = window.getGuiScaledWidth() / 2 - 90;
-		int y = window.getGuiScaledHeight() - 23;
+		int x = width / 2 - 90;
+		int y = height - 23;
 		RenderSystem.enableDepthTest();
 
 		Player player = mc.player;
+		if (player == null)
+			return;
 		CompoundTag persistentData = player.getCustomData();
 		if (!persistentData.contains("CreateToolboxData"))
 			return;

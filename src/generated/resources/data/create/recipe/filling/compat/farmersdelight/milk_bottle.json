@@ -14,12 +14,15 @@
     },
     {
       "amount": 27000,
-      "fluidTag": "c:milk"
+      "fluid_tag": "c:milk",
+      "type": "fluid_tag"
     }
   ],
   "results": [
     {
-      "item": "farmersdelight:milk_bottle"
+      "item": {
+        "id": "farmersdelight:milk_bottle"
+      }
     }
   ]
 }

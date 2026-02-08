@@ -7,37 +7,55 @@
   "results": [
     {
       "chance": 120.0,
-      "item": "create:precision_mechanism"
+      "item": {
+        "id": "create:precision_mechanism"
+      }
     },
     {
       "chance": 8.0,
-      "item": "create:golden_sheet"
+      "item": {
+        "id": "create:golden_sheet"
+      }
     },
     {
       "chance": 8.0,
-      "item": "create:andesite_alloy"
+      "item": {
+        "id": "create:andesite_alloy"
+      }
     },
     {
       "chance": 5.0,
-      "item": "create:cogwheel"
+      "item": {
+        "id": "create:cogwheel"
+      }
     },
     {
       "chance": 3.0,
-      "item": "minecraft:gold_nugget"
+      "item": {
+        "id": "minecraft:gold_nugget"
+      }
     },
     {
       "chance": 2.0,
-      "item": "create:shaft"
+      "item": {
+        "id": "create:shaft"
+      }
     },
     {
       "chance": 2.0,
-      "item": "create:crushed_raw_gold"
+      "item": {
+        "id": "create:crushed_raw_gold"
+      }
     },
     {
-      "item": "minecraft:iron_ingot"
+      "item": {
+        "id": "minecraft:iron_ingot"
+      }
     },
     {
-      "item": "minecraft:clock"
+      "item": {
+        "id": "minecraft:clock"
+      }
     }
   ],
   "sequence": [
@@ -53,7 +71,9 @@
       ],
       "results": [
         {
-          "item": "create:incomplete_precision_mechanism"
+          "item": {
+            "id": "create:incomplete_precision_mechanism"
+          }
         }
       ]
     },
@@ -69,7 +89,9 @@
       ],
       "results": [
         {
-          "item": "create:incomplete_precision_mechanism"
+          "item": {
+            "id": "create:incomplete_precision_mechanism"
+          }
         }
       ]
     },
@@ -85,12 +107,16 @@
       ],
       "results": [
         {
-          "item": "create:incomplete_precision_mechanism"
+          "item": {
+            "id": "create:incomplete_precision_mechanism"
+          }
         }
       ]
     }
   ],
-  "transitionalItem": {
-    "item": "create:incomplete_precision_mechanism"
+  "transitional_item": {
+    "item": {
+      "id": "create:incomplete_precision_mechanism"
+    }
   }
 }

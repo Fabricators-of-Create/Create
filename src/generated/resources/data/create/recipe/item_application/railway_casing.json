@@ -10,7 +10,9 @@
   ],
   "results": [
     {
-      "item": "create:railway_casing"
+      "item": {
+        "id": "create:railway_casing"
+      }
     }
   ]
 }

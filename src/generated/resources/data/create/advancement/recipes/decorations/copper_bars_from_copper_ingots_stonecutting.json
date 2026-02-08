@@ -5,11 +5,7 @@
       "conditions": {
         "items": [
           {
-<<<<<<<< HEAD:src/generated/resources/data/create/advancement/recipes/decorations/copper_bars_from_copper_ingots_stonecutting.json
             "tag": "c:copper_ingots"
-========
-            "items": "#c:ingots/copper"
->>>>>>>> forge/mc1.21.1/dev:src/generated/resources/data/create/advancement/recipes/decorations/copper_bars_from_ingots_copper_stonecutting.json
           }
         ]
       },
@@ -24,13 +20,8 @@
   },
   "requirements": [
     [
-<<<<<<<< HEAD:src/generated/resources/data/create/advancement/recipes/decorations/copper_bars_from_copper_ingots_stonecutting.json
       "has_copper_ingots",
       "has_the_recipe"
-========
-      "has_the_recipe",
-      "has_ingots_copper"
->>>>>>>> forge/mc1.21.1/dev:src/generated/resources/data/create/advancement/recipes/decorations/copper_bars_from_ingots_copper_stonecutting.json
     ]
   ],
   "rewards": {

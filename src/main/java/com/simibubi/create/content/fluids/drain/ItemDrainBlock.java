@@ -45,8 +45,8 @@ public class ItemDrainBlock extends Block implements IWrenchable, IBE<ItemDrainB
 
 	@Override
 	protected ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hitResult) {
-								 if (stack.getItem() instanceof BlockItem && stack.getCapability(Capabilities.FluidHandler.ITEM) == null)
-			return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
+									 if (stack.getItem() instanceof BlockItem && FluidStorage.ITEM.find(stack, ContainerItemContext.withConstant(stack)) == null)
+				return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
 
 		return onBlockEntityUseItemOn(level, pos, be -> {
 			if (!stack.isEmpty()) {

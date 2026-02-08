@@ -6,12 +6,15 @@
     },
     {
       "amount": 20250,
-      "fluidTag": "c:honey"
+      "fluid_tag": "c:honey",
+      "type": "fluid_tag"
     }
   ],
   "results": [
     {
-      "item": "minecraft:honey_bottle"
+      "item": {
+        "id": "minecraft:honey_bottle"
+      }
     }
   ]
 }

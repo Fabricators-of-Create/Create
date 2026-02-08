@@ -16,7 +16,9 @@
   "results": [
     {
       "count": 9,
-      "item": "techreborn:silver_nugget"
+      "item": {
+        "id": "techreborn:silver_nugget"
+      }
     }
   ]
 }

@@ -1,26 +1,30 @@
 {
-  "neoforge:conditions": [
-    {
-      "type": "neoforge:mod_loaded",
-      "modid": "byg"
-    }
-  ],
   "type": "create:milling",
   "ingredients": [
     {
-      "type": "neoforge:compound",
       "ingredients": [
         {
           "item": "byg:white_puffball_cap"
         }
-      ]
+      ],
+      "fabric:type": "fabric:any"
     }
   ],
   "processing_time": 150,
   "results": [
     {
       "chance": 0.25,
-      "item": "byg:white_puffball_spores"
+      "item": {
+        "id": "byg:white_puffball_spores"
+      }
+    }
+  ],
+  "fabric:load_conditions": [
+    {
+      "condition": "fabric:all_mods_loaded",
+      "values": [
+        "byg"
+      ]
     }
   ]
 }

@@ -13,10 +13,12 @@
       "tag": "c:ender_pearls"
     }
   ],
-  "processingTime": 100,
+  "processing_time": 100,
   "results": [
     {
-      "item": "ae2:ender_dust"
+      "item": {
+        "id": "ae2:ender_dust"
+      }
     }
   ]
 }

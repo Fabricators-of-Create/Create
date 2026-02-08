@@ -1,8 +1,10 @@
 {
   "type": "minecraft:stonecutting",
-  "count": 2,
   "ingredient": {
     "tag": "c:brass_ingots"
   },
-  "result": "create:brass_scaffolding"
+  "result": {
+    "id": "create:brass_scaffolding",
+    "count": 2
+  }
 }

@@ -85,7 +85,7 @@ public class LargeWaterWheelBlock extends RotatedPillarKineticBlock implements I
 	@Override
 	protected ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hitResult) {
 		if (AdventureUtil.isAdventure(player))
-			return InteractionResult.PASS;
+			return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
 		return onBlockEntityUseItemOn(level, pos, wwt -> wwt.applyMaterialIfValid(stack));
 	}
 

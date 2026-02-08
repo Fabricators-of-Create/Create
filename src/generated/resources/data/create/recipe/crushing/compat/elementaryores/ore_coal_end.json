@@ -1,19 +1,13 @@
 {
-  "neoforge:conditions": [
-    {
-      "type": "neoforge:mod_loaded",
-      "modid": "elementaryores"
-    }
-  ],
   "type": "create:crushing",
   "ingredients": [
     {
-      "type": "neoforge:compound",
       "ingredients": [
         {
           "item": "elementaryores:ore_coal_end"
         }
-      ]
+      ],
+      "fabric:type": "fabric:any"
     }
   ],
   "processing_time": 350,
@@ -40,6 +34,14 @@
       "item": {
         "id": "minecraft:end_stone"
       }
+    }
+  ],
+  "fabric:load_conditions": [
+    {
+      "condition": "fabric:all_mods_loaded",
+      "values": [
+        "elementaryores"
+      ]
     }
   ]
 }

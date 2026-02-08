@@ -100,7 +100,7 @@ public class FillingRecipeGen extends ProcessingRecipeGen {
 		// IE
 
 		IE_TREATED_WOOD = create(Mods.IE.recipeId("treated_wood_in_spout"),
-			b -> b.require(AllTags.commonFluidTag("creosote"), 125)
+			b -> b.require(AllTags.commonFluidTag("creosote"), FluidConstants.BUCKET / 8)
 				.require(I.planks())
 				.output(Mods.IE, "treated_wood_horizontal")
 				.whenModLoaded(Mods.IE.getId()));

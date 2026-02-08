@@ -13,10 +13,12 @@
       "tag": "botania:petals/black"
     }
   ],
-  "processingTime": 50,
+  "processing_time": 50,
   "results": [
     {
-      "item": "minecraft:black_dye"
+      "item": {
+        "id": "minecraft:black_dye"
+      }
     }
   ]
 }

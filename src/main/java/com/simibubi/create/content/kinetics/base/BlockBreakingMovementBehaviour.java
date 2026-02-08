@@ -183,10 +183,10 @@ public class BlockBreakingMovementBehaviour implements MovementBehaviour {
 			return;
 		}
 
-		float breakSpeed = getBlockBreakingSpeed(context);
-		destroyProgress += Mth.clamp((int) (breakSpeed / blockHardness), 1, 10 - destroyProgress);
-		world.playSound(null, breakingPos, stateToBreak.getSoundType(world, breakingPos, null)
-			.getHitSound(), SoundSource.NEUTRAL, .25f, 1);
+			float breakSpeed = getBlockBreakingSpeed(context);
+			destroyProgress += Mth.clamp((int) (breakSpeed / blockHardness), 1, 10 - destroyProgress);
+			world.playSound(null, breakingPos, stateToBreak.getSoundType()
+				.getHitSound(), SoundSource.NEUTRAL, .25f, 1);
 
 		if (destroyProgress >= 10) {
 			world.destroyBlockProgress(id, breakingPos, -1);

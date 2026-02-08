@@ -13,15 +13,19 @@
       "item": "minecraft:moss_block"
     }
   ],
-  "processingTime": 50,
+  "processing_time": 50,
   "results": [
     {
       "count": 2,
-      "item": "quark:moss_paste"
+      "item": {
+        "id": "quark:moss_paste"
+      }
     },
     {
       "chance": 0.1,
-      "item": "quark:moss_paste"
+      "item": {
+        "id": "quark:moss_paste"
+      }
     }
   ]
 }

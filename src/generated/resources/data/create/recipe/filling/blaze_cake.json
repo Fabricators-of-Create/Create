@@ -7,12 +7,14 @@
     {
       "amount": 27000,
       "fluid": "minecraft:lava",
-      "nbt": {}
+      "type": "fluid_stack"
     }
   ],
   "results": [
     {
-      "item": "create:blaze_cake"
+      "item": {
+        "id": "create:blaze_cake"
+      }
     }
   ]
 }

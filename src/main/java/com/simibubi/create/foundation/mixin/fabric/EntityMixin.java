@@ -5,7 +5,6 @@ import java.util.List;
 import javax.annotation.Nullable;
 
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
@@ -28,16 +27,17 @@ import io.github.fabricators_of_create.porting_lib.mixin.accessors.common.access
 
 @Mixin(Entity.class)
 public abstract class EntityMixin {
-	@Shadow
-	public abstract Level level();
-
 	// AbstractMinecart does not override remove, so we have to inject here.
 	@Inject(method = "remove", at = @At("HEAD"))
 	private void removeMinecartController(RemovalReason reason, CallbackInfo ci) {
 		//noinspection ConstantValue
 		if ((Object) this instanceof AbstractMinecart cart) {
-			CapabilityMinecartController.onCartRemoved(level(), cart);
+			CapabilityMinecartController.onCartRemoved(create$getLevel(), cart);
 		}
+	}
+
+	private Level create$getLevel() {
+		return ((Entity) (Object) this).level();
 	}
 
 	/**

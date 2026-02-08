@@ -13,11 +13,13 @@
       "tag": "c:plates/copper"
     }
   ],
-  "processingTime": 50,
+  "processing_time": 50,
   "results": [
     {
       "count": 2,
-      "item": "immersiveengineering:wire_copper"
+      "item": {
+        "id": "immersiveengineering:wire_copper"
+      }
     }
   ]
 }

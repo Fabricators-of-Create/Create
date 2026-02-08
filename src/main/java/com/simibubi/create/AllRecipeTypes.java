@@ -12,7 +12,6 @@ import org.jetbrains.annotations.Nullable;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
-import com.simibubi.create.compat.rei.ConversionRecipe;
 import com.simibubi.create.content.equipment.sandPaper.SandPaperPolishingRecipe;
 import com.simibubi.create.content.equipment.toolbox.ToolboxDyeingRecipe;
 import com.simibubi.create.content.fluids.transfer.EmptyingRecipe;
@@ -51,7 +50,7 @@ import net.minecraft.world.level.Level;
 
 public enum AllRecipeTypes implements IRecipeTypeInfo, StringRepresentable {
 
-	CONVERSION(ConversionRecipe::new),
+	CONVERSION(PressingRecipe::new),
 	CRUSHING(CrushingRecipe::new),
 	CUTTING(CuttingRecipe::new),
 	MILLING(MillingRecipe::new),
@@ -108,7 +107,10 @@ public enum AllRecipeTypes implements IRecipeTypeInfo, StringRepresentable {
 	}
 
 	AllRecipeTypes(ProcessingRecipeFactory<?> processingFactory) {
-		this(() -> new ProcessingRecipeSerializer<>(processingFactory));
+		String name = Lang.asId(name());
+		id = Create.asResource(name);
+		serializerObject = Registry.register(BuiltInRegistries.RECIPE_SERIALIZER, id, new ProcessingRecipeSerializer<>(processingFactory, this));
+		typeObject = Registry.register(BuiltInRegistries.RECIPE_TYPE, id, createType(id));
 		isProcessingRecipe = true;
 	}
 

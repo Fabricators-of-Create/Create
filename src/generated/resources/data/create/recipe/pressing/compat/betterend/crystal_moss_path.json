@@ -15,7 +15,9 @@
   ],
   "results": [
     {
-      "item": "betterend:crystal_moss_path"
+      "item": {
+        "id": "betterend:crystal_moss_path"
+      }
     }
   ]
 }

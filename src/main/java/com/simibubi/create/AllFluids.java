@@ -11,27 +11,23 @@ import javax.annotation.Nullable;
 import com.simibubi.create.content.decoration.palettes.AllPaletteStoneTypes;
 import com.simibubi.create.content.fluids.VirtualFluid;
 import com.simibubi.create.content.fluids.potion.PotionFluid;
-import com.simibubi.create.content.fluids.potion.PotionFluid.BottleType;
 import com.simibubi.create.content.fluids.potion.PotionFluidHandler;
 import com.simibubi.create.foundation.data.CreateRegistrate;
 import com.simibubi.create.foundation.fluid.FluidHelper;
+import com.simibubi.create.infrastructure.fabric.transfer.TransferUtil;
 import com.tterrag.registrate.fabric.SimpleFlowableFluid;
 import com.tterrag.registrate.util.entry.FluidEntry;
 
 import io.github.fabricators_of_create.porting_lib.tags.Tags;
 
 import net.createmod.catnip.data.Iterate;
-import net.createmod.catnip.nbt.NBTHelper;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.registries.Registries;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.world.item.TooltipFlag;
-import net.minecraft.world.item.alchemy.PotionUtils;
 import net.minecraft.world.level.BlockAndTintGetter;
-import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.state.BlockState;
@@ -78,7 +74,7 @@ public class AllFluids {
 			.onRegisterAfter(Registries.ITEM, tea -> {
 				Fluid still = tea.getSource();
 				FluidStorage.combinedItemApiProvider(AllItems.BUILDERS_TEA.get()).register(context ->
-						new FullItemFluidStorage(context, bottle -> ItemVariant.of(GLASS_BOTTLE), FluidVariant.of(still), FluidConstants.BOTTLE));
+						new FullItemFluidStorage(context, bottle -> ItemVariant.of(GLASS_BOTTLE), TransferUtil.fluidVariantOf(still), FluidConstants.BOTTLE));
 				FluidStorage.combinedItemApiProvider(GLASS_BOTTLE).register(context ->
 						new EmptyItemFluidStorage(context, bottle -> ItemVariant.of(AllItems.BUILDERS_TEA.get()), still, FluidConstants.BOTTLE));
 			})
@@ -98,13 +94,13 @@ public class AllFluids {
 					.tag(AllTags.commonItemTag("buckets/honey"))
 					.build()
 					.onRegisterAfter(Registries.ITEM, honey -> {
-						Fluid source = honey.getSource();
+						Fluid source = FluidHelper.convertToStill(honey);
 						FluidStorage.combinedItemApiProvider(HONEY_BOTTLE).register(context ->
-								new FullItemFluidStorage(context, bottle -> ItemVariant.of(GLASS_BOTTLE), FluidVariant.of(source), HONEY_BOTTLE_AMOUNT));
+								new FullItemFluidStorage(context, bottle -> ItemVariant.of(GLASS_BOTTLE), TransferUtil.fluidVariantOf(source), HONEY_BOTTLE_AMOUNT));
 						FluidStorage.combinedItemApiProvider(GLASS_BOTTLE).register(context ->
 								new EmptyItemFluidStorage(context, bottle -> ItemVariant.of(HONEY_BOTTLE), source, HONEY_BOTTLE_AMOUNT));
 						FluidStorage.combinedItemApiProvider(source.getBucket()).register(context ->
-								new FullItemFluidStorage(context, bucket -> ItemVariant.of(BUCKET), FluidVariant.of(source), FluidConstants.BUCKET));
+								new FullItemFluidStorage(context, bucket -> ItemVariant.of(BUCKET), TransferUtil.fluidVariantOf(source), FluidConstants.BUCKET));
 						FluidStorage.combinedItemApiProvider(BUCKET).register(context ->
 								new EmptyItemFluidStorage(context, bucket -> ItemVariant.of(source.getBucket()), source, FluidConstants.BUCKET));
 					})
@@ -120,10 +116,10 @@ public class AllFluids {
 							.blastResistance(100f))
 					.fluidAttributes(() -> new CreateAttributeHandler("block.create.chocolate", 1500, 1400))
 					.onRegisterAfter(Registries.ITEM, chocolate -> {
-						Fluid source = chocolate.getSource();
+						Fluid source = FluidHelper.convertToStill(chocolate);
 						// transfer values
 						FluidStorage.combinedItemApiProvider(source.getBucket()).register(context ->
-								new FullItemFluidStorage(context, bucket -> ItemVariant.of(BUCKET), FluidVariant.of(source), FluidConstants.BUCKET));
+								new FullItemFluidStorage(context, bucket -> ItemVariant.of(BUCKET), TransferUtil.fluidVariantOf(source), FluidConstants.BUCKET));
 						FluidStorage.combinedItemApiProvider(BUCKET).register(context ->
 								new EmptyItemFluidStorage(context, bucket -> ItemVariant.of(source.getBucket()), source, FluidConstants.BUCKET));
 					})
@@ -203,12 +199,12 @@ public class AllFluids {
 	public static class PotionFluidVariantRenderHandler implements FluidVariantRenderHandler {
 		@Override
 		public int getColor(FluidVariant fluidVariant, @Nullable BlockAndTintGetter view, @Nullable BlockPos pos) {
-			return PotionUtils.getColor(PotionUtils.getAllEffects(fluidVariant.getNbt())) | 0xff000000;
+			return 0xff385dc6;
 		}
 
 		@Override
 		public void appendTooltip(FluidVariant fluidVariant, List<Component> tooltip, TooltipFlag tooltipContext) {
-			PotionFluidHandler.addPotionTooltip(fluidVariant, tooltip, 1);
+			PotionFluidHandler.addPotionTooltip(fluidVariant, tooltip::add, 1);
 		}
 	}
 
@@ -219,14 +215,7 @@ public class AllFluids {
 		}
 
 		public String getTranslationKey(FluidVariant stack) {
-			CompoundTag tag = stack.getNbt();
-			if (tag == null)
-				return "create.potion.invalid";
-			ItemLike itemFromBottleType =
-					PotionFluidHandler.itemFromBottleType(NBTHelper.readEnum(tag, "Bottle", BottleType.class));
-			return PotionUtils.getPotion(tag)
-					.getName(itemFromBottleType.asItem()
-							.getDescriptionId() + ".effect.");
+			return "item.minecraft.potion.effect.empty";
 		}
 	}
 

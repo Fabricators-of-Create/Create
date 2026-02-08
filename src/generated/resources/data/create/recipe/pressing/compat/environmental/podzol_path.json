@@ -15,7 +15,9 @@
   ],
   "results": [
     {
-      "item": "environmental:podzol_path"
+      "item": {
+        "id": "environmental:podzol_path"
+      }
     }
   ]
 }

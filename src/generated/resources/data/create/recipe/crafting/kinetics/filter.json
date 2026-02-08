@@ -13,7 +13,7 @@
     "ASA"
   ],
   "result": {
-    "item": "create:filter"
+    "id": "create:filter"
   },
   "show_notification": true
 }

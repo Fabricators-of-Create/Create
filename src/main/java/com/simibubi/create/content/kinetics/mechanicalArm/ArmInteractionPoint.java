@@ -109,7 +109,7 @@ public class ArmInteractionPoint {
 		if (handler == null)
 			return stack;
 		long inserted = handler.insert(ItemVariant.of(stack), stack.getCount(), ctx);
-		return ItemHandlerHelper.copyStackWithSize(stack, ItemHelper.truncateLong(stack.getCount() - inserted));
+		return stack.copyWithCount(ItemHelper.truncateLong(stack.getCount() - inserted));
 	}
 
 	public ItemStack extract(int amount, TransactionContext ctx) {

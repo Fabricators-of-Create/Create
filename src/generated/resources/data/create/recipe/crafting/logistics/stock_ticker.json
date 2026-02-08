@@ -18,7 +18,7 @@
     "B"
   ],
   "result": {
-    "item": "create:stock_ticker"
+    "id": "create:stock_ticker"
   },
   "show_notification": true
 }

@@ -9,7 +9,7 @@
       "item": "minecraft:barrel"
     },
     "D": {
-      "tag": "c:gray_dyes"
+      "tag": "c:dyes/gray"
     }
   },
   "pattern": [
@@ -18,7 +18,7 @@
     "A"
   ],
   "result": {
-    "item": "create:gray_postbox"
+    "id": "create:gray_postbox"
   },
   "show_notification": true
 }

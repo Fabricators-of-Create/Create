@@ -15,7 +15,7 @@
     "G G"
   ],
   "result": {
-    "item": "create:copper_diving_boots"
+    "id": "create:copper_diving_boots"
   },
   "show_notification": true
 }

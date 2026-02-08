@@ -13,10 +13,12 @@
       "tag": "c:certus_quartz"
     }
   ],
-  "processingTime": 200,
+  "processing_time": 200,
   "results": [
     {
-      "item": "ae2:certus_quartz_dust"
+      "item": {
+        "id": "ae2:certus_quartz_dust"
+      }
     }
   ]
 }

@@ -15,7 +15,9 @@
   ],
   "results": [
     {
-      "item": "immersiveengineering:plate_constantan"
+      "item": {
+        "id": "immersiveengineering:plate_constantan"
+      }
     }
   ]
 }

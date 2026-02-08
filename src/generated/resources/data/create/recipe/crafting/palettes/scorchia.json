@@ -6,7 +6,7 @@
       "item": "create:scoria"
     },
     "D": {
-      "tag": "c:black_dyes"
+      "tag": "c:dyes/black"
     }
   },
   "pattern": [
@@ -16,7 +16,7 @@
   ],
   "result": {
     "count": 8,
-    "item": "create:scorchia"
+    "id": "create:scorchia"
   },
   "show_notification": true
 }

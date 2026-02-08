@@ -1,6 +1,7 @@
 package com.simibubi.create.content.contraptions.sync;
 
 import com.simibubi.create.AllPackets;
+import com.simibubi.create.foundation.utility.PersistentDataHelper;
 
 import io.netty.buffer.ByteBuf;
 import net.createmod.catnip.codecs.stream.CatnipStreamCodecs;
@@ -29,7 +30,7 @@ public record LimbSwingUpdatePacket(int entityId, Vec3 position, float limbSwing
 		Entity entity = player.clientLevel.getEntity(entityId);
 		if (entity == null)
 			return;
-		CompoundTag data = entity.getPersistentData();
+		CompoundTag data = PersistentDataHelper.get(entity);
 		data.putInt("LastOverrideLimbSwingUpdate", 0);
 		data.putFloat("OverrideLimbSwing", limbSwing);
 		entity.lerpTo(position.x, position.y, position.z, entity.getYRot(),

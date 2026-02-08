@@ -56,6 +56,11 @@ public class CombinedSlottedStackStorage<S extends SlottedStackStorage> extends 
 	}
 
 	@Override
+	public boolean isItemValid(int slot, ItemStack stack) {
+		return this.getFromStorage(slot, (storage, index) -> storage.isItemValid(index, stack));
+	}
+
+	@Override
 	public long insertSlot(int slot, ItemVariant resource, long maxAmount, TransactionContext transaction) {
 		return this.getFromStorage(slot, (storage, index) -> storage.insertSlot(index, resource, maxAmount, transaction));
 	}

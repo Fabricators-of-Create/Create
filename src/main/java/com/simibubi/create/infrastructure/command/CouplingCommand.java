@@ -123,23 +123,23 @@ public class CouplingCommand {
 								return 0;
 							}
 
-							for (boolean bool : Iterate.trueAndFalse) {
-								UUID coupledCart = cart1Capability.getCoupledCart(bool);
-								if (coupledCart == null)
-									continue;
+								for (boolean bool : Iterate.trueAndFalse) {
+									UUID coupledCart = cart1Controller.getCoupledCart(bool);
+									if (coupledCart == null)
+										continue;
 
-								if (coupledCart != cart2.getUUID())
-									continue;
+									if (!coupledCart.equals(cart2.getUUID()))
+										continue;
 
 								MinecartController cart2Controller =
 									CapabilityMinecartController.getIfPresent(cart1.getCommandSenderWorld(), coupledCart);
 								if (cart2Controller == null)
 									return 0;
 
-								cart1Capability.removeConnection(bool);
-								cart2Controller.removeConnection(!bool);
-								return Command.SINGLE_SUCCESS;
-							}
+									cart1Controller.removeConnection(bool);
+									cart2Controller.removeConnection(!bool);
+									return Command.SINGLE_SUCCESS;
+								}
 
 							ctx.getSource()
 								.sendSuccess(() -> {
@@ -157,8 +157,8 @@ public class CouplingCommand {
 
 						MinecartController controller = ((AbstractMinecart) cart).create$getController();
 
-						int couplings =
-							(capability.isConnectedToCoupling() ? 1 : 0) + (capability.isLeadingCoupling() ? 1 : 0);
+							int couplings =
+								(controller.isConnectedToCoupling() ? 1 : 0) + (controller.isLeadingCoupling() ? 1 : 0);
 						if (couplings == 0) {
 							ctx.getSource()
 								.sendSuccess(() -> {
@@ -167,7 +167,7 @@ public class CouplingCommand {
 							return 0;
 						}
 
-						capability.decouple();
+							controller.decouple();
 
 						ctx.getSource()
 							.sendSuccess(() ->

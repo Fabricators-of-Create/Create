@@ -13,16 +13,20 @@
       "item": "minecraft:ice"
     }
   ],
-  "processingTime": 100,
+  "processing_time": 100,
   "results": [
     {
       "count": 3,
-      "item": "neapolitan:ice_cubes"
+      "item": {
+        "id": "neapolitan:ice_cubes"
+      }
     },
     {
       "chance": 0.25,
       "count": 3,
-      "item": "neapolitan:ice_cubes"
+      "item": {
+        "id": "neapolitan:ice_cubes"
+      }
     }
   ]
 }

@@ -16,7 +16,9 @@
   "results": [
     {
       "count": 9,
-      "item": "techreborn:tin_nugget"
+      "item": {
+        "id": "techreborn:tin_nugget"
+      }
     }
   ]
 }

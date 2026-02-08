@@ -13,15 +13,12 @@ import com.simibubi.create.foundation.gui.widget.ScrollInput;
 import net.createmod.catnip.platform.CatnipServices;
 import com.simibubi.create.foundation.gui.widget.SelectionScrollInput;
 import com.simibubi.create.foundation.utility.CreateLang;
-import com.simibubi.create.infrastructure.ponder.AllCreatePonderTags;
 
 import dev.engine_room.flywheel.lib.transform.TransformStack;
 import net.createmod.catnip.data.Iterate;
 import net.createmod.catnip.gui.AbstractSimiScreen;
-import net.createmod.catnip.gui.ScreenOpener;
 import net.createmod.catnip.gui.element.GuiGameElement;
 import net.createmod.catnip.gui.widget.AbstractSimiWidget;
-import net.createmod.ponder.foundation.ui.PonderTagScreen;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
@@ -129,12 +126,6 @@ public class ThresholdSwitchScreen extends AbstractSimiScreen {
 
 	@Override
 	public boolean mouseClicked(double mouseX, double mouseY, int pButton) {
-		int itemX = guiLeft + 13;
-		int itemY = guiTop + 80;
-		if (mouseX >= itemX && mouseX < itemX + 16 && mouseY >= itemY && mouseY < itemY + 16) {
-			ScreenOpener.open(new PonderTagScreen(AllCreatePonderTags.THRESHOLD_SWITCH_TARGETS));
-			return true;
-		}
 		return super.mouseClicked(mouseX, mouseY, pButton);
 	}
 

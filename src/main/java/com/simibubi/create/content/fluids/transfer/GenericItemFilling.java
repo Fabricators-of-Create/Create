@@ -60,13 +60,13 @@ public class GenericItemFilling {
 		if (stack.getItem() == Items.MILK_BUCKET)
 			return false;
 
-		Storage<FluidVariant> tank = FluidStorage.ITEM.find(stack, ContainerItemContext.withConstant(stack));
-		if (tank == null)
-			return false;
-		if (!isFluidHandlerValid(stack, capability))
-			return false;
-		return tank.supportsInsertion();
-	}
+			Storage<FluidVariant> tank = FluidStorage.ITEM.find(stack, ContainerItemContext.withConstant(stack));
+			if (tank == null)
+				return false;
+			if (!isFluidHandlerValid(stack, tank))
+				return false;
+			return tank.supportsInsertion();
+		}
 
 	public static long getRequiredAmountForItem(Level world, ItemStack stack, FluidStack availableFluid) {
 		if (stack.getItem() == Items.GLASS_BOTTLE && canFillGlassBottleInternally(availableFluid))

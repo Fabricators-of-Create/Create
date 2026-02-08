@@ -14,5 +14,7 @@
   "ingredient": {
     "item": "create:crushed_raw_nickel"
   },
-  "result": "modern_industrialization:nickel_ingot"
+  "result": {
+    "id": "modern_industrialization:nickel_ingot"
+  }
 }

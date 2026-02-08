@@ -15,7 +15,9 @@
   ],
   "results": [
     {
-      "item": "endergetic:petrified_nether_corrock_crown"
+      "item": {
+        "id": "endergetic:petrified_nether_corrock_crown"
+      }
     }
   ]
 }

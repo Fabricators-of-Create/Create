@@ -218,7 +218,7 @@ public class FluidTankBlock extends Block implements IWrenchable, IBE<FluidTankB
 			Fluid fluid = fluidInTank.getFluid();
 			fluidState = fluid.defaultFluidState()
 				.createLegacyBlock();
-			soundevent = FluidVariantAttributes.getEmptySound(FluidVariant.of(fluid));
+			soundevent = FluidVariantAttributes.getEmptySound(TransferUtil.fluidVariantOf(fluid));
 		}
 
 		if (exchange == FluidExchange.TANK_TO_ITEM) {

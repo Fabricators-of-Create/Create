@@ -6,7 +6,7 @@
       "item": "create:cardboard"
     },
     "S": {
-      "tag": "c:wooden_rods"
+      "tag": "c:rods/wooden"
     }
   },
   "pattern": [
@@ -15,7 +15,7 @@
     "S"
   ],
   "result": {
-    "item": "create:cardboard_sword"
+    "id": "create:cardboard_sword"
   },
   "show_notification": true
 }

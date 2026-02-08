@@ -1,19 +1,13 @@
 {
-  "neoforge:conditions": [
-    {
-      "type": "neoforge:mod_loaded",
-      "modid": "atmospheric"
-    }
-  ],
   "type": "create:splashing",
   "ingredients": [
     {
-      "type": "neoforge:compound",
       "ingredients": [
         {
           "item": "atmospheric:arid_sand"
         }
-      ]
+      ],
+      "fabric:type": "fabric:any"
     }
   ],
   "results": [
@@ -25,7 +19,17 @@
     },
     {
       "chance": 0.05,
-      "item": "atmospheric:aloe_kernels"
+      "item": {
+        "id": "atmospheric:aloe_kernels"
+      }
+    }
+  ],
+  "fabric:load_conditions": [
+    {
+      "condition": "fabric:all_mods_loaded",
+      "values": [
+        "atmospheric"
+      ]
     }
   ]
 }

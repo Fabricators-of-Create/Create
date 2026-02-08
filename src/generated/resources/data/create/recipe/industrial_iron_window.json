@@ -15,7 +15,7 @@
   ],
   "result": {
     "count": 2,
-    "item": "create:industrial_iron_window"
+    "id": "create:industrial_iron_window"
   },
   "show_notification": true
 }

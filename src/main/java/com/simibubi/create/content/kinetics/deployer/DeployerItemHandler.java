@@ -52,7 +52,7 @@ public class DeployerItemHandler extends SnapshotParticipant<Unit> implements St
 
 	@Override
 	public long insert(ItemVariant resource, long maxAmount, TransactionContext transaction) {
-		int maxInsert = Math.min((int) maxAmount, resource.getItem().getMaxStackSize());
+		int maxInsert = Math.min((int) maxAmount, resource.getItem().getDefaultMaxStackSize());
 		ItemStack stack = resource.toStack(maxInsert);
 		if (!isItemValid(stack))
 			return 0;
@@ -203,7 +203,7 @@ public class DeployerItemHandler extends SnapshotParticipant<Unit> implements St
 				return 0;
 			int toExtract = (int) Math.min(maxAmount, stack.getCount());
 			updateSnapshots(transaction);
-			ItemStack newStack = io.github.fabricators_of_create.porting_lib.transfer.item.ItemHandlerHelper.copyStackWithSize(stack, stack.getCount() - toExtract);
+			ItemStack newStack = stack.copyWithCount(stack.getCount() - toExtract);
 			heldSetter.accept(newStack);
 			return toExtract;
 		}

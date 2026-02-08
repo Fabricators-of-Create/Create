@@ -8,14 +8,15 @@ val fapiVersion = "0.115.1+1.21.1"
 
 // in-house dependencies
 val flywheelVersion = "1.0.1-11"
-val ponderVersion = "1.0.44"
+val ponderVersion = "1.0.50"
 val registrateVersion = "1.3.77-MC1.21.1"
-val milkLibVersion = "1.2.60"
 
 // external dependencies
 val configApiVersion = "21.1.3"
 val nightConfigVersion =  "3.6.3"
 val jsr305Version = "3.0.2"
+val portingLibVersion = "3.1.0-beta.54+1.21.1"
+val portingLibTagsModVersion = "3.0"
 
 // compat
 // https://modrinth.com/mod/cc-tweaked/versions
@@ -82,7 +83,7 @@ repositories {
         content { includeGroup("com.jamieswhiteshirt") }
     }
     maven("https://maven.ladysnake.org/releases") // CCA, for Trinkets
-    maven("https://maven.saps.dev/releases") // FTB
+    maven("https://maven.ftb.dev/releases") // FTB
     maven("https://maven.architectury.dev") // Architectury API
     maven("https://jm.gserv.me/repository/maven-public/") // Journey map
 }
@@ -93,7 +94,7 @@ dependencies {
     // setup
     minecraft("com.mojang:minecraft:$minecraftVersion")
     mappings(loom.layered {
-        officialMojangMappings { nameSyntheticMembers = false }
+        officialMojangMappings()
         parchment("org.parchmentmc.data:parchment-$minecraftVersion:$parchmentVersion@zip")
     })
     modImplementation("net.fabricmc:fabric-loader:$loaderVersion")
@@ -107,8 +108,38 @@ dependencies {
     modApi(include("com.electronwill.night-config:toml:$nightConfigVersion")!!)
     modApi(include("fuzs.forgeconfigapiport:forgeconfigapiport-fabric:$configApiVersion")!!)
     modApi(include("dev.engine-room.flywheel:flywheel-fabric-$minecraftVersion:$flywheelVersion")!!)
-    modApi(include("io.github.tropheusj:milk-lib:$milkLibVersion")!!)
     api(include("com.google.code.findbugs:jsr305:$jsr305Version")!!)
+    listOf(
+        "accessors",
+        "asm",
+        "attributes",
+        "base",
+        "blocks",
+        "brewing",
+        "client_events",
+        "common",
+        "conditions",
+        "config",
+        "core",
+        "data",
+        "entity",
+        "extensions",
+        "fluids",
+        "gametest",
+        "gui_utils",
+        "item_abilities",
+        "lazy_registration",
+        "level_events",
+        "mixin_extensions",
+        "model_loader",
+        "models",
+        "obj_loader",
+        "render_types",
+        "tags",
+        "transfer"
+    ).forEach { module ->
+        modImplementation(include("io.github.fabricators_of_create.Porting-Lib:$module:$portingLibVersion")!!)
+    }
 
     if (ponder.exists()) {
         implementation("net.createmod.ponder:Ponder-Fabric-$minecraftVersion:$ponderVersion") { isTransitive = false }
@@ -170,7 +201,44 @@ dependencies {
     modLocalRuntime("net.fabricmc.fabric-api:fabric-api-deprecated:$fapiVersion")
 }
 
+configurations.configureEach {
+    resolutionStrategy.eachDependency {
+        if (requested.group == "io.github.fabricators_of_create.Porting-Lib") {
+            useVersion(portingLibVersion)
+        }
+    }
+}
+
 sourceSets.named("main") {
+    java {
+        // Temporary exclusions while the Fabric 1.21.1 runtime path is stabilized.
+        exclude(
+            "com/simibubi/create/compat/computercraft/implementation/**",
+            "com/simibubi/create/compat/curios/**",
+            "com/simibubi/create/compat/emi/**",
+            "com/simibubi/create/compat/ftb/**",
+            "com/simibubi/create/compat/jei/**",
+            "com/simibubi/create/compat/rei/**",
+            "com/simibubi/create/compat/sandwichable/**",
+            "com/simibubi/create/compat/trainmap/**",
+            "com/simibubi/create/foundation/data/CreateDatamapProvider.java",
+            "com/simibubi/create/foundation/data/RuntimeDataGenerator.java",
+            "com/simibubi/create/foundation/data/SimpleDatagenIngredient.java",
+            "com/simibubi/create/foundation/data/recipe/*Gen.java",
+            "com/simibubi/create/foundation/data/recipe/CreateRecipeProvider.java",
+            "com/simibubi/create/foundation/data/recipe/MechanicalCraftingRecipeBuilder.java",
+            "com/simibubi/create/foundation/data/recipe/LogStrippingFakeRecipes.java",
+            "com/simibubi/create/foundation/data/recipe/ProcessingRecipeGen.java",
+            "com/simibubi/create/foundation/data/recipe/StandardRecipeGen.java",
+            "com/simibubi/create/foundation/mixin/accessor/FluidInteractionRegistryAccessor.java",
+            "com/simibubi/create/foundation/mixin/accessor/ItemStackHandlerAccessor.java",
+            "com/simibubi/create/foundation/mixin/datafixer/ItemStackComponentizationFixMixin.java",
+            "com/simibubi/create/foundation/mixin/SmithingTrimRecipeMixin.java",
+            "com/simibubi/create/infrastructure/data/**",
+            "com/simibubi/create/infrastructure/ponder/**",
+            "com/simibubi/create/infrastructure/RemapHelper.java"
+        )
+    }
     resources {
         srcDir("src/generated/resources")
         exclude(".cache/")
@@ -228,7 +296,15 @@ tasks.named<ProcessResources>("processResources") {
         "loader_version" to loaderVersion,
         "fabric_version" to fapiVersion,
         "forge_config_version" to configApiVersion,
-        "milk_lib_version" to milkLibVersion
+        "port_lib_accessors_version" to portingLibVersion,
+        "port_lib_base_version" to portingLibVersion,
+        "port_lib_entity_version" to portingLibVersion,
+        "port_lib_extensions_version" to portingLibVersion,
+        "port_lib_obj_loader_version" to portingLibVersion,
+        "port_lib_tags_version" to portingLibTagsModVersion,
+        "port_lib_transfer_version" to portingLibVersion,
+        "port_lib_models_version" to portingLibVersion,
+        "port_lib_client_events_version" to portingLibVersion
     )
 
     inputs.properties(properties)
@@ -245,6 +321,39 @@ java {
 tasks.named<JavaCompile>("compileJava") {
     options.compilerArgs.add("-Xmaxerrs")
     options.compilerArgs.add("10000")
+}
+
+// Keep Loom's remap classpath empty; the distributable script remaps classes again with --ignoreConflicts.
+tasks.named<net.fabricmc.loom.task.RemapJarTask>("remapJar") {
+    classpath.setFrom(files())
+}
+
+val auditClientLog by tasks.registering(Exec::class) {
+    group = "verification"
+    description = "Audit run/logs/latest.log for actionable runtime warning signatures."
+    commandLine(
+        "bash",
+        "-lc",
+        "if [ ! -f run/logs/latest.log ]; then echo 'Missing log: run/logs/latest.log'; exit 1; fi; scripts/audit_runtime_warnings.sh run/logs/latest.log"
+    )
+}
+
+val auditServerLog by tasks.registering(Exec::class) {
+    group = "verification"
+    description = "Audit run/server/logs/latest.log for actionable runtime warning signatures."
+    commandLine(
+        "bash",
+        "-lc",
+        "if [ ! -f run/server/logs/latest.log ]; then echo 'Missing log: run/server/logs/latest.log'; exit 1; fi; scripts/audit_runtime_warnings.sh run/server/logs/latest.log"
+    )
+}
+
+tasks.named("runClient") {
+    finalizedBy(auditClientLog)
+}
+
+tasks.named("runServer") {
+    finalizedBy(auditServerLog)
 }
 
 publishing {

@@ -15,7 +15,7 @@
     " S "
   ],
   "result": {
-    "item": "create:propeller"
+    "id": "create:propeller"
   },
   "show_notification": true
 }

@@ -23,6 +23,8 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
+import io.github.fabricators_of_create.porting_lib.util.TagUtil;
+
 @ParametersAreNonnullByDefault
 public class ValveHandleBlock extends HandCrankBlock {
 

@@ -14,5 +14,7 @@
   "ingredient": {
     "item": "create:crushed_raw_uranium"
   },
-  "result": "ic2:ingot_uranium"
+  "result": {
+    "id": "ic2:ingot_uranium"
+  }
 }

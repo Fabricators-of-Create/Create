@@ -15,7 +15,9 @@
   ],
   "results": [
     {
-      "item": "betterend:cave_moss_path"
+      "item": {
+        "id": "betterend:cave_moss_path"
+      }
     }
   ]
 }

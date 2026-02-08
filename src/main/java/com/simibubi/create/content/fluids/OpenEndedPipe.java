@@ -11,10 +11,10 @@ import com.simibubi.create.foundation.advancement.AllAdvancements;
 import com.simibubi.create.foundation.fluid.FluidHelper;
 import com.simibubi.create.foundation.mixin.accessor.FlowingFluidAccessor;
 import com.simibubi.create.infrastructure.config.AllConfigs;
+import com.simibubi.create.infrastructure.fabric.transfer.TransactionSuccessCallback;
 
 import com.simibubi.create.infrastructure.fabric.transfer.fluid.FluidStack;
 
-import io.github.tropheusj.milk.Milk;
 import net.createmod.catnip.math.BlockFace;
 
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidConstants;
@@ -25,14 +25,18 @@ import net.fabricmc.fabric.api.transfer.v1.transaction.TransactionContext;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.tags.TagKey;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.LiquidBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.level.material.Fluid;
 import net.minecraft.world.level.material.FlowingFluid;
 import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.material.Fluids;
@@ -40,10 +44,10 @@ import net.minecraft.world.phys.AABB;
 
 import net.fabricmc.fabric.api.transfer.v1.storage.Storage;
 
-import io.github.fabricators_of_create.porting_lib.transfer.callbacks.TransactionCallback;
 import com.simibubi.create.infrastructure.fabric.transfer.fluid.FluidTank;
 
 public class OpenEndedPipe extends FlowSource {
+	private static final TagKey<Fluid> MILK_FLUID_TAG = TagKey.create(Registries.FLUID, ResourceLocation.fromNamespaceAndPath("milk", "milk_fluid"));
 
 	private Level world;
 	private BlockPos pos;
@@ -53,7 +57,7 @@ public class OpenEndedPipe extends FlowSource {
 	private BlockPos outputPos;
 	private boolean wasPulling;
 
-	private final ICapabilityProvider<IFluidHandler> fluidHandlerProvider = ICapabilityProvider.of(() -> fluidHandler);
+	private final ICapabilityProvider<Storage<FluidVariant>> fluidHandlerProvider = ICapabilityProvider.of(() -> fluidHandler);
 
 	public OpenEndedPipe(BlockFace face) {
 		super(face);
@@ -186,7 +190,7 @@ public class OpenEndedPipe extends FlowSource {
 			return false;
 		if (!(fluid.getFluid() instanceof FlowingFluid))
 			return false;
-		if (!FluidHelper.hasBlockState(fluid.getFluid()) || fluid.getFluid().is(Milk.MILK_FLUID_TAG)) // fabric: milk logic is different
+		if (!FluidHelper.hasBlockState(fluid.getFluid()) || fluid.getFluid().is(MILK_FLUID_TAG)) // fabric: milk logic is different
 			return true;
 
 		// fabric: note - this is possibly prone to issues but follows what forge does.
@@ -252,8 +256,8 @@ public class OpenEndedPipe extends FlowSource {
 			FluidStack containedFluidStack = getFluid();
 			boolean hasBlockState = FluidHelper.hasBlockState(containedFluidStack.getFluid());
 
-			if (!containedFluidStack.isEmpty() && !FluidStack.isSameFluidSameComponents(containedFluidStack, resource))
-				setFluid(FluidStack.EMPTY);
+				if (!containedFluidStack.isEmpty() && !containedFluidStack.getVariant().equals(resource))
+					setFluid(FluidStack.EMPTY);
 			if (wasPulling)
 				wasPulling = false;
 
@@ -299,8 +303,8 @@ public class OpenEndedPipe extends FlowSource {
 			FluidStack drainedFromWorld = removeFluidFromSpace(transaction);
 			if (drainedFromWorld.isEmpty())
 				return 0;
-			if (!FluidStack.isSameFluidSameComponents(drainedFromWorld, filter))
-				return 0;
+				if (!extractedVariant.isBlank() && !drainedFromWorld.getVariant().equals(extractedVariant))
+					return 0;
 
 			long remainder = drainedFromWorld.getAmount() - maxAmount;
 			drainedFromWorld.setAmount(maxAmount);

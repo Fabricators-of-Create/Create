@@ -15,7 +15,7 @@
   ],
   "result": {
     "count": 2,
-    "item": "create:jungle_window"
+    "id": "create:jungle_window"
   },
   "show_notification": true
 }

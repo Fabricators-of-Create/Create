@@ -37,7 +37,6 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition.Builder;
 import net.minecraft.world.level.material.FluidState;
-import net.minecraft.world.level.pathfinder.BlockPathTypes;
 import net.minecraft.world.level.pathfinder.PathComputationType;
 import net.minecraft.world.level.pathfinder.PathType;
 import net.minecraft.world.phys.AABB;
@@ -48,7 +47,6 @@ import net.minecraft.world.phys.shapes.EntityCollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
 import net.fabricmc.fabric.api.entity.FakePlayer;
-import net.fabricmc.fabric.api.registry.LandPathNodeTypesRegistry;
 
 import io.github.fabricators_of_create.porting_lib.util.TagUtil;
 
@@ -62,7 +60,7 @@ public class SeatBlock extends Block implements ProperWaterloggedBlock {
 		super(properties);
 		this.color = color;
 		registerDefaultState(defaultBlockState().setValue(WATERLOGGED, false));
-		LandPathNodeTypesRegistry.register(this, BlockPathTypes.RAIL, null);
+		LandPathNodeTypesRegistry.register(this, PathType.RAIL, null);
 	}
 
 	@Override

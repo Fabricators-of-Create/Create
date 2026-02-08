@@ -13,11 +13,13 @@
       "tag": "c:plates/electrum"
     }
   ],
-  "processingTime": 50,
+  "processing_time": 50,
   "results": [
     {
       "count": 2,
-      "item": "immersiveengineering:wire_electrum"
+      "item": {
+        "id": "immersiveengineering:wire_electrum"
+      }
     }
   ]
 }

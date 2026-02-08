@@ -20,7 +20,7 @@ public class AutomaticPackingEmiRecipe extends CreateEmiRecipe<BasinRecipe> {
 			height = 90;
 		}
 		ResourceLocation id = recipe.getId();
-		this.id = new ResourceLocation("emi", "create/automatic_packing/" + id.getNamespace() + "/" + id.getPath());
+		this.id = ResourceLocation.fromNamespaceAndPath("emi", "create/automatic_packing/" + id.getNamespace() + "/" + id.getPath());
 	}
 
 	@Override

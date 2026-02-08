@@ -13,10 +13,12 @@
       "tag": "botania:petals/brown"
     }
   ],
-  "processingTime": 50,
+  "processing_time": 50,
   "results": [
     {
-      "item": "minecraft:brown_dye"
+      "item": {
+        "id": "minecraft:brown_dye"
+      }
     }
   ]
 }

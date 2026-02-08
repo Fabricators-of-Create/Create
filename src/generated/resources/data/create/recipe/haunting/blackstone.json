@@ -7,7 +7,9 @@
   ],
   "results": [
     {
-      "item": "minecraft:blackstone"
+      "item": {
+        "id": "minecraft:blackstone"
+      }
     }
   ]
 }

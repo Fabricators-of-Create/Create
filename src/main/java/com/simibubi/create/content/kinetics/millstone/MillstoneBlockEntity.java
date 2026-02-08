@@ -19,12 +19,11 @@ import net.createmod.catnip.math.VecHelper;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.transfer.v1.item.ItemVariant;
+import net.fabricmc.fabric.api.transfer.v1.storage.Storage;
 import net.fabricmc.fabric.api.transfer.v1.storage.StorageView;
 import net.fabricmc.fabric.api.transfer.v1.storage.base.CombinedStorage;
 import net.fabricmc.fabric.api.transfer.v1.storage.base.SidedStorageBlockEntity;
-
 import net.fabricmc.fabric.api.transfer.v1.transaction.Transaction;
-
 import net.fabricmc.fabric.api.transfer.v1.transaction.TransactionContext;
 
 import net.minecraft.core.BlockPos;
@@ -41,21 +40,12 @@ import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
 
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
-import net.fabricmc.fabric.api.transfer.v1.item.ItemVariant;
-import net.fabricmc.fabric.api.transfer.v1.storage.Storage;
-import net.fabricmc.fabric.api.transfer.v1.storage.StorageView;
-import net.fabricmc.fabric.api.transfer.v1.storage.base.CombinedStorage;
-import net.fabricmc.fabric.api.transfer.v1.storage.base.SidedStorageBlockEntity;
-import net.fabricmc.fabric.api.transfer.v1.transaction.Transaction;
-import net.fabricmc.fabric.api.transfer.v1.transaction.TransactionContext;
-
 import com.simibubi.create.infrastructure.fabric.transfer.TransferUtil;
 import io.github.fabricators_of_create.porting_lib.transfer.ViewOnlyWrappedStorageView;
 import com.simibubi.create.infrastructure.fabric.transfer.item.ItemStackHandler;
 import io.github.fabricators_of_create.porting_lib.transfer.item.ItemStackHandlerContainer;
 import io.github.fabricators_of_create.porting_lib.transfer.item.ItemStackHandlerSlot;
+import io.github.fabricators_of_create.porting_lib.transfer.item.RecipeWrapper;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -221,14 +211,15 @@ public class MillstoneBlockEntity extends KineticBlockEntity implements SidedSto
 	private boolean canProcess(ItemStack stack) {
 		ItemStackHandlerContainer tester = new ItemStackHandlerContainer(1);
 		tester.setStackInSlot(0, stack);
+		RecipeWrapper wrapper = new RecipeWrapper(tester);
 
-		if (lastRecipe != null && lastRecipe.matches(tester, level))
+		if (lastRecipe != null && lastRecipe.matches(wrapper, level))
 			return true;
-		return AllRecipeTypes.MILLING.find(tester, level)
+		return AllRecipeTypes.MILLING.find(wrapper, level)
 			.isPresent();
 	}
 
-	private class MillstoneInventoryHandler extends CombinedStorage<ItemVariant, io.github.fabricators_of_create.porting_lib.transfer.item.ItemStackHandler> {
+	private class MillstoneInventoryHandler extends CombinedStorage<ItemVariant, Storage<ItemVariant>> {
 
 		public MillstoneInventoryHandler() {
 			super(List.of(inputInv, outputInv));

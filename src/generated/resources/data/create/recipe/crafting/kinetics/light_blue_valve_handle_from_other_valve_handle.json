@@ -3,13 +3,13 @@
   "category": "misc",
   "ingredients": [
     {
-      "tag": "c:light_blue_dyes"
+      "tag": "c:dyes/light_blue"
     },
     {
       "tag": "create:valve_handles"
     }
   ],
   "result": {
-    "item": "create:light_blue_valve_handle"
+    "id": "create:light_blue_valve_handle"
   }
 }

@@ -13,6 +13,7 @@ import net.minecraft.core.Direction;
 import net.minecraft.core.NonNullList;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
@@ -85,8 +86,8 @@ public class SuperGlueSelectionHelper {
 
 			int charges = Math.min(requiredAmount, stack.getMaxDamage() - stack.getDamageValue());
 
-			if (!simulate && player.level() instanceof ServerLevel serverLevel)
-				stack.hurtAndBreak(charges, serverLevel, player, i == -1 ? $ -> SuperGlueItem.onBroken(player) : $ -> {});
+				if (!simulate && player.level() instanceof ServerLevel serverLevel && player instanceof ServerPlayer serverPlayer)
+					stack.hurtAndBreak(charges, serverLevel, serverPlayer, i == -1 ? $ -> SuperGlueItem.onBroken(serverPlayer) : $ -> {});
 
 			requiredAmount -= charges;
 			if (requiredAmount <= 0)

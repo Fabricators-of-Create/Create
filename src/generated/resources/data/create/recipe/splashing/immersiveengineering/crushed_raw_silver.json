@@ -16,7 +16,9 @@
   "results": [
     {
       "count": 9,
-      "item": "immersiveengineering:nugget_silver"
+      "item": {
+        "id": "immersiveengineering:nugget_silver"
+      }
     }
   ]
 }

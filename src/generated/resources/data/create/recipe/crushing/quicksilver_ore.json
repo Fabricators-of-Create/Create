@@ -1,13 +1,4 @@
 {
-  "neoforge:conditions": [
-    {
-      "type": "neoforge:not",
-      "value": {
-        "type": "neoforge:tag_empty",
-        "tag": "c:ores/quicksilver"
-      }
-    }
-  ],
   "type": "create:crushing",
   "ingredients": [
     {
@@ -32,6 +23,14 @@
       "item": {
         "id": "create:experience_nugget"
       }
+    }
+  ],
+  "fabric:load_conditions": [
+    {
+      "condition": "fabric:tags_populated",
+      "values": [
+        "c:ores/quicksilver"
+      ]
     }
   ]
 }

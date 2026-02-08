@@ -1,9 +1,10 @@
 package com.simibubi.create.foundation.mixin.fabric.infra.block;
 
+import java.lang.reflect.Field;
+
 import org.apache.commons.lang3.mutable.MutableInt;
 import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 
@@ -21,12 +22,35 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 
 @Mixin(ParticleEngine.class)
 public class ParticleEngineMixin {
-	@Shadow
-	protected ClientLevel level;
+	@Unique
+	private static final Field create$levelField = create$findLevelField();
 
 	@Unique
 	@Nullable
 	private Double particleChance = null;
+
+	@Unique
+	private static Field create$findLevelField() {
+		for (Field field : ParticleEngine.class.getDeclaredFields()) {
+			if (ClientLevel.class.isAssignableFrom(field.getType())) {
+				field.setAccessible(true);
+				return field;
+			}
+		}
+		return null;
+	}
+
+	@Unique
+	private ClientLevel create$getLevel() {
+		if (create$levelField == null) {
+			throw new IllegalStateException("Could not locate ParticleEngine level field");
+		}
+		try {
+			return (ClientLevel) create$levelField.get(this);
+		} catch (IllegalAccessException e) {
+			throw new RuntimeException("Failed to access ParticleEngine level field", e);
+		}
+	}
 
 	@WrapOperation(
 		method = "destroy",
@@ -58,7 +82,8 @@ public class ParticleEngineMixin {
 		)
 	)
 	private void maybeDontAdd(ParticleEngine self, Particle particle, Operation<Void> original) {
-		if (this.particleChance != null && this.level.getRandom().nextDouble() > this.particleChance)
+		ClientLevel level = create$getLevel();
+		if (this.particleChance != null && level.getRandom().nextDouble() > this.particleChance)
 			return;
 
 		original.call(self, particle);

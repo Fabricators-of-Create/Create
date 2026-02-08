@@ -15,7 +15,9 @@
   ],
   "results": [
     {
-      "item": "betterend:amber_moss_path"
+      "item": {
+        "id": "betterend:amber_moss_path"
+      }
     }
   ]
 }

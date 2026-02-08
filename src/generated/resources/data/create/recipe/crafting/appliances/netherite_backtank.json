@@ -7,7 +7,7 @@
     "item": "create:copper_backtank"
   },
   "result": {
-    "item": "create:netherite_backtank"
+    "id": "create:netherite_backtank"
   },
   "template": {
     "item": "minecraft:netherite_upgrade_smithing_template"

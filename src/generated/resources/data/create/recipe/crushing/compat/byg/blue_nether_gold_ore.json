@@ -1,19 +1,13 @@
 {
-  "neoforge:conditions": [
-    {
-      "type": "neoforge:mod_loaded",
-      "modid": "byg"
-    }
-  ],
   "type": "create:crushing",
   "ingredients": [
     {
-      "type": "neoforge:compound",
       "ingredients": [
         {
           "item": "byg:blue_nether_gold_ore"
         }
-      ]
+      ],
+      "fabric:type": "fabric:any"
     }
   ],
   "processing_time": 350,
@@ -32,7 +26,17 @@
     },
     {
       "chance": 0.125,
-      "item": "byg:blue_netherrack"
+      "item": {
+        "id": "byg:blue_netherrack"
+      }
+    }
+  ],
+  "fabric:load_conditions": [
+    {
+      "condition": "fabric:all_mods_loaded",
+      "values": [
+        "byg"
+      ]
     }
   ]
 }

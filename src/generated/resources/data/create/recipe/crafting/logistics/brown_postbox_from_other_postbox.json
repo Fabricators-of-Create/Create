@@ -3,13 +3,13 @@
   "category": "building",
   "ingredients": [
     {
-      "tag": "c:brown_dyes"
+      "tag": "c:dyes/brown"
     },
     {
       "tag": "create:postboxes"
     }
   ],
   "result": {
-    "item": "create:brown_postbox"
+    "id": "create:brown_postbox"
   }
 }

@@ -1,13 +1,4 @@
 {
-  "neoforge:conditions": [
-    {
-      "type": "neoforge:not",
-      "value": {
-        "type": "neoforge:tag_empty",
-        "tag": "c:storage_blocks/raw_osmium"
-      }
-    }
-  ],
   "type": "create:crushing",
   "ingredients": [
     {
@@ -28,6 +19,14 @@
       "item": {
         "id": "create:experience_nugget"
       }
+    }
+  ],
+  "fabric:load_conditions": [
+    {
+      "condition": "fabric:tags_populated",
+      "values": [
+        "c:storage_blocks/raw_osmium"
+      ]
     }
   ]
 }

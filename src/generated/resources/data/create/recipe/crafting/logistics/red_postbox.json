@@ -9,7 +9,7 @@
       "item": "minecraft:barrel"
     },
     "D": {
-      "tag": "c:red_dyes"
+      "tag": "c:dyes/red"
     }
   },
   "pattern": [
@@ -18,7 +18,7 @@
     "A"
   ],
   "result": {
-    "item": "create:red_postbox"
+    "id": "create:red_postbox"
   },
   "show_notification": true
 }

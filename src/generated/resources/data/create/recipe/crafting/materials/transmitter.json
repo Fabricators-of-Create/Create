@@ -18,7 +18,7 @@
     " R "
   ],
   "result": {
-    "item": "create:transmitter"
+    "id": "create:transmitter"
   },
   "show_notification": true
 }

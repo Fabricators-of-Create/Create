@@ -15,7 +15,7 @@
     "SSS"
   ],
   "result": {
-    "item": "create:whisk"
+    "id": "create:whisk"
   },
   "show_notification": true
 }

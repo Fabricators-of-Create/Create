@@ -13,11 +13,13 @@
       "tag": "c:plates/steel"
     }
   ],
-  "processingTime": 50,
+  "processing_time": 50,
   "results": [
     {
       "count": 2,
-      "item": "immersiveengineering:wire_steel"
+      "item": {
+        "id": "immersiveengineering:wire_steel"
+      }
     }
   ]
 }

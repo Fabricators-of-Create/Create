@@ -7,7 +7,7 @@
     "item": "create:copper_diving_helmet"
   },
   "result": {
-    "item": "create:netherite_diving_helmet"
+    "id": "create:netherite_diving_helmet"
   },
   "template": {
     "item": "minecraft:netherite_upgrade_smithing_template"

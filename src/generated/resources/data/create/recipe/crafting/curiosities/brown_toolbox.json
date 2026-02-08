@@ -21,7 +21,7 @@
     " L "
   ],
   "result": {
-    "item": "create:brown_toolbox"
+    "id": "create:brown_toolbox"
   },
   "show_notification": true
 }

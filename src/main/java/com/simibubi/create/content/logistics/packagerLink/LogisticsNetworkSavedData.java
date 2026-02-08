@@ -21,7 +21,11 @@ public class LogisticsNetworkSavedData extends SavedData {
 	private Map<UUID, LogisticsNetwork> logisticsNetworks = new HashMap<>();
 
 	public static SavedData.Factory<LogisticsNetworkSavedData> factory() {
-		return new SavedData.Factory<>(LogisticsNetworkSavedData::new, LogisticsNetworkSavedData::load);
+		return new SavedData.Factory<>(
+			LogisticsNetworkSavedData::new,
+			(tag, registries) -> LogisticsNetworkSavedData.load(tag, registries),
+			null
+		);
 	}
 
 	@Override

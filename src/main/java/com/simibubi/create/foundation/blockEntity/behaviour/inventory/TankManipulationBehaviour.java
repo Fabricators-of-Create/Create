@@ -49,13 +49,14 @@ public class TankManipulationBehaviour extends CapManipulationBehaviourBase<Flui
 					FluidStack stack = new FluidStack(view);
 					if (!filterTest.test(stack))
 						continue;
-					long extracted = view.extract(view.getResource(), view.getAmount(), t);
-					if (extracted != 0) {
-						if (!simulateNext) t.commit();
-						return stack.setAmount(extracted);
+						long extracted = view.extract(view.getResource(), view.getAmount(), t);
+						if (extracted != 0) {
+							if (!simulateNext) t.commit();
+							stack.setAmount(extracted);
+							return stack;
+						}
 					}
 				}
-			}
 		}
 
 		return FluidStack.EMPTY;

@@ -6,20 +6,13 @@ import net.createmod.catnip.lang.Lang;
 import org.jetbrains.annotations.NotNull;
 
 import com.mojang.serialization.Codec;
-import com.simibubi.create.AllDataComponents;
 import com.simibubi.create.AllFluids;
 import com.simibubi.create.content.fluids.VirtualFluid;
 
-import io.netty.buffer.ByteBuf;
 import net.createmod.catnip.codecs.stream.CatnipStreamCodecBuilders;
-import net.createmod.catnip.lang.Lang;
-import net.minecraft.core.BlockPos;
-import net.minecraft.core.component.DataComponents;
 import net.minecraft.network.codec.StreamCodec;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.StringRepresentable;
-import net.minecraft.world.item.alchemy.Potion;
-import net.minecraft.world.item.alchemy.Potions;
+import net.minecraft.world.item.alchemy.PotionContents;
 
 import com.simibubi.create.infrastructure.fabric.transfer.fluid.FluidStack;
 
@@ -38,20 +31,11 @@ public class PotionFluid extends VirtualFluid {
 	}
 
 	public static FluidStack of(long amount, PotionContents potionContents, BottleType bottleType) {
-		FluidStack fluidStack;
-		fluidStack = new FluidStack(AllFluids.POTION.get().getSource(), amount);
-		addPotionToFluidStack(fluidStack, potionContents);
-		fluidStack.set(AllDataComponents.POTION_FLUID_BOTTLE_TYPE, bottleType);
-		return fluidStack;
+		return new FluidStack(AllFluids.POTION.get().getSource(), amount);
 	}
 
 	public static FluidStack addPotionToFluidStack(FluidStack fs, PotionContents potionContents) {
-		if (potionContents == PotionContents.EMPTY) {
-			fs.remove(DataComponents.POTION_CONTENTS);
-			return fs;
-		}
-		fs.set(DataComponents.POTION_CONTENTS, potionContents);
-		return new FluidStack(fs.getFluid(), fs.getAmount(), fs.getTag());
+		return fs;
 	}
 
 	public enum BottleType implements StringRepresentable {

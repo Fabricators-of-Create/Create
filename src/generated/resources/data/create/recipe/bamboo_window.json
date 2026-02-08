@@ -15,7 +15,7 @@
   ],
   "result": {
     "count": 2,
-    "item": "create:bamboo_window"
+    "id": "create:bamboo_window"
   },
   "show_notification": true
 }

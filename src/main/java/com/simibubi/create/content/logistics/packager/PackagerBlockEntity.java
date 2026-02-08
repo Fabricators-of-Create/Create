@@ -113,9 +113,9 @@ public class PackagerBlockEntity extends SmartBlockEntity implements SidedStorag
 		buttonCooldown = 0;
 	}
 
-	public static void registerCapabilities(RegisterCapabilitiesEvent event) {
+	public static void registerCapabilities(net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent event) {
 		event.registerBlockEntity(
-			Capabilities.ItemHandler.BLOCK,
+			net.neoforged.neoforge.capabilities.Capabilities.ItemHandler.BLOCK,
 			AllBlockEntityTypes.PACKAGER.get(),
 			(be, context) -> be.inventory
 		);
@@ -387,8 +387,8 @@ public class PackagerBlockEntity extends SmartBlockEntity implements SidedStorag
 			});
 		}
 
-		return true;
-	}
+			return unpacked;
+		}
 
 	public void attemptToSend(List<PackagingRequest> queuedRequests) {
 		if (queuedRequests == null && (!heldBox.isEmpty() || animationTicks != 0 || buttonCooldown > 0))

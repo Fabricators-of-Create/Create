@@ -30,16 +30,19 @@ import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.item.crafting.SingleRecipeInput;
 import net.minecraft.world.item.enchantment.Enchantment;
+import net.minecraft.world.item.enchantment.ItemEnchantments;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.ComposterBlock;
 import net.minecraft.world.level.block.entity.AbstractFurnaceBlockEntity;
+import net.fabricmc.fabric.api.transfer.v1.context.ContainerItemContext;
+import net.fabricmc.fabric.api.transfer.v1.fluid.FluidStorage;
 
 // TODO - Documentation
 public class AllItemAttributeTypes {
 	public static final ItemAttributeType
 		PLACEABLE = singleton("placeable", s -> s.getItem() instanceof BlockItem),
 		CONSUMABLE = singleton("consumable", s -> s.has(DataComponents.FOOD)),
-		FLUID_CONTAINER = singleton("fluid_container", s -> s.getCapability(Capabilities.FluidHandler.ITEM) != null),
+		FLUID_CONTAINER = singleton("fluid_container", s -> FluidStorage.ITEM.find(s, ContainerItemContext.withConstant(s)) != null),
 		ENCHANTED = singleton("enchanted", ItemStack::isEnchanted),
 		MAX_ENCHANTED = singleton("max_enchanted", AllItemAttributeTypes::maxEnchanted),
 		RENAMED = singleton("renamed", s -> s.has(DataComponents.CUSTOM_NAME)),
@@ -79,7 +82,8 @@ public class AllItemAttributeTypes {
 	}
 
 	private static boolean maxEnchanted(ItemStack s) {
-		for (Object2IntMap.Entry<Holder<Enchantment>> entry : s.getTagEnchantments().entrySet()) {
+		ItemEnchantments enchantments = s.getOrDefault(DataComponents.ENCHANTMENTS, ItemEnchantments.EMPTY);
+		for (Object2IntMap.Entry<Holder<Enchantment>> entry : enchantments.entrySet()) {
 			if (entry.getKey().value().getMaxLevel() <= entry.getIntValue())
 				return true;
 		}

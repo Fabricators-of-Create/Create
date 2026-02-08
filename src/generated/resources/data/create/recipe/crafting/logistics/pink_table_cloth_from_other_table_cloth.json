@@ -3,13 +3,13 @@
   "category": "building",
   "ingredients": [
     {
-      "tag": "c:pink_dyes"
+      "tag": "c:dyes/pink"
     },
     {
       "tag": "create:dyed_table_cloths"
     }
   ],
   "result": {
-    "item": "create:pink_table_cloth"
+    "id": "create:pink_table_cloth"
   }
 }

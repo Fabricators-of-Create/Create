@@ -5,11 +5,7 @@
       "conditions": {
         "items": [
           {
-<<<<<<<< HEAD:src/generated/resources/data/create/advancement/recipes/building_blocks/industrial_iron_block_from_iron_ingots_stonecutting.json
             "tag": "c:iron_ingots"
-========
-            "items": "#c:ingots/iron"
->>>>>>>> forge/mc1.21.1/dev:src/generated/resources/data/create/advancement/recipes/building_blocks/industrial_iron_block_from_ingots_iron_stonecutting.json
           }
         ]
       },
@@ -24,13 +20,8 @@
   },
   "requirements": [
     [
-<<<<<<<< HEAD:src/generated/resources/data/create/advancement/recipes/building_blocks/industrial_iron_block_from_iron_ingots_stonecutting.json
       "has_iron_ingots",
       "has_the_recipe"
-========
-      "has_the_recipe",
-      "has_ingots_iron"
->>>>>>>> forge/mc1.21.1/dev:src/generated/resources/data/create/advancement/recipes/building_blocks/industrial_iron_block_from_ingots_iron_stonecutting.json
     ]
   ],
   "rewards": {

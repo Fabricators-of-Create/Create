@@ -15,7 +15,7 @@
     " I "
   ],
   "result": {
-    "item": "create:empty_blaze_burner"
+    "id": "create:empty_blaze_burner"
   },
   "show_notification": true
 }

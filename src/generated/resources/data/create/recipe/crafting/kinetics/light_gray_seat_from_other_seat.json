@@ -3,13 +3,13 @@
   "category": "building",
   "ingredients": [
     {
-      "tag": "c:light_gray_dyes"
+      "tag": "c:dyes/light_gray"
     },
     {
       "tag": "create:seats"
     }
   ],
   "result": {
-    "item": "create:light_gray_seat"
+    "id": "create:light_gray_seat"
   }
 }

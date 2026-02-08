@@ -15,7 +15,7 @@
     " B "
   ],
   "result": {
-    "item": "create:brass_hand"
+    "id": "create:brass_hand"
   },
   "show_notification": true
 }

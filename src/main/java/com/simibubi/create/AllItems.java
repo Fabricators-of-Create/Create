@@ -25,7 +25,6 @@ import com.simibubi.create.content.equipment.armor.BacktankItem;
 import com.simibubi.create.content.equipment.armor.BacktankItem.BacktankBlockItem;
 import com.simibubi.create.content.equipment.armor.BaseArmorItem;
 import com.simibubi.create.content.equipment.armor.CardboardArmorItem;
-import com.simibubi.create.content.equipment.armor.CardboardArmorStealthOverlay;
 import com.simibubi.create.content.equipment.armor.DivingBootsItem;
 import com.simibubi.create.content.equipment.armor.DivingHelmetItem;
 import com.simibubi.create.content.equipment.armor.TrimmableArmorModelGenerator;
@@ -79,6 +78,7 @@ import com.tterrag.registrate.providers.ProviderType;
 import com.tterrag.registrate.util.entry.ItemEntry;
 import com.tterrag.registrate.util.nullness.NonNullBiConsumer;
 
+import net.createmod.catnip.platform.CatnipServices;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.tags.TagKey;
@@ -93,6 +93,8 @@ import net.minecraft.world.item.Rarity;
 import net.minecraft.world.item.SwordItem;
 import net.neoforged.neoforge.common.Tags;
 
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.fabricmc.fabric.api.registry.FuelRegistry;
 
@@ -360,14 +362,14 @@ public class AllItems {
 
 	public static final ItemEntry<? extends BaseArmorItem>
 
-		CARDBOARD_HELMET = REGISTRATE.item("cardboard_helmet", p -> new CardboardArmorItem(ArmorItem.Type.HELMET, p))
-			.properties(p -> p.durability(Type.HELMET.getDurability(4)))
-			.tag(ItemTags.HEAD_ARMOR, ItemTags.TRIMMABLE_ARMOR)
-			.onRegister(i -> FuelRegistry.INSTANCE.add(i, 1000))
-			.onRegisterAfter(Registries.ITEM, v -> ItemDescription.useKey(v, "item.create.cardboard_armor"))
-			.model(TrimmableArmorModelGenerator::generate)
-			.onRegister(item -> HelmetOverlay.REGISTRY.register(item, new CardboardArmorStealthOverlay()))
-			.register(),
+			CARDBOARD_HELMET = REGISTRATE.item("cardboard_helmet", p -> new CardboardArmorItem(ArmorItem.Type.HELMET, p))
+				.properties(p -> p.durability(Type.HELMET.getDurability(4)))
+				.tag(ItemTags.HEAD_ARMOR, ItemTags.TRIMMABLE_ARMOR)
+				.onRegister(i -> FuelRegistry.INSTANCE.add(i, 1000))
+				.onRegisterAfter(Registries.ITEM, v -> ItemDescription.useKey(v, "item.create.cardboard_armor"))
+				.model(TrimmableArmorModelGenerator::generate)
+				.onRegister(item -> CatnipServices.PLATFORM.executeOnClientOnly(() -> () -> ClientHooks.registerCardboardArmorOverlay(item)))
+				.register(),
 
 		CARDBOARD_CHESTPLATE =
 			REGISTRATE.item("cardboard_chestplate", p -> new CardboardArmorItem(ArmorItem.Type.CHESTPLATE, p))
@@ -553,6 +555,16 @@ public class AllItems {
 	}
 
 	// Load this class
+
+	@Environment(EnvType.CLIENT)
+	private static final class ClientHooks {
+		private ClientHooks() {
+		}
+
+		private static void registerCardboardArmorOverlay(Item item) {
+			HelmetOverlay.REGISTRY.register(item, new com.simibubi.create.content.equipment.armor.CardboardArmorStealthOverlay());
+		}
+	}
 
 	public static void register() {
 	}

@@ -9,7 +9,7 @@
       "tag": "c:gold_plates"
     },
     "S": {
-      "tag": "c:string"
+      "tag": "c:strings"
     }
   },
   "pattern": [
@@ -17,7 +17,7 @@
     "GPG"
   ],
   "result": {
-    "item": "create:goggles"
+    "id": "create:goggles"
   },
   "show_notification": true
 }

@@ -9,11 +9,9 @@ import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
 import com.simibubi.create.AllItems;
 import com.simibubi.create.foundation.advancement.AllAdvancements;
 
-import net.minecraft.core.component.DataComponents;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.SmithingMenu;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.enchantment.ItemEnchantments;
 
 @Mixin(SmithingMenu.class)
 public class SmithingMenuMixin {
@@ -36,13 +34,6 @@ public class SmithingMenuMixin {
 		)
 	)
 	private ItemStack create$preventUnbreakingOnBacktanks(ItemStack original) {
-		if (AllItems.COPPER_BACKTANK.is(original) || AllItems.NETHERITE_BACKTANK.is(original)) {
-			ItemEnchantments.Mutable mutableEnchantments =
-				new ItemEnchantments.Mutable(original.getTagEnchantments());
-			mutableEnchantments.removeIf(enchant -> !original.supportsEnchantment(enchant));
-			original.set(DataComponents.ENCHANTMENTS, mutableEnchantments.toImmutable());
-		}
-
 		return original;
 	}
 }

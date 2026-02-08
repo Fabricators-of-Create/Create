@@ -3,13 +3,13 @@
   "category": "building",
   "ingredients": [
     {
-      "tag": "c:cyan_dyes"
+      "tag": "c:dyes/cyan"
     },
     {
       "tag": "create:postboxes"
     }
   ],
   "result": {
-    "item": "create:cyan_postbox"
+    "id": "create:cyan_postbox"
   }
 }

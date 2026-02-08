@@ -13,23 +13,31 @@
       "tag": "c:ores/anthracite"
     }
   ],
-  "processingTime": 150,
+  "processing_time": 150,
   "results": [
     {
       "count": 2,
-      "item": "byg:anthracite"
+      "item": {
+        "id": "byg:anthracite"
+      }
     },
     {
       "chance": 0.5,
-      "item": "byg:anthracite"
+      "item": {
+        "id": "byg:anthracite"
+      }
     },
     {
       "chance": 0.75,
-      "item": "create:experience_nugget"
+      "item": {
+        "id": "create:experience_nugget"
+      }
     },
     {
       "chance": 0.125,
-      "item": "byg:brimstone"
+      "item": {
+        "id": "byg:brimstone"
+      }
     }
   ]
 }

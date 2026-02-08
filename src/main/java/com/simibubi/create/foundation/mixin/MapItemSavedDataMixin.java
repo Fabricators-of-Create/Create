@@ -6,9 +6,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
-import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -19,6 +17,7 @@ import com.google.common.collect.Maps;
 import com.simibubi.create.content.trains.station.StationBlockEntity;
 import com.simibubi.create.content.trains.station.StationMapData;
 import com.simibubi.create.content.trains.station.StationMarker;
+import com.simibubi.create.foundation.mixin.accessor.MapItemSavedDataAccessor;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
@@ -27,6 +26,7 @@ import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.Tag;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.world.level.saveddata.SavedData;
 import net.minecraft.world.level.saveddata.maps.MapDecoration;
 import net.minecraft.world.level.saveddata.maps.MapItemSavedData;
 
@@ -35,27 +35,13 @@ public class MapItemSavedDataMixin implements StationMapData {
 	@Unique
 	private static final String STATION_MARKERS_KEY = "create:stations";
 
-	@Shadow
-	@Final
-	public int centerX;
-
-	@Shadow
-	@Final
-	public int centerZ;
-
-	@Shadow
-	@Final
-	public byte scale;
-
-	@Shadow
-	@Final
-	Map<String, MapDecoration> decorations;
-
-	@Shadow
-	private int trackedDecorationCount;
-
 	@Unique
 	private final Map<String, StationMarker> create$stationMarkers = Maps.newHashMap();
+
+	@Unique
+	private MapItemSavedDataAccessor create$accessor() {
+		return (MapItemSavedDataAccessor) (Object) this;
+	}
 
 	@Inject(
 			method = "load",
@@ -88,12 +74,13 @@ public class MapItemSavedDataMixin implements StationMapData {
 	public void addStationMarker(StationMarker marker) {
 		create$stationMarkers.put(marker.getId(), marker);
 
-		int scaleMultiplier = 1 << scale;
-		float localX = (marker.getTarget().getX() - centerX) / (float) scaleMultiplier;
-		float localZ = (marker.getTarget().getZ() - centerZ) / (float) scaleMultiplier;
+		MapItemSavedDataAccessor accessor = create$accessor();
+		int scaleMultiplier = 1 << accessor.create$getScale();
+		float localX = (marker.getTarget().getX() - accessor.create$getCenterX()) / (float) scaleMultiplier;
+		float localZ = (marker.getTarget().getZ() - accessor.create$getCenterZ()) / (float) scaleMultiplier;
 
 		if (localX < -63.0F || localX > 63.0F || localZ < -63.0F || localZ > 63.0F) {
-			removeDecoration(marker.getId());
+			create$removeDecoration(marker.getId());
 			return;
 		}
 
@@ -101,43 +88,50 @@ public class MapItemSavedDataMixin implements StationMapData {
 		byte localZByte = (byte) (int) (localZ * 2.0F + 0.5F);
 
 		MapDecoration decoration = StationMarker.createStationDecoration(localXByte, localZByte, Optional.of(marker.getName()));
+		Map<String, MapDecoration> decorations = accessor.create$getDecorations();
 		MapDecoration oldDecoration = decorations.put(marker.getId(), decoration);
 		if (!decoration.equals(oldDecoration)) {
+			int trackedDecorationCount = accessor.create$getTrackedDecorationCount();
 			if (oldDecoration != null && oldDecoration.type().value().trackCount()) {
-				--trackedDecorationCount;
+				trackedDecorationCount--;
 			}
 
 			if (decoration.type().value().trackCount()) {
-				++trackedDecorationCount;
+				trackedDecorationCount++;
 			}
 
-			setDecorationsDirty();
+			accessor.create$setTrackedDecorationCount(trackedDecorationCount);
+			create$markDecorationsDirty();
 		}
 	}
 
-	@Shadow
-	public void removeDecoration(String identifier) {
-		throw new AssertionError();
+	@Unique
+	private void create$markDecorationsDirty() {
+		((SavedData) (Object) this).setDirty();
 	}
 
-	@Shadow
-	private void setDecorationsDirty() {
-		throw new AssertionError();
-	}
-
-	@Shadow
-	public boolean isTrackedCountOverLimit(int trackedCount) {
-		throw new AssertionError();
+	@Unique
+	private void create$removeDecoration(String identifier) {
+		MapItemSavedDataAccessor accessor = create$accessor();
+		Map<String, MapDecoration> decorations = accessor.create$getDecorations();
+		MapDecoration removed = decorations.remove(identifier);
+		int trackedDecorationCount = accessor.create$getTrackedDecorationCount();
+		if (removed != null && removed.type().value().trackCount()) {
+			trackedDecorationCount--;
+		}
+		accessor.create$setTrackedDecorationCount(trackedDecorationCount);
+		create$markDecorationsDirty();
 	}
 
 	@Override
 	public boolean toggleStation(LevelAccessor level, BlockPos pos, StationBlockEntity stationBlockEntity) {
 		double xCenter = pos.getX() + 0.5D;
 		double zCenter = pos.getZ() + 0.5D;
-		int scaleMultiplier = 1 << scale;
+		MapItemSavedDataAccessor accessor = create$accessor();
+		int scaleMultiplier = 1 << accessor.create$getScale();
 
-		double localX = (xCenter - (double) centerX) / (double) scaleMultiplier;
-		double localZ = (zCenter - (double) centerZ) / (double) scaleMultiplier;
+		double localX = (xCenter - (double) accessor.create$getCenterX()) / (double) scaleMultiplier;
+		double localZ = (zCenter - (double) accessor.create$getCenterZ()) / (double) scaleMultiplier;
 
 		if (localX < -63.0D || localX > 63.0D || localZ < -63.0D || localZ > 63.0D)
 			return false;
@@ -147,11 +141,11 @@ public class MapItemSavedDataMixin implements StationMapData {
 			return false;
 
 		if (create$stationMarkers.remove(marker.getId(), marker)) {
-			removeDecoration(marker.getId());
+			create$removeDecoration(marker.getId());
 			return true;
 		}
 
-		if (!isTrackedCountOverLimit(256)) {
+		if (accessor.create$getTrackedDecorationCount() < 256) {
 			addStationMarker(marker);
 			return true;
 		}
@@ -178,7 +172,7 @@ public class MapItemSavedDataMixin implements StationMapData {
 				StationMarker other = StationMarker.fromWorld(blockGetter, marker.getSource());
 				if (!marker.equals(other)) {
 					iterator.remove();
-					removeDecoration(marker.getId());
+					create$removeDecoration(marker.getId());
 
 					if (other != null && marker.getTarget().equals(other.getTarget())) {
 						newMarkers.add(other);

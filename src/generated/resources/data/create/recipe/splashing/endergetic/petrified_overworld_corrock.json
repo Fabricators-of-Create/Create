@@ -15,7 +15,9 @@
   ],
   "results": [
     {
-      "item": "endergetic:petrified_overworld_corrock"
+      "item": {
+        "id": "endergetic:petrified_overworld_corrock"
+      }
     }
   ]
 }

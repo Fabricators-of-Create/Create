@@ -16,7 +16,9 @@
   "results": [
     {
       "count": 9,
-      "item": "iceandfire:silver_nugget"
+      "item": {
+        "id": "iceandfire:silver_nugget"
+      }
     }
   ]
 }

@@ -6,7 +6,7 @@
       "item": "create:andesite_alloy"
     },
     "S": {
-      "tag": "c:wooden_rods"
+      "tag": "c:rods/wooden"
     },
     "W": {
       "tag": "minecraft:wool"
@@ -18,7 +18,7 @@
   ],
   "result": {
     "count": 2,
-    "item": "create:white_sail"
+    "id": "create:white_sail"
   },
   "show_notification": true
 }

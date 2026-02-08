@@ -89,8 +89,7 @@ public class FluidTankScenes {
 
 		scene.world().hideIndependentSection(chocLink, Direction.DOWN);
 		scene.idle(5);
-		FluidStack content = new FluidStack(AllFluids.CHOCOLATE.get()
-			.getSource(), FluidConstants.BUCKET * 16);
+		FluidStack content = new FluidStack(FluidHelper.convertToStill(AllFluids.CHOCOLATE.get()), FluidConstants.BUCKET * 16);
 		scene.world().modifyBlockEntity(tankPos, FluidTankBlockEntity.class, be -> TransferUtil.insert(be.getTankInventory(), content));
 		scene.idle(25);
 
@@ -191,7 +190,7 @@ public class FluidTankScenes {
 			.pointAt(util.vector().topOf(2, 1, 1));
 		scene.idle(90);
 
-		ItemStack chocBucket = AllFluids.CHOCOLATE.get()
+		ItemStack chocBucket = FluidHelper.convertToStill(AllFluids.CHOCOLATE.get())
 			.getBucket().getDefaultInstance();
 		scene.world().createItemOnBeltLike(util.grid().at(3, 1, 0), Direction.WEST, chocBucket);
 		scene.idle(40);

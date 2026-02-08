@@ -16,7 +16,9 @@
   "results": [
     {
       "count": 9,
-      "item": "galosphere:silver_nugget"
+      "item": {
+        "id": "galosphere:silver_nugget"
+      }
     }
   ]
 }

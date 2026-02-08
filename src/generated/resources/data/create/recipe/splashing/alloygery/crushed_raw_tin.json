@@ -16,7 +16,9 @@
   "results": [
     {
       "count": 9,
-      "item": "alloygery:tin_nugget"
+      "item": {
+        "id": "alloygery:tin_nugget"
+      }
     }
   ]
 }

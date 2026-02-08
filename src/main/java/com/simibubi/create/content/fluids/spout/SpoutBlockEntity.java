@@ -71,9 +71,9 @@ public class SpoutBlockEntity extends SmartBlockEntity implements IHaveGoggleInf
 		processingTicks = -1;
 	}
 
-	public static void registerCapabilities(RegisterCapabilitiesEvent event) {
+	public static void registerCapabilities(net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent event) {
 		event.registerBlockEntity(
-				Capabilities.FluidHandler.BLOCK,
+				net.neoforged.neoforge.capabilities.Capabilities.FluidHandler.BLOCK,
 				AllBlockEntityTypes.SPOUT.get(),
 				(be, context) -> {
 					if (context != Direction.DOWN)

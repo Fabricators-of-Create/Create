@@ -12,10 +12,6 @@ import com.simibubi.create.content.kinetics.crafter.MechanicalCraftingRecipe;
 
 import net.createmod.catnip.registry.RegisteredObjectsHelper;
 
-import net.fabricmc.fabric.api.resource.conditions.v1.ConditionJsonProvider;
-
-import net.fabricmc.fabric.api.resource.conditions.v1.DefaultResourceConditions;
-
 import net.minecraft.data.recipes.RecipeOutput;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;
@@ -26,9 +22,6 @@ import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.ShapedRecipePattern;
 import net.minecraft.world.level.ItemLike;
 
-import net.fabricmc.fabric.api.resource.conditions.v1.ConditionJsonProvider;
-import net.fabricmc.fabric.api.resource.conditions.v1.DefaultResourceConditions;
-
 public class MechanicalCraftingRecipeBuilder {
 
 	private final Item result;
@@ -36,7 +29,7 @@ public class MechanicalCraftingRecipeBuilder {
 	private final List<String> pattern = Lists.newArrayList();
 	private final Map<Character, Ingredient> key = Maps.newLinkedHashMap();
 	private boolean acceptMirrored;
-	private List<ConditionJsonProvider> recipeConditions;
+	private List<Object> recipeConditions;
 
 	public MechanicalCraftingRecipeBuilder(ItemLike p_i48261_1_, int p_i48261_2_) {
 		result = p_i48261_1_.asItem();
@@ -140,7 +133,7 @@ public class MechanicalCraftingRecipeBuilder {
 				new ItemStack(result, count),
 				acceptMirrored
 		);
-		output.accept(id, recipe, null, recipeConditions.toArray(new ICondition[0]));
+		output.accept(id, recipe, null);
 		//output
 		//	.accept(new MechanicalCraftingRecipeBuilder.Result(id, result, count, pattern, key, acceptMirrored, recipeConditions));
 	}
@@ -172,14 +165,14 @@ public class MechanicalCraftingRecipeBuilder {
 	}
 
 	public MechanicalCraftingRecipeBuilder whenModLoaded(String modid) {
-		return withCondition(DefaultResourceConditions.allModsLoaded(modid));
+		return this;
 	}
 
 	public MechanicalCraftingRecipeBuilder whenModMissing(String modid) {
-		return withCondition(DefaultResourceConditions.not(DefaultResourceConditions.allModsLoaded(modid)));
+		return this;
 	}
 
-	public MechanicalCraftingRecipeBuilder withCondition(ConditionJsonProvider condition) {
+	public MechanicalCraftingRecipeBuilder withCondition(Object condition) {
 		recipeConditions.add(condition);
 		return this;
 	}

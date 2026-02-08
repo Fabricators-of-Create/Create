@@ -6,30 +6,26 @@ import java.util.function.Supplier;
 import javax.annotation.Nullable;
 
 import io.github.fabricators_of_create.porting_lib.transfer.item.ItemStackHandlerContainer;
-
 import net.fabricmc.fabric.api.event.Event;
 import net.fabricmc.fabric.api.event.EventFactory;
-
 import net.minecraft.world.item.crafting.Recipe;
-
-import net.fabricmc.fabric.api.event.Event;
-import net.fabricmc.fabric.api.event.EventFactory;
-
-import io.github.fabricators_of_create.porting_lib.transfer.item.ItemStackHandlerContainer;
+import net.minecraft.world.item.crafting.RecipeHolder;
+import net.minecraft.world.item.crafting.RecipeInput;
 
 public class DeployerRecipeSearchEvent {
-	private boolean canceled = false;
+	private boolean canceled;
 	private final DeployerBlockEntity blockEntity;
 	private final ItemStackHandlerContainer inventory;
 	@Nullable
-	RecipeHolder<? extends Recipe<? extends RecipeInput>> recipe = null;
-	private int maxPriority = 0;
+	private RecipeHolder<? extends Recipe<? extends RecipeInput>> recipe;
+	private int maxPriority;
 
-	public static final Event<DeployerRecipeSearchCallback> EVENT = EventFactory.createArrayBacked(DeployerRecipeSearchCallback.class, callbacks -> (event) -> {
-		for (DeployerRecipeSearchCallback callback : callbacks) {
-			callback.handle(event);
-		}
-	});
+	public static final Event<DeployerRecipeSearchCallback> EVENT =
+		EventFactory.createArrayBacked(DeployerRecipeSearchCallback.class, callbacks -> event -> {
+			for (DeployerRecipeSearchCallback callback : callbacks) {
+				callback.handle(event);
+			}
+		});
 
 	@FunctionalInterface
 	public interface DeployerRecipeSearchCallback {
@@ -49,7 +45,14 @@ public class DeployerRecipeSearchEvent {
 		return inventory;
 	}
 
-	// lazyness to not scan for recipes that aren't selected
+	public boolean isCanceled() {
+		return canceled;
+	}
+
+	public void cancel() {
+		this.canceled = true;
+	}
+
 	public boolean shouldAddRecipeWithPriority(int priority) {
 		return !canceled && priority > maxPriority;
 	}
@@ -61,12 +64,15 @@ public class DeployerRecipeSearchEvent {
 		return recipe;
 	}
 
-	public void addRecipe(Supplier<Optional<? extends RecipeHolder<? extends Recipe<? extends RecipeInput>>>> recipeSupplier, int priority) {
+	public void addRecipe(
+		Supplier<Optional<? extends RecipeHolder<? extends Recipe<? extends RecipeInput>>>> recipeSupplier,
+		int priority
+	) {
 		if (!shouldAddRecipeWithPriority(priority))
 			return;
 		recipeSupplier.get().ifPresent(newRecipe -> {
 			this.recipe = newRecipe;
-			maxPriority = priority;
+			this.maxPriority = priority;
 		});
 	}
 }

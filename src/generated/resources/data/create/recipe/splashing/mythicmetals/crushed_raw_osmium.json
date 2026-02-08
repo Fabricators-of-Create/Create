@@ -16,7 +16,9 @@
   "results": [
     {
       "count": 9,
-      "item": "mythicmetals:osmium_nugget"
+      "item": {
+        "id": "mythicmetals:osmium_nugget"
+      }
     }
   ]
 }

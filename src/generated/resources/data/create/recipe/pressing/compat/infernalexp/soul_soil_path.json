@@ -15,7 +15,9 @@
   ],
   "results": [
     {
-      "item": "infernalexp:soul_soil_path"
+      "item": {
+        "id": "infernalexp:soul_soil_path"
+      }
     }
   ]
 }

@@ -1,6 +1,6 @@
 {
   "type": "create:mechanical_crafting",
-  "acceptMirrored": true,
+  "accept_mirrored": true,
   "key": {
     "B": {
       "tag": "c:brass_ingots"
@@ -26,6 +26,6 @@
     " O "
   ],
   "result": {
-    "item": "create:wand_of_symmetry"
+    "id": "create:wand_of_symmetry"
   }
 }

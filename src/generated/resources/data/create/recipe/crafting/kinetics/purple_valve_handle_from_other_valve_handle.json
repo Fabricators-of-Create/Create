@@ -3,13 +3,13 @@
   "category": "misc",
   "ingredients": [
     {
-      "tag": "c:purple_dyes"
+      "tag": "c:dyes/purple"
     },
     {
       "tag": "create:valve_handles"
     }
   ],
   "result": {
-    "item": "create:purple_valve_handle"
+    "id": "create:purple_valve_handle"
   }
 }

@@ -5,11 +5,7 @@
       "conditions": {
         "items": [
           {
-<<<<<<<< HEAD:src/generated/resources/data/create/advancement/recipes/building_blocks/framed_glass_pane_from_colorless_glass_panes_stonecutting.json
             "tag": "c:colorless_glass_panes"
-========
-            "items": "#c:glass_panes/colorless"
->>>>>>>> forge/mc1.21.1/dev:src/generated/resources/data/create/advancement/recipes/building_blocks/framed_glass_pane_from_glass_panes_colorless_stonecutting.json
           }
         ]
       },
@@ -24,13 +20,8 @@
   },
   "requirements": [
     [
-<<<<<<<< HEAD:src/generated/resources/data/create/advancement/recipes/building_blocks/framed_glass_pane_from_colorless_glass_panes_stonecutting.json
       "has_colorless_glass_panes",
       "has_the_recipe"
-========
-      "has_the_recipe",
-      "has_glass_panes_colorless"
->>>>>>>> forge/mc1.21.1/dev:src/generated/resources/data/create/advancement/recipes/building_blocks/framed_glass_pane_from_glass_panes_colorless_stonecutting.json
     ]
   ],
   "rewards": {

@@ -15,7 +15,9 @@
   ],
   "results": [
     {
-      "item": "farmersdelight:rotten_tomato"
+      "item": {
+        "id": "farmersdelight:rotten_tomato"
+      }
     }
   ]
 }

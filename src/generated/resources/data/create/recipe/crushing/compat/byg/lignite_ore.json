@@ -13,24 +13,32 @@
       "tag": "c:ores/lignite"
     }
   ],
-  "processingTime": 300,
+  "processing_time": 300,
   "results": [
     {
       "count": 2,
-      "item": "byg:lignite"
+      "item": {
+        "id": "byg:lignite"
+      }
     },
     {
       "chance": 0.5,
       "count": 2,
-      "item": "byg:lignite"
+      "item": {
+        "id": "byg:lignite"
+      }
     },
     {
       "chance": 0.75,
-      "item": "create:experience_nugget"
+      "item": {
+        "id": "create:experience_nugget"
+      }
     },
     {
       "chance": 0.125,
-      "item": "byg:cobbled_ether_stone"
+      "item": {
+        "id": "byg:cobbled_ether_stone"
+      }
     }
   ]
 }

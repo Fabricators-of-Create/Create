@@ -6,7 +6,6 @@ import com.simibubi.create.AllTags.AllItemTags;
 import com.simibubi.create.Create;
 import com.simibubi.create.api.contraption.dispenser.DefaultMountedDispenseBehavior;
 import com.simibubi.create.api.contraption.dispenser.MountedDispenseBehavior;
-import com.simibubi.create.api.contraption.dispenser.MountedProjectileDispenseBehavior;
 import com.simibubi.create.api.registry.SimpleRegistry;
 import com.simibubi.create.content.contraptions.behaviour.MovementContext;
 import com.simibubi.create.foundation.mixin.accessor.DispenserBlockAccessor;
@@ -29,6 +28,7 @@ import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.phys.Vec3;
 
 import io.github.fabricators_of_create.porting_lib.event.common.TagsUpdatedCallback;
+import io.github.fabricators_of_create.porting_lib.util.ServerLifecycleHooks;
 
 public enum DispenserBehaviorConverter implements SimpleRegistry.Provider<Item, MountedDispenseBehavior> {
 	INSTANCE;
@@ -47,10 +47,6 @@ public enum DispenserBehaviorConverter implements SimpleRegistry.Provider<Item, 
 		// if the item is explicitly blocked from having its behavior wrapped, ignore it
 		if (AllItemTags.DISPENSE_BEHAVIOR_WRAP_BLACKLIST.matches(item))
 			return null;
-
-		if (vanilla instanceof ProjectileDispenseBehavior projectile) {
-			return MountedProjectileDispenseBehavior.of(projectile);
-		}
 
 		// other behaviors are more dangerous due to BlockSource providing a BlockEntity, which contraptions can't do.
 		// wrap in a fallback that will watch for errors.

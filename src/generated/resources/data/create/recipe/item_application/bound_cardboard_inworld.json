@@ -5,12 +5,14 @@
       "item": "create:cardboard_block"
     },
     {
-      "tag": "c:string"
+      "tag": "c:strings"
     }
   ],
   "results": [
     {
-      "item": "create:bound_cardboard_block"
+      "item": {
+        "id": "create:bound_cardboard_block"
+      }
     }
   ]
 }

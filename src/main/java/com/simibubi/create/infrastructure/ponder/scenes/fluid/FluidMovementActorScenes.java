@@ -45,7 +45,7 @@ public class FluidMovementActorScenes {
 		BlockPos ct2 = util.grid().at(6, 3, 2);
 		BlockPos st = util.grid().at(0, 1, 5);
 		Class<FluidTankBlockEntity> type = FluidTankBlockEntity.class;
-		ItemStack bucket = AllFluids.CHOCOLATE.get().getBucket().getDefaultInstance();
+		ItemStack bucket = FluidHelper.convertToStill(AllFluids.CHOCOLATE.get()).getBucket().getDefaultInstance();
 
 		scene.world().modifyBlock(pumpPos, s -> s.setValue(PumpBlock.FACING, Direction.NORTH), false);
 

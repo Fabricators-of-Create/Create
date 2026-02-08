@@ -61,16 +61,18 @@ public class ItemThresholdCondition extends CargoThresholdCondition {
 		for (Carriage carriage : train.carriages) {
 			Storage<ItemVariant> items = carriage.storage.getAllItems();
 			for (StorageView<ItemVariant> view : items.nonEmptyViews()) {
-				ItemVariant variant = view.getResource();
-				if (!stack.test(level, variant.toStack()))
-					continue;
+					ItemVariant variant = view.getResource();
+					if (!stack.test(level, variant.toStack()))
+						continue;
 
-				if (stacks)
-					foundItems += stackInSlot.getCount() == stackInSlot.getOrDefault(DataComponents.MAX_STACK_SIZE, 64) ? 1 : 0;
-				else
-					foundItems += view.getAmount();
+					if (stacks) {
+						ItemStack sample = variant.toStack(1);
+						int maxStackSize = sample.getOrDefault(DataComponents.MAX_STACK_SIZE, 64);
+						foundItems += view.getAmount() / maxStackSize;
+					} else
+						foundItems += view.getAmount();
+				}
 			}
-		}
 
 		requestStatusToUpdate(foundItems, context);
 		return operator.test(foundItems, target);

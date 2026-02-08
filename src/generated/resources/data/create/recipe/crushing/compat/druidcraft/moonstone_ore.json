@@ -13,19 +13,25 @@
       "item": "druidcraft:moonstone_ore"
     }
   ],
-  "processingTime": 300,
+  "processing_time": 300,
   "results": [
     {
       "count": 2,
-      "item": "druidcraft:moonstone"
+      "item": {
+        "id": "druidcraft:moonstone"
+      }
     },
     {
       "chance": 0.5,
-      "item": "druidcraft:moonstone"
+      "item": {
+        "id": "druidcraft:moonstone"
+      }
     },
     {
       "chance": 0.125,
-      "item": "minecraft:cobblestone"
+      "item": {
+        "id": "minecraft:cobblestone"
+      }
     }
   ]
 }

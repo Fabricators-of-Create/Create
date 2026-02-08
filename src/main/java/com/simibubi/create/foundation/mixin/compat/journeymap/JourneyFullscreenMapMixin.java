@@ -12,8 +12,6 @@ import org.spongepowered.asm.mixin.injection.At.Shift;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-import com.simibubi.create.compat.trainmap.JourneyTrainMap;
-
 import journeymap.client.ui.fullscreen.Fullscreen;
 import net.minecraft.client.gui.GuiGraphics;
 
@@ -32,10 +30,6 @@ public abstract class JourneyFullscreenMapMixin {
 	@Inject(method = "render(Lnet/minecraft/client/gui/GuiGraphics;IIF)V", at = @At(target = "Ljourneymap/client/ui/fullscreen/Fullscreen;drawMap(Lnet/minecraft/client/gui/GuiGraphics;Lnet/minecraft/client/renderer/MultiBufferSource$BufferSource;II)V", value = "INVOKE", shift = Shift.AFTER))
 	public void create$journeyMapFullscreenRender(GuiGraphics graphics, int mouseX, int mouseY, float pt,
 		CallbackInfo ci) {
-		Point2D.Double mouseDrag = getMouseDrag();
-		MapRendererAccessor accessor = (MapRendererAccessor) mapRenderer;
-		double x = accessor.create$getCenterBlockX() - (isDragging ? mouseDrag.x : 0);
-		double z = accessor.create$getCenterBlockZ() - (isDragging ? mouseDrag.y : 0);
-		JourneyTrainMap.onRender(graphics, (Fullscreen) (Object) this, x, z, mouseX, mouseY, pt);
+		// Journey Map train overlay is disabled in this compatibility pass.
 	}
 }

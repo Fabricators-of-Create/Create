@@ -11,12 +11,12 @@ import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.world.phys.Vec3;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.neoforged.neoforge.fluids.FluidStack;
+import com.simibubi.create.infrastructure.fabric.transfer.fluid.FluidStack;
 
 public record FluidSplashPacket(BlockPos pos, FluidStack fluid) implements ClientboundPacketPayload {
 	public static final StreamCodec<RegistryFriendlyByteBuf, FluidSplashPacket> STREAM_CODEC = StreamCodec.composite(
 	        BlockPos.STREAM_CODEC, FluidSplashPacket::pos,
-			FluidStack.OPTIONAL_STREAM_CODEC, FluidSplashPacket::fluid,
+			FluidStack.STREAM_CODEC, FluidSplashPacket::fluid,
 	        FluidSplashPacket::new
 	);
 

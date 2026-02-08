@@ -9,7 +9,7 @@
       "item": "create:cogwheel"
     },
     "S": {
-      "tag": "c:wooden_rods"
+      "tag": "c:rods/wooden"
     }
   },
   "pattern": [
@@ -18,7 +18,7 @@
     " S"
   ],
   "result": {
-    "item": "create:wrench"
+    "id": "create:wrench"
   },
   "show_notification": true
 }

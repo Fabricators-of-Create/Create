@@ -1,30 +1,28 @@
 {
-  "neoforge:conditions": [
-    {
-      "type": "neoforge:mod_loaded",
-      "modid": "thermal"
-    }
-  ],
   "type": "create:crushing",
   "ingredients": [
     {
-      "type": "neoforge:compound",
       "ingredients": [
         {
           "item": "thermal:sulfur_ore"
         }
-      ]
+      ],
+      "fabric:type": "fabric:any"
     }
   ],
   "processing_time": 350,
   "results": [
     {
       "count": 2,
-      "item": "thermal:sulfur"
+      "item": {
+        "id": "thermal:sulfur"
+      }
     },
     {
       "chance": 0.25,
-      "item": "thermal:sulfur"
+      "item": {
+        "id": "thermal:sulfur"
+      }
     },
     {
       "chance": 0.12,
@@ -37,6 +35,14 @@
       "item": {
         "id": "create:experience_nugget"
       }
+    }
+  ],
+  "fabric:load_conditions": [
+    {
+      "condition": "fabric:all_mods_loaded",
+      "values": [
+        "thermal"
+      ]
     }
   ]
 }

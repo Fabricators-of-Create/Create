@@ -6,7 +6,6 @@ import java.util.function.Predicate;
 
 import org.jetbrains.annotations.Nullable;
 
-import com.simibubi.create.AllEnchantments;
 import com.simibubi.create.AllEntityTypes;
 import com.simibubi.create.CreateClient;
 import com.simibubi.create.api.equipment.potatoCannon.PotatoCannonProjectileType;
@@ -54,11 +53,10 @@ import net.minecraft.world.phys.Vec3;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 
-import io.github.fabricators_of_create.porting_lib.enchant.CustomEnchantingBehaviorItem;
 import io.github.fabricators_of_create.porting_lib.item.EntitySwingListenerItem;
 import io.github.fabricators_of_create.porting_lib.item.ReequipAnimationItem;
 
-public class PotatoCannonItem extends ProjectileWeaponItem implements CustomArmPoseItem, EntitySwingListenerItem, ReequipAnimationItem, CustomEnchantingBehaviorItem {
+public class PotatoCannonItem extends ProjectileWeaponItem implements CustomArmPoseItem, EntitySwingListenerItem, ReequipAnimationItem {
 
 	public PotatoCannonItem(Properties properties) {
 		super(properties);
@@ -188,8 +186,8 @@ public class PotatoCannonItem extends ProjectileWeaponItem implements CustomArmP
 			return;
 
 		HolderLookup<Enchantment> lookup = registries.lookupOrThrow(Registries.ENCHANTMENT);
-		int power = stack.getEnchantmentLevel(lookup.getOrThrow(Enchantments.POWER));
-		int punch = stack.getEnchantmentLevel(lookup.getOrThrow(Enchantments.PUNCH));
+		int power = EnchantmentHelper.getItemEnchantmentLevel(lookup.getOrThrow(Enchantments.POWER), stack);
+		int punch = EnchantmentHelper.getItemEnchantmentLevel(lookup.getOrThrow(Enchantments.PUNCH), stack);
 		final float additionalDamageMult = 1 + power * .2f;
 		final float additionalKnockback = punch * .5f;
 
@@ -247,21 +245,6 @@ public class PotatoCannonItem extends ProjectileWeaponItem implements CustomArmP
 	}
 
 	@Override
-	public boolean supportsEnchantment(ItemStack stack, Holder<Enchantment> enchantment) {
-		if (enchantment.is(Enchantments.POWER))
-			return true;
-		if (enchantment.is(Enchantments.PUNCH))
-			return true;
-		if (enchantment.is(Enchantments.FLAME))
-			return true;
-		if (enchantment.is(Enchantments.LOOTING))
-			return true;
-		if (enchantment.is(AllEnchantments.POTATO_RECOVERY))
-			return true;
-		return super.supportsEnchantment(stack, enchantment);
-	}
-
-	@Override
 	public boolean isBarVisible(ItemStack stack) {
 		return BacktankUtil.isBarVisible(stack, maxUses());
 	}
@@ -280,7 +263,6 @@ public class PotatoCannonItem extends ProjectileWeaponItem implements CustomArmP
 		return AllConfigs.server().equipment.maxPotatoCannonShots.get();
 	}
 
-	@Override
 	public boolean onEntitySwing(ItemStack stack, LivingEntity entity, InteractionHand hand) {
 		return false;
 	}

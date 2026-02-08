@@ -11,7 +11,7 @@ import com.simibubi.create.content.logistics.packager.PackagerItemHandler;
 import com.simibubi.create.content.logistics.packager.PackagingRequest;
 
 import com.simibubi.create.infrastructure.fabric.transfer.TransferUtil;
-import io.github.fabricators_of_create.porting_lib.transfer.callbacks.TransactionCallback;
+import com.simibubi.create.infrastructure.fabric.transfer.TransactionSuccessCallback;
 
 import net.fabricmc.fabric.api.transfer.v1.item.ItemVariant;
 import net.fabricmc.fabric.api.transfer.v1.storage.Storage;
@@ -24,16 +24,6 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
-
-import net.fabricmc.fabric.api.transfer.v1.item.ItemVariant;
-import net.fabricmc.fabric.api.transfer.v1.storage.Storage;
-import net.fabricmc.fabric.api.transfer.v1.storage.StorageUtil;
-import net.fabricmc.fabric.api.transfer.v1.storage.StorageView;
-import net.fabricmc.fabric.api.transfer.v1.transaction.Transaction;
-import net.fabricmc.fabric.api.transfer.v1.transaction.TransactionContext;
-
-import com.simibubi.create.infrastructure.fabric.transfer.TransferUtil;
-import io.github.fabricators_of_create.porting_lib.transfer.callbacks.TransactionCallback;
 
 public class RepackagerBlockEntity extends PackagerBlockEntity {
 
@@ -104,7 +94,7 @@ public class RepackagerBlockEntity extends PackagerBlockEntity {
 			if (!PackageItem.isPackage(resource))
 				continue;
 
-			if (!defragmenter.isFragmented(resource)) {
+			if (!defragmenter.isFragmented(resource.toStack(1))) {
 				try (Transaction t = Transaction.openOuter()) {
 					if (view.extract(resource, 1, t) == 1) {
 						t.commit();
@@ -161,9 +151,9 @@ public class RepackagerBlockEntity extends PackagerBlockEntity {
 		notifyUpdate();
 	}
 
-	public static void registerCapabilities(RegisterCapabilitiesEvent event) {
+	public static void registerCapabilities(net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent event) {
 		event.registerBlockEntity(
-			Capabilities.ItemHandler.BLOCK,
+			net.neoforged.neoforge.capabilities.Capabilities.ItemHandler.BLOCK,
 			AllBlockEntityTypes.REPACKAGER.get(),
 			(be, context) -> be.inventory
 		);

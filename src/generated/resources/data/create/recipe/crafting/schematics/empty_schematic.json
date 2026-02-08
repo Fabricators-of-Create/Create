@@ -6,10 +6,10 @@
       "item": "minecraft:paper"
     },
     {
-      "tag": "c:light_blue_dyes"
+      "tag": "c:dyes/light_blue"
     }
   ],
   "result": {
-    "item": "create:empty_schematic"
+    "id": "create:empty_schematic"
   }
 }

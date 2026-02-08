@@ -1,19 +1,13 @@
 {
-  "neoforge:conditions": [
-    {
-      "type": "neoforge:mod_loaded",
-      "modid": "farmersdelight"
-    }
-  ],
   "type": "create:emptying",
   "ingredients": [
     {
-      "type": "neoforge:compound",
       "ingredients": [
         {
           "item": "farmersdelight:milk_bottle"
         }
-      ]
+      ],
+      "fabric:type": "fabric:any"
     }
   ],
   "results": [
@@ -23,8 +17,16 @@
       }
     },
     {
-      "amount": 250,
+      "amount": 20250,
       "id": "minecraft:milk"
+    }
+  ],
+  "fabric:load_conditions": [
+    {
+      "condition": "fabric:all_mods_loaded",
+      "values": [
+        "farmersdelight"
+      ]
     }
   ]
 }

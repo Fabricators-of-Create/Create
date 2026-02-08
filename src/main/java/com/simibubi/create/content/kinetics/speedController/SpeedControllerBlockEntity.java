@@ -39,7 +39,7 @@ public class SpeedControllerBlockEntity extends KineticBlockEntity {
 		hasBracket = false;
 	}
 
-	public static void registerCapabilities(RegisterCapabilitiesEvent event) {
+	public static void registerCapabilities(net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent event) {
 		if (Mods.COMPUTERCRAFT.isLoaded()) {
 			event.registerBlockEntity(
 					PeripheralCapability.get(),

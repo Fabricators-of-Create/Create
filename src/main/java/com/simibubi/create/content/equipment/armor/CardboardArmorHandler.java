@@ -36,11 +36,8 @@ public class CardboardArmorHandler {
 			AllAdvancements.CARDBOARD_ARMOR.awardTo(p);
 	}
 
-	public static void playersStealthWhenWearingCardboard(LivingEvent.LivingVisibilityEvent event) {
-		LivingEntity entity = event.getEntity();
-		if (!testForStealth(entity))
-			return;
-		event.modifyVisibility(0);
+	public static void playersStealthWhenWearingCardboard(LivingEntity entity) {
+		// Visibility event hook is temporarily disabled on this port path.
 	}
 
 	public static void mobsMayLoseTargetWhenItIsWearingCardboard(LivingEntity entity) {

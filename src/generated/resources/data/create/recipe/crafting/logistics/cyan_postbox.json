@@ -9,7 +9,7 @@
       "item": "minecraft:barrel"
     },
     "D": {
-      "tag": "c:cyan_dyes"
+      "tag": "c:dyes/cyan"
     }
   },
   "pattern": [
@@ -18,7 +18,7 @@
     "A"
   ],
   "result": {
-    "item": "create:cyan_postbox"
+    "id": "create:cyan_postbox"
   },
   "show_notification": true
 }

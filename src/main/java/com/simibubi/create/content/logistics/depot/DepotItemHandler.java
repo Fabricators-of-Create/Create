@@ -30,7 +30,7 @@ public class DepotItemHandler extends SnapshotParticipant<Unit> implements Stora
 			return 0;
 		if (!behaviour.isOutputEmpty() && !behaviour.canMergeItems())
 			return 0;
-		int toInsert = Math.min(ItemHelper.truncateLong(maxAmount), resource.getItem().getMaxStackSize());
+		int toInsert = Math.min(ItemHelper.truncateLong(maxAmount), resource.getItem().getDefaultMaxStackSize());
 		ItemStack stack = resource.toStack(toInsert);
 		if (!behaviour.isItemValid(stack))
 			return 0;

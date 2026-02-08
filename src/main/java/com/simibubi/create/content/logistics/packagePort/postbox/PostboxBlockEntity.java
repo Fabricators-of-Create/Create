@@ -40,11 +40,11 @@ public class PostboxBlockEntity extends PackagePortBlockEntity {
 			.startWithValue(0);
 	}
 
-	public static void registerCapabilities(RegisterCapabilitiesEvent event) {
+	public static void registerCapabilities(net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent event) {
 		event.registerBlockEntity(
-			Capabilities.ItemHandler.BLOCK,
+			net.neoforged.neoforge.capabilities.Capabilities.ItemHandler.BLOCK,
 			AllBlockEntityTypes.PACKAGE_POSTBOX.get(),
-			(be, context) -> be.itemHandler
+			(be, context) -> be.exposedInventory
 		);
 	}
 

@@ -151,7 +151,7 @@ public abstract class PackagePortBlockEntity extends SmartBlockEntity implements
 			return ItemInteractionResult.SUCCESS;
 		}
 
-		player.openMenu(this, worldPosition);
+		player.openMenu(this);
 		return ItemInteractionResult.SUCCESS;
 	}
 

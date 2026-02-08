@@ -13,10 +13,12 @@
       "tag": "botania:petals/cyan"
     }
   ],
-  "processingTime": 50,
+  "processing_time": 50,
   "results": [
     {
-      "item": "minecraft:cyan_dye"
+      "item": {
+        "id": "minecraft:cyan_dye"
+      }
     }
   ]
 }

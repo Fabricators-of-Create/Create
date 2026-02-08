@@ -13,11 +13,13 @@
       "tag": "c:plates/aluminum"
     }
   ],
-  "processingTime": 50,
+  "processing_time": 50,
   "results": [
     {
       "count": 2,
-      "item": "immersiveengineering:wire_aluminum"
+      "item": {
+        "id": "immersiveengineering:wire_aluminum"
+      }
     }
   ]
 }

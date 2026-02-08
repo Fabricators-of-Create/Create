@@ -55,10 +55,6 @@ import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
-
-import net.fabricmc.fabric.api.transfer.v1.item.ItemVariant;
-
-import com.simibubi.create.infrastructure.fabric.transfer.TransferUtil;
 import com.simibubi.create.infrastructure.fabric.transfer.item.ItemStackHandler;
 
 public class PackageItem extends Item {
@@ -138,11 +134,7 @@ public class PackageItem extends Item {
 	}
 
 	public static int getOrderId(ItemVariant box) {
-		CompoundTag tag = box.getNbt();
-		if (tag == null || !tag.contains("Fragment"))
-			return -1;
-		return tag.getCompound("Fragment")
-			.getInt("OrderId");
+		return getOrderId(box.toStack());
 	}
 
 	public static PackageOrder getOrderContext(ItemStack box) {
@@ -183,10 +175,7 @@ public class PackageItem extends Item {
 	}
 
 	public static String getAddress(ItemVariant variant) {
-		String boxAddress = !variant.hasNbt() ? ""
-			: variant.getNbt()
-			.getString("Address");
-		return boxAddress;
+		return getAddress(variant.toStack());
 	}
 
 	public static float getWidth(ItemStack box) {

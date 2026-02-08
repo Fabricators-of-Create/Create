@@ -16,7 +16,7 @@
   ],
   "result": {
     "count": 4,
-    "item": "create:fluid_pipe"
+    "id": "create:fluid_pipe"
   },
   "show_notification": true
 }

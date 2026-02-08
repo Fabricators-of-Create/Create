@@ -18,7 +18,7 @@
     " C "
   ],
   "result": {
-    "item": "create:mechanical_plough"
+    "id": "create:mechanical_plough"
   },
   "show_notification": true
 }

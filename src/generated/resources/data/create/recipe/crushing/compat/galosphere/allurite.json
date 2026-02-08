@@ -13,12 +13,14 @@
       "tag": "create:stone_types/galosphere/allurite"
     }
   ],
-  "processingTime": 300,
+  "processing_time": 300,
   "results": [
     {
       "chance": 0.8,
       "count": 4,
-      "item": "galosphere:allurite_shard"
+      "item": {
+        "id": "galosphere:allurite_shard"
+      }
     }
   ]
 }

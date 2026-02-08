@@ -6,7 +6,7 @@
       "item": "create:cogwheel"
     },
     "I": {
-      "tag": "c:stone"
+      "tag": "c:stones"
     },
     "S": {
       "item": "create:andesite_casing"
@@ -18,7 +18,7 @@
     "I"
   ],
   "result": {
-    "item": "create:millstone"
+    "id": "create:millstone"
   },
   "show_notification": true
 }

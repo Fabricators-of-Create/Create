@@ -19,7 +19,7 @@
   ],
   "result": {
     "count": 2,
-    "item": "create:brass_funnel"
+    "id": "create:brass_funnel"
   },
   "show_notification": true
 }

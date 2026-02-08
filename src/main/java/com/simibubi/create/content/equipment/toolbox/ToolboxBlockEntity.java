@@ -98,9 +98,9 @@ public class ToolboxBlockEntity extends SmartBlockEntity implements MenuProvider
 		setLazyTickRate(10);
 	}
 
-	public static void registerCapabilities(RegisterCapabilitiesEvent event) {
+	public static void registerCapabilities(net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent event) {
 		event.registerBlockEntity(
-				Capabilities.ItemHandler.BLOCK,
+				net.neoforged.neoforge.capabilities.Capabilities.ItemHandler.BLOCK,
 				AllBlockEntityTypes.TOOLBOX.get(),
 				(be, context) -> be.inventory
 		);

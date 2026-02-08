@@ -13,10 +13,12 @@
       "tag": "botania:petals/orange"
     }
   ],
-  "processingTime": 50,
+  "processing_time": 50,
   "results": [
     {
-      "item": "minecraft:orange_dye"
+      "item": {
+        "id": "minecraft:orange_dye"
+      }
     }
   ]
 }

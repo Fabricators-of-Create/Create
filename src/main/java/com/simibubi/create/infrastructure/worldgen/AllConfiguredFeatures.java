@@ -49,14 +49,16 @@ public class AllConfiguredFeatures {
 			AllLayerPatterns.LIMESTONE.get(),
 			AllLayerPatterns.OCHRESTONE.get()
 		);
+		@SuppressWarnings("unchecked")
+		Feature<LayeredOreConfiguration> layeredOre = (Feature<LayeredOreConfiguration>) AllFeatures.LAYERED_ORE.value();
 
-		register(ctx, STRIATED_ORES_OVERWORLD, AllFeatures.LAYERED_ORE.get(), new LayeredOreConfiguration(overworldLayerPatterns, 32, 0));
+		register(ctx, STRIATED_ORES_OVERWORLD, layeredOre, new LayeredOreConfiguration(overworldLayerPatterns, 32, 0));
 
 		List<LayerPattern> netherLayerPatterns = List.of(
 			AllLayerPatterns.SCORIA_NETHER.get(),
 			AllLayerPatterns.SCORCHIA_NETHER.get()
 		);
 
-		register(ctx, STRIATED_ORES_NETHER, AllFeatures.LAYERED_ORE.get(), new LayeredOreConfiguration(netherLayerPatterns, 32, 0));
+		register(ctx, STRIATED_ORES_NETHER, layeredOre, new LayeredOreConfiguration(netherLayerPatterns, 32, 0));
 	}
 }

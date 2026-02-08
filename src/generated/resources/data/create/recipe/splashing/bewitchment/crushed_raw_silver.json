@@ -16,7 +16,9 @@
   "results": [
     {
       "count": 9,
-      "item": "bewitchment:silver_nugget"
+      "item": {
+        "id": "bewitchment:silver_nugget"
+      }
     }
   ]
 }

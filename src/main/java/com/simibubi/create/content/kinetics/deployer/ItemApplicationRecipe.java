@@ -12,12 +12,11 @@ import com.simibubi.create.content.processing.recipe.ProcessingRecipeSerializer;
 
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.util.GsonHelper;
-import net.minecraft.world.Container;
-import net.minecraft.world.Container;
+import net.minecraft.world.item.crafting.RecipeInput;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.Level;
 
-public class ItemApplicationRecipe extends ProcessingRecipe<Container> {
+public class ItemApplicationRecipe extends ProcessingRecipe<RecipeInput> {
 	public static <T extends ProcessingRecipe<?>> MapCodec<T> codec(AllRecipeTypes recipeTypes) {
 		return RecordCodecBuilder.mapCodec(i -> i.group(
 			ProcessingRecipeSerializer.<T>codec(recipeTypes).forGetter(Function.identity()),
@@ -38,7 +37,7 @@ public class ItemApplicationRecipe extends ProcessingRecipe<Container> {
 	}
 
 	@Override
-	public boolean matches(Container inv, Level p_77569_2_) {
+	public boolean matches(RecipeInput inv, Level p_77569_2_) {
 		return getProcessedItem().test(inv.getItem(0)) && getRequiredHeldItem().test(inv.getItem(1));
 	}
 

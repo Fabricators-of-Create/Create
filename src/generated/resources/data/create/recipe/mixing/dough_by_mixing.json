@@ -6,7 +6,7 @@
     },
     {
       "type": "fluid_stack",
-      "amount": 1000,
+      "amount": 81000,
       "fluid": "minecraft:water"
     }
   ],

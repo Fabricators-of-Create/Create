@@ -15,7 +15,9 @@
   ],
   "results": [
     {
-      "item": "betterend:shadow_grass_path"
+      "item": {
+        "id": "betterend:shadow_grass_path"
+      }
     }
   ]
 }

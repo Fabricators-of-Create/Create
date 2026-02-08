@@ -76,6 +76,7 @@ import net.fabricmc.fabric.api.transfer.v1.storage.base.SidedStorageBlockEntity;
 import net.fabricmc.fabric.api.transfer.v1.transaction.base.SnapshotParticipant;
 
 import io.github.fabricators_of_create.porting_lib.transfer.item.ItemStackHandlerContainer;
+import io.github.fabricators_of_create.porting_lib.transfer.item.RecipeWrapper;
 
 
 public class DeployerBlockEntity extends KineticBlockEntity implements SidedStorageBlockEntity {
@@ -135,9 +136,9 @@ public class DeployerBlockEntity extends KineticBlockEntity implements SidedStor
 			.startWithValue(0);
 	}
 
-	public static void registerCapabilities(RegisterCapabilitiesEvent event) {
+	public static void registerCapabilities(net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent event) {
 		event.registerBlockEntity(
-				Capabilities.ItemHandler.BLOCK,
+				net.neoforged.neoforge.capabilities.Capabilities.ItemHandler.BLOCK,
 				AllBlockEntityTypes.DEPLOYER.get(),
 				(be, context) ->  {
 					if (be.invHandler == null)
@@ -606,10 +607,10 @@ public class DeployerBlockEntity extends KineticBlockEntity implements SidedStor
 
 		DeployerRecipeSearchEvent event = new DeployerRecipeSearchEvent(this, recipeInv);
 
-		event.addRecipe(() -> SequencedAssemblyRecipe.getRecipe(level, event.getInventory(),
+		event.addRecipe(() -> SequencedAssemblyRecipe.getRecipe(level, new RecipeWrapper(event.getInventory()),
 			AllRecipeTypes.DEPLOYING.getType(), DeployerApplicationRecipe.class), 100);
-		event.addRecipe(() -> checkRecipe(AllRecipeTypes.DEPLOYING, event.getInventory(), level), 50);
-		event.addRecipe(() -> checkRecipe(AllRecipeTypes.ITEM_APPLICATION, event.getInventory(), level), 50);
+		event.addRecipe(() -> checkRecipe(AllRecipeTypes.DEPLOYING, new RecipeWrapper(event.getInventory()), level), 50);
+		event.addRecipe(() -> checkRecipe(AllRecipeTypes.ITEM_APPLICATION, new RecipeWrapper(event.getInventory()), level), 50);
 
 		DeployerRecipeSearchEvent.EVENT.invoker().handle(event);
 		return event.getRecipe();

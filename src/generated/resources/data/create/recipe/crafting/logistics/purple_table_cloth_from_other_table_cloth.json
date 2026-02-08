@@ -3,13 +3,13 @@
   "category": "building",
   "ingredients": [
     {
-      "tag": "c:purple_dyes"
+      "tag": "c:dyes/purple"
     },
     {
       "tag": "create:dyed_table_cloths"
     }
   ],
   "result": {
-    "item": "create:purple_table_cloth"
+    "id": "create:purple_table_cloth"
   }
 }

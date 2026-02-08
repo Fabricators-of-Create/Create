@@ -1,21 +1,20 @@
 package com.simibubi.create;
 
-import org.jetbrains.annotations.ApiStatus.Internal;
-
 import com.simibubi.create.content.schematics.SchematicProcessor;
 
-import net.minecraft.core.registries.Registries;
+import net.minecraft.core.Holder;
+import net.minecraft.core.Registry;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureProcessorType;
 
-import io.github.fabricators_of_create.porting_lib.util.LazyRegistrar;
-
 public class AllStructureProcessorTypes {
-	private static final LazyRegistrar<StructureProcessorType<?>> REGISTER = LazyRegistrar.create(Registries.STRUCTURE_PROCESSOR, Create.ID);
+	@SuppressWarnings({"rawtypes", "unchecked"})
+	public static final Holder.Reference<StructureProcessorType<?>> SCHEMATIC = Registry.registerForHolder(
+		BuiltInRegistries.STRUCTURE_PROCESSOR,
+		Create.asResource("schematic"),
+		(StructureProcessorType) (() -> SchematicProcessor.CODEC)
+	);
 
-	public static final DeferredHolder<StructureProcessorType<?>, StructureProcessorType<SchematicProcessor>> SCHEMATIC = REGISTER.register("schematic", () -> () -> SchematicProcessor.CODEC);
-
-	@Internal
 	public static void register() {
-		REGISTER.register();
 	}
 }

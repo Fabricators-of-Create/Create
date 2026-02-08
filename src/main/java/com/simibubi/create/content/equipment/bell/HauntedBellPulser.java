@@ -28,8 +28,7 @@ public class HauntedBellPulser {
 		.expireAfterAccess(250, TimeUnit.MILLISECONDS)
 		.build();
 
-	public static void hauntedBellCreatesPulse(PlayerTickEvent.Post event) {
-		Player player = event.getEntity();
+	public static void hauntedBellCreatesPulse(Player player) {
 
 		if (player.level().isClientSide())
 			return;

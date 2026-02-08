@@ -1,10 +1,4 @@
 {
-  "neoforge:conditions": [
-    {
-      "type": "neoforge:mod_loaded",
-      "modid": "byg"
-    }
-  ],
   "type": "create:crushing",
   "ingredients": [
     {
@@ -36,6 +30,14 @@
       "item": {
         "id": "minecraft:netherrack"
       }
+    }
+  ],
+  "fabric:load_conditions": [
+    {
+      "condition": "fabric:all_mods_loaded",
+      "values": [
+        "byg"
+      ]
     }
   ]
 }

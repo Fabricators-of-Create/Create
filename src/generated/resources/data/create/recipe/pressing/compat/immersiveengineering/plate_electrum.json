@@ -15,7 +15,9 @@
   ],
   "results": [
     {
-      "item": "immersiveengineering:plate_electrum"
+      "item": {
+        "id": "immersiveengineering:plate_electrum"
+      }
     }
   ]
 }

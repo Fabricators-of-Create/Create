@@ -83,14 +83,14 @@ public class FluidTankBlockEntity extends SmartBlockEntity implements IHaveGoggl
 //		refreshCapability(); // fabric: lazy init to prevent access too early
 	}
 
-	public static void registerCapabilities(RegisterCapabilitiesEvent event) {
+	public static void registerCapabilities(net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent event) {
 		event.registerBlockEntity(
-				Capabilities.FluidHandler.BLOCK,
+				net.neoforged.neoforge.capabilities.Capabilities.FluidHandler.BLOCK,
 				AllBlockEntityTypes.FLUID_TANK.get(),
 				(be, context) -> {
-					if (be.fluidCapability == null)
+					if (be.exposedTank == null)
 						be.refreshCapability();
-					return be.fluidCapability;
+					return be.exposedTank;
 				}
 		);
 	}
@@ -384,7 +384,7 @@ public class FluidTankBlockEntity extends SmartBlockEntity implements IHaveGoggl
 		sendData();
 	}
 
-	private void refreshCapability() {
+	protected void refreshCapability() {
 		exposedTank = handlerForCapability();
 	}
 

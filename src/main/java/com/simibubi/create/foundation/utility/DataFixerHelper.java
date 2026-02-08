@@ -5,6 +5,9 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
+import java.lang.reflect.Field;
+import java.lang.reflect.Method;
+import java.lang.reflect.Modifier;
 import java.util.function.Function;
 import java.util.stream.IntStream;
 
@@ -20,12 +23,14 @@ import net.minecraft.util.datafix.fixes.References;
 public class DataFixerHelper {
 	private static final Set<BlockPosFixer> BLOCK_POS_FIXERS = new HashSet<>();
 	public static final Set<BlockPosFixer> BLOCK_POS_FIXERS_VIEW = Collections.unmodifiableSet(BLOCK_POS_FIXERS);
+	public static final DSL.TypeReference ENTITY_REFERENCE = resolveReference("ENTITY", "entity");
+	public static final DSL.TypeReference BLOCK_ENTITY_REFERENCE = resolveReference("BLOCK_ENTITY", "block_entity");
 
 	static {
-		addBlockPosFixer(References.ENTITY, "minecraft:item", Set.of("BypassCrushingWheel"));
-		addBlockPosFixer(References.ENTITY, "stationary_contraption", Set.of("ControllerRelative"));
+		addBlockPosFixer(ENTITY_REFERENCE, "minecraft:item", Set.of("BypassCrushingWheel"));
+		addBlockPosFixer(ENTITY_REFERENCE, "stationary_contraption", Set.of("ControllerRelative"));
 
-		addBlockPosFixer(References.BLOCK_ENTITY,
+		addBlockPosFixer(BLOCK_ENTITY_REFERENCE,
 			Set.of("adjustable_chain_gearshift", "backtank", "belt", "clockwork_bearing", "clutch", "cuckoo_clock",
 				"deployer", "drill", "elevator_pulley", "encased_fan", "flap_display", "fluid_valve", "flywheel",
 				"gantry_pinion", "gearbox", "gearshift", "hand_crank", "hose_pulley", "large_water_wheel", "mechanical_arm",
@@ -35,14 +40,53 @@ public class DataFixerHelper {
 				"windmill_bearing"
 			), Set.of("Source")
 		);
-		addBlockPosFixer(References.BLOCK_ENTITY, "belt", Set.of("Controller"));
-		addBlockPosFixer(References.BLOCK_ENTITY, Set.of("item_vault", "fluid_tank"), Set.of("LastKnownPos", "Controller"));
-		addBlockPosFixer(References.BLOCK_ENTITY, "display_link", Set.of("TargetOffset"));
-		addBlockPosFixer(References.BLOCK_ENTITY, Set.of("drill", "saw"), Set.of("Breaking"));
-		addBlockPosFixer(References.BLOCK_ENTITY, Set.of("rope_pulley", "elevator_pulley"), Set.of("MirrorChildren"));
-		addBlockPosFixer(References.BLOCK_ENTITY, Set.of("rope_pulley", "elevator_pulley"),
+		addBlockPosFixer(BLOCK_ENTITY_REFERENCE, "belt", Set.of("Controller"));
+		addBlockPosFixer(BLOCK_ENTITY_REFERENCE, Set.of("item_vault", "fluid_tank"), Set.of("LastKnownPos", "Controller"));
+		addBlockPosFixer(BLOCK_ENTITY_REFERENCE, "display_link", Set.of("TargetOffset"));
+		addBlockPosFixer(BLOCK_ENTITY_REFERENCE, Set.of("drill", "saw"), Set.of("Breaking"));
+		addBlockPosFixer(BLOCK_ENTITY_REFERENCE, Set.of("rope_pulley", "elevator_pulley"), Set.of("MirrorChildren"));
+		addBlockPosFixer(BLOCK_ENTITY_REFERENCE, Set.of("rope_pulley", "elevator_pulley"),
 				data -> convertListOfBlockPositions("MirrorChildren", data));
-		addBlockPosFixer(References.BLOCK_ENTITY, "powered_shaft", Set.of("EnginePos"));
+		addBlockPosFixer(BLOCK_ENTITY_REFERENCE, "powered_shaft", Set.of("EnginePos"));
+	}
+
+	public static boolean isEntityReference(DSL.TypeReference reference) {
+		return reference != null && "entity".equals(reference.typeName());
+	}
+
+	public static boolean isBlockEntityReference(DSL.TypeReference reference) {
+		return reference != null && "block_entity".equals(reference.typeName());
+	}
+
+	private static DSL.TypeReference resolveReference(String fieldName, String typeName) {
+		try {
+			Field field = References.class.getField(fieldName);
+			Object value = field.get(null);
+			if (value instanceof DSL.TypeReference reference)
+				return reference;
+		} catch (ReflectiveOperationException ignored) {
+		}
+
+		try {
+			for (Method method : References.class.getDeclaredMethods()) {
+				if (!Modifier.isStatic(method.getModifiers()))
+					continue;
+				if (!DSL.TypeReference.class.isAssignableFrom(method.getReturnType()))
+					continue;
+
+				Class<?>[] params = method.getParameterTypes();
+				if (params.length == 1 && params[0] == String.class) {
+					method.setAccessible(true);
+					Object value = method.invoke(null, typeName);
+					if (value instanceof DSL.TypeReference reference)
+						return reference;
+				}
+			}
+		} catch (ReflectiveOperationException ignored) {
+		}
+
+		// Last resort for edge runtimes: preserve bootability and datafix registration.
+		return () -> typeName;
 	}
 
 	private static void addBlockPosFixer(DSL.TypeReference reference, Set<String> ids, Set<String> fields) {

@@ -2,17 +2,17 @@ package com.simibubi.create.foundation.blockEntity;
 
 import org.jetbrains.annotations.ApiStatus;
 
+import net.fabricmc.fabric.api.transfer.v1.item.ItemVariant;
 import net.minecraft.world.Container;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeInput;
-import net.neoforged.neoforge.items.IItemHandlerModifiable;
 
 public class LegacyRecipeWrapper implements Container, RecipeInput {
 
-	protected final IItemHandlerModifiable inv;
+	protected final io.github.fabricators_of_create.porting_lib.transfer.item.SlottedStackStorage inv;
 
-	public LegacyRecipeWrapper(IItemHandlerModifiable inv)
+	public LegacyRecipeWrapper(io.github.fabricators_of_create.porting_lib.transfer.item.SlottedStackStorage inv)
 	{
 		this.inv = inv;
 	}
@@ -30,7 +30,7 @@ public class LegacyRecipeWrapper implements Container, RecipeInput {
 	@Override
 	public int getContainerSize()
 	{
-		return inv.getSlots();
+		return inv.getSlotCount();
 	}
 
 	/**
@@ -76,7 +76,7 @@ public class LegacyRecipeWrapper implements Container, RecipeInput {
 	@Override
 	public boolean isEmpty()
 	{
-		for(int i = 0; i < inv.getSlots(); i++)
+		for(int i = 0; i < inv.getSlotCount(); i++)
 		{
 			if(!inv.getStackInSlot(i).isEmpty()) return false;
 		}
@@ -86,13 +86,13 @@ public class LegacyRecipeWrapper implements Container, RecipeInput {
 	@Override
 	public boolean canPlaceItem(int slot, ItemStack stack)
 	{
-		return inv.isItemValid(slot, stack);
+		return inv.isItemValid(slot, ItemVariant.of(stack), stack.getCount());
 	}
 
 	@Override
 	public void clearContent()
 	{
-		for(int i = 0; i < inv.getSlots(); i++)
+		for(int i = 0; i < inv.getSlotCount(); i++)
 		{
 			inv.setStackInSlot(i, ItemStack.EMPTY);
 		}

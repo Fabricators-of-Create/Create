@@ -8,12 +8,9 @@ import java.util.UUID;
 
 import javax.annotation.Nullable;
 
-import io.github.fabricators_of_create.porting_lib.util.MinecartAndRailUtil;
-
 import org.apache.commons.lang3.mutable.MutableBoolean;
 import org.jetbrains.annotations.NotNull;
 
-import com.mojang.serialization.Codec;
 import com.simibubi.create.Create;
 import com.simibubi.create.content.contraptions.AbstractContraptionEntity;
 import com.simibubi.create.content.contraptions.OrientedContraptionEntity;
@@ -32,7 +29,6 @@ import net.minecraft.nbt.NbtUtils;
 import net.minecraft.nbt.Tag;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.util.Mth;
-import net.minecraft.util.StringRepresentable;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.vehicle.AbstractMinecart;
 import net.minecraft.world.entity.vehicle.Minecart;
@@ -50,8 +46,6 @@ import io.github.fabricators_of_create.porting_lib.util.MinecartAndRailUtil;
  */
 public class MinecartController implements INBTSerializable<CompoundTag> {
 	public static final MinecartController EMPTY = new MinecartController.Empty();
-
-	public static final IAttachmentSerializer<CompoundTag, MinecartController> SERIALIZER = Type.SERIALIZER;
 
 	private boolean needsEntryRefresh;
 	private WeakReference<AbstractMinecart> weakRef;
@@ -76,12 +70,7 @@ public class MinecartController implements INBTSerializable<CompoundTag> {
 	}
 
 	public final boolean isEmpty() {
-		return getType() == Type.EMPTY;
-	}
-
-	@NotNull
-	protected Type getType() {
-		return Type.NORMAL;
+		return this == EMPTY;
 	}
 
 	public void tick() {
@@ -363,6 +352,12 @@ public class MinecartController implements INBTSerializable<CompoundTag> {
 		if (cart() == null)
 			return null;
 		return cart().level();
+	}
+
+	private static class Empty extends MinecartController {
+		private Empty() {
+			super(null);
+		}
 	}
 
 	private static class CouplingData {

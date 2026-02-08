@@ -16,7 +16,9 @@
   "results": [
     {
       "count": 9,
-      "item": "thermal:silver_nugget"
+      "item": {
+        "id": "thermal:silver_nugget"
+      }
     }
   ]
 }

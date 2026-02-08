@@ -5,11 +5,7 @@
       "conditions": {
         "items": [
           {
-<<<<<<<< HEAD:src/generated/resources/data/create/advancement/recipes/decorations/brass_ladder_from_brass_ingots_stonecutting.json
             "tag": "c:brass_ingots"
-========
-            "items": "#c:ingots/brass"
->>>>>>>> forge/mc1.21.1/dev:src/generated/resources/data/create/advancement/recipes/decorations/brass_ladder_from_ingots_brass_stonecutting.json
           }
         ]
       },
@@ -24,13 +20,8 @@
   },
   "requirements": [
     [
-<<<<<<<< HEAD:src/generated/resources/data/create/advancement/recipes/decorations/brass_ladder_from_brass_ingots_stonecutting.json
       "has_brass_ingots",
       "has_the_recipe"
-========
-      "has_the_recipe",
-      "has_ingots_brass"
->>>>>>>> forge/mc1.21.1/dev:src/generated/resources/data/create/advancement/recipes/decorations/brass_ladder_from_ingots_brass_stonecutting.json
     ]
   ],
   "rewards": {

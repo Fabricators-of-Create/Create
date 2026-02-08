@@ -7,11 +7,6 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map.Entry;
 
-import net.fabricmc.fabric.api.transfer.v1.item.ItemVariant;
-import net.fabricmc.fabric.api.transfer.v1.storage.base.SidedStorageBlockEntity;
-
-import net.fabricmc.fabric.api.transfer.v1.transaction.TransactionContext;
-
 import org.apache.commons.lang3.tuple.Pair;
 import org.jetbrains.annotations.Nullable;
 
@@ -53,7 +48,9 @@ import net.fabricmc.fabric.api.transfer.v1.storage.Storage;
 import net.fabricmc.fabric.api.transfer.v1.storage.base.SidedStorageBlockEntity;
 import net.fabricmc.fabric.api.transfer.v1.transaction.TransactionContext;
 
-import io.github.fabricators_of_create.porting_lib.transfer.callbacks.TransactionCallback;
+import com.simibubi.create.infrastructure.fabric.transfer.TransactionSuccessCallback;
+import net.neoforged.neoforge.capabilities.Capabilities;
+import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent;
 
 public class MechanicalCrafterBlockEntity extends KineticBlockEntity implements SidedStorageBlockEntity {
 
@@ -65,16 +62,16 @@ public class MechanicalCrafterBlockEntity extends KineticBlockEntity implements 
 
 		private MechanicalCrafterBlockEntity blockEntity;
 
-		public Inventory(MechanicalCrafterBlockEntity blockEntity) {
-			super(1, blockEntity, 1, false);
-			this.blockEntity = blockEntity;
-			forbidExtraction();
-			whenContentsChanged(() -> {
-				if (getStackInSlot(0).isEmpty()) // fabric: only has one slot, this is safe
-					return;
-				if (blockEntity.phase == Phase.IDLE)
-					blockEntity.checkCompletedRecipe(false);
-			});
+			public Inventory(MechanicalCrafterBlockEntity blockEntity) {
+				super(1, blockEntity, 1, false);
+				this.blockEntity = blockEntity;
+				forbidExtraction();
+				whenContentsChanged(slot -> {
+					if (getStackInSlot(0).isEmpty()) // fabric: only has one slot, this is safe
+						return;
+					if (blockEntity.phase == Phase.IDLE)
+						blockEntity.checkCompletedRecipe(false);
+				});
 		}
 
 		@Override
@@ -105,6 +102,7 @@ public class MechanicalCrafterBlockEntity extends KineticBlockEntity implements 
 	protected GroupedItems groupedItemsBeforeCraft; // for rendering on client
 	private InvManipulationBehaviour inserting;
 	private EdgeInteractionBehaviour connectivity;
+	private Storage<ItemVariant> invCap;
 
 	private ItemStack scriptedResult = ItemStack.EMPTY;
 
@@ -119,15 +117,15 @@ public class MechanicalCrafterBlockEntity extends KineticBlockEntity implements 
 		wasPoweredBefore = true;
 	}
 
-	public static void registerCapabilities(RegisterCapabilitiesEvent event) {
+	public static void registerCapabilities(net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent event) {
 		event.registerBlockEntity(
-				Capabilities.ItemHandler.BLOCK,
+				net.neoforged.neoforge.capabilities.Capabilities.ItemHandler.BLOCK,
 				AllBlockEntityTypes.MECHANICAL_CRAFTER.get(),
 				(be, context) -> be.getInvCapability()
 		);
 	}
 
-	protected IItemHandler getInvCapability() {
+	protected Storage<ItemVariant> getInvCapability() {
 		if (invCap == null) {
 			invCap = input.getItemHandler(getLevel(), getBlockPos());
 		}
@@ -470,9 +468,9 @@ public class MechanicalCrafterBlockEntity extends KineticBlockEntity implements 
 		Vec3 ejectPos = VecHelper.getCenterOf(worldPosition)
 			.add(vec);
 		groupedItems.grid.forEach((pair, stack) -> dropItem(ejectPos, stack));
-		if (!inventory.getItem(0)
+		if (!inventory.getStackInSlot(0)
 			.isEmpty())
-			dropItem(ejectPos, inventory.getItem(0));
+			dropItem(ejectPos, inventory.getStackInSlot(0));
 		phase = Phase.IDLE;
 		groupedItems = new GroupedItems();
 		inventory.setStackInSlot(0, ItemStack.EMPTY);
@@ -497,12 +495,12 @@ public class MechanicalCrafterBlockEntity extends KineticBlockEntity implements 
 	}
 
 	public boolean craftingItemPresent() {
-		return !inventory.getItem(0)
+		return !inventory.getStackInSlot(0)
 			.isEmpty();
 	}
 
 	public boolean craftingItemOrCoverPresent() {
-		return !inventory.getItem(0)
+		return !inventory.getStackInSlot(0)
 			.isEmpty() || covered;
 	}
 
@@ -522,7 +520,7 @@ public class MechanicalCrafterBlockEntity extends KineticBlockEntity implements 
 
 	protected void begin() {
 		phase = Phase.ACCEPTING;
-		groupedItems = new GroupedItems(inventory.getItem(0));
+		groupedItems = new GroupedItems(inventory.getStackInSlot(0));
 		inventory.setStackInSlot(0, ItemStack.EMPTY);
 		if (RecipeGridHandler.getPrecedingCrafters(this)
 			.isEmpty()) {

@@ -16,7 +16,9 @@
   "results": [
     {
       "count": 9,
-      "item": "oreganized:silver_nugget"
+      "item": {
+        "id": "oreganized:silver_nugget"
+      }
     }
   ]
 }

@@ -35,8 +35,9 @@ public class ItemUseOverrides {
 			return InteractionResult.PASS;
 
 		BlockPos pos = traceResult.getBlockPos();
+		Direction face = traceResult.getDirection();
 
-		BlockState state = level.getBlockState(pos);
+		BlockState state = world.getBlockState(pos);
 		ResourceLocation id = RegisteredObjectsHelper.getKeyOrThrow(state.getBlock());
 
 		if (!OVERRIDES.contains(id))
@@ -44,7 +45,7 @@ public class ItemUseOverrides {
 
 		BlockHitResult blockTrace =
 				new BlockHitResult(VecHelper.getCenterOf(pos), face, pos, true);
-		InteractionResult result = BlockHelper.invokeUse(state, level, player, hand, blockTrace);
+		InteractionResult result = BlockHelper.invokeUse(state, world, player, hand, blockTrace);
 
 		if (!result.consumesAction())
 			return InteractionResult.PASS;

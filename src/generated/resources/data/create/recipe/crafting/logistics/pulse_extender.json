@@ -9,7 +9,7 @@
       "tag": "c:dusts/redstone"
     },
     "S": {
-      "tag": "c:stone"
+      "tag": "c:stones"
     },
     "T": {
       "item": "minecraft:redstone_torch"
@@ -21,7 +21,7 @@
     "SSS"
   ],
   "result": {
-    "item": "create:pulse_extender"
+    "id": "create:pulse_extender"
   },
   "show_notification": true
 }

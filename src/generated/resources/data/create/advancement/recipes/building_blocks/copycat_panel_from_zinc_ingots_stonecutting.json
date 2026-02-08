@@ -11,11 +11,7 @@
       "conditions": {
         "items": [
           {
-<<<<<<<< HEAD:src/generated/resources/data/create/advancement/recipes/building_blocks/copycat_panel_from_zinc_ingots_stonecutting.json
             "tag": "c:zinc_ingots"
-========
-            "items": "#c:ingots/zinc"
->>>>>>>> forge/mc1.21.1/dev:src/generated/resources/data/create/advancement/recipes/building_blocks/copycat_panel_from_ingots_zinc_stonecutting.json
           }
         ]
       },
@@ -24,13 +20,8 @@
   },
   "requirements": [
     [
-<<<<<<<< HEAD:src/generated/resources/data/create/advancement/recipes/building_blocks/copycat_panel_from_zinc_ingots_stonecutting.json
       "has_zinc_ingots",
       "has_the_recipe"
-========
-      "has_the_recipe",
-      "has_ingots_zinc"
->>>>>>>> forge/mc1.21.1/dev:src/generated/resources/data/create/advancement/recipes/building_blocks/copycat_panel_from_ingots_zinc_stonecutting.json
     ]
   ],
   "rewards": {

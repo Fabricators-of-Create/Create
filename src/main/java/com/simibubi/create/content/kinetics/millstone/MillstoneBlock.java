@@ -62,22 +62,22 @@ public class MillstoneBlock extends KineticBlock implements IBE<MillstoneBlockEn
 
 		withBlockEntityDo(level, pos, millstone -> {
 			boolean emptyOutput = true;
-			ItemStackHandler inv = millstone.outputInv;
-			for (int slot = 0; slot < inv.getSlotCount(); slot++) {
-				ItemStack stackInSlot = inv.getStackInSlot(slot);
+			ItemStackHandler outputInv = millstone.outputInv;
+			for (int slot = 0; slot < outputInv.getSlotCount(); slot++) {
+				ItemStack stackInSlot = outputInv.getStackInSlot(slot);
 				if (!stackInSlot.isEmpty())
 					emptyOutput = false;
 				player.getInventory()
 					.placeItemBackInInventory(stackInSlot);
-				inv.setStackInSlot(slot, ItemStack.EMPTY);
+				outputInv.setStackInSlot(slot, ItemStack.EMPTY);
 			}
 
 			if (emptyOutput) {
-				inv = millstone.inputInv;
-				for (int slot = 0; slot < inv.getSlotCount(); slot++) {
+				var inputInv = millstone.inputInv;
+				for (int slot = 0; slot < inputInv.getSlotCount(); slot++) {
 					player.getInventory()
-						.placeItemBackInInventory(inv.getStackInSlot(slot));
-					inv.setStackInSlot(slot, ItemStack.EMPTY);
+						.placeItemBackInInventory(inputInv.getStackInSlot(slot));
+					inputInv.setStackInSlot(slot, ItemStack.EMPTY);
 				}
 			}
 
@@ -113,13 +113,13 @@ public class MillstoneBlock extends KineticBlock implements IBE<MillstoneBlockEn
 
 		try (Transaction t = Transaction.openOuter()) {
 			ItemStack inEntity = itemEntity.getItem();
-			long inserted = handler.insert(ItemVariant.of(inEntity), inEntity.getCount(), t);
-			if (inserted == inEntity.getCount())
-				itemEntity.discard();
-			else itemEntity.setItem(ItemHandlerHelper.copyStackWithSize(inEntity, (int) (inEntity.getCount() - inserted)));
-			t.commit();
+				long inserted = handler.insert(ItemVariant.of(inEntity), inEntity.getCount(), t);
+				if (inserted == inEntity.getCount())
+					itemEntity.discard();
+				else itemEntity.setItem(inEntity.copyWithCount((int) (inEntity.getCount() - inserted)));
+				t.commit();
+			}
 		}
-	}
 
 	@Override
 	public Axis getRotationAxis(BlockState state) {

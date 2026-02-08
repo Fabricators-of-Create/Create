@@ -13,19 +13,25 @@
       "item": "druidcraft:amber_ore"
     }
   ],
-  "processingTime": 300,
+  "processing_time": 300,
   "results": [
     {
       "count": 2,
-      "item": "druidcraft:amber"
+      "item": {
+        "id": "druidcraft:amber"
+      }
     },
     {
       "chance": 0.5,
-      "item": "druidcraft:amber"
+      "item": {
+        "id": "druidcraft:amber"
+      }
     },
     {
       "chance": 0.125,
-      "item": "minecraft:cobblestone"
+      "item": {
+        "id": "minecraft:cobblestone"
+      }
     }
   ]
 }

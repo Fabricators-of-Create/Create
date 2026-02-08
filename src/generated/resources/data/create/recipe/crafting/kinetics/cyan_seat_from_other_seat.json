@@ -3,13 +3,13 @@
   "category": "building",
   "ingredients": [
     {
-      "tag": "c:cyan_dyes"
+      "tag": "c:dyes/cyan"
     },
     {
       "tag": "create:seats"
     }
   ],
   "result": {
-    "item": "create:cyan_seat"
+    "id": "create:cyan_seat"
   }
 }

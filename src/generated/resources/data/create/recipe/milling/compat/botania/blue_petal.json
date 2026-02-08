@@ -13,10 +13,12 @@
       "tag": "botania:petals/blue"
     }
   ],
-  "processingTime": 50,
+  "processing_time": 50,
   "results": [
     {
-      "item": "minecraft:blue_dye"
+      "item": {
+        "id": "minecraft:blue_dye"
+      }
     }
   ]
 }

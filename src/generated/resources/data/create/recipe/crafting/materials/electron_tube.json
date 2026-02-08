@@ -14,7 +14,7 @@
     "N"
   ],
   "result": {
-    "item": "create:electron_tube"
+    "id": "create:electron_tube"
   },
   "show_notification": true
 }

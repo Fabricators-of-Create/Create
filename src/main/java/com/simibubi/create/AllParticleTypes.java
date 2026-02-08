@@ -18,12 +18,11 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.particle.ParticleEngine;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleType;
+import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
 
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-
-import io.github.fabricators_of_create.porting_lib.util.LazyRegistrar;
 
 public enum AllParticleTypes {
 	ROTATION_INDICATOR(RotationIndicatorParticleData::new),
@@ -48,7 +47,6 @@ public enum AllParticleTypes {
 	}
 
 	public static void register() {
-		ParticleEntry.REGISTER.register();
 	}
 
 	@Environment(EnvType.CLIENT)
@@ -67,8 +65,6 @@ public enum AllParticleTypes {
 	}
 
 	private static class ParticleEntry<D extends ParticleOptions> {
-		private static final LazyRegistrar<ParticleType<?>> REGISTER = LazyRegistrar.create(BuiltInRegistries.PARTICLE_TYPE, Create.ID);
-
 		private final String name;
 		private final Supplier<? extends ICustomParticleData<D>> typeFactory;
 		private final ParticleType<D> object;
@@ -77,8 +73,7 @@ public enum AllParticleTypes {
 			this.name = name;
 			this.typeFactory = typeFactory;
 
-			object = this.typeFactory.get().createType();
-			REGISTER.register(name, () -> object);
+			object = Registry.register(BuiltInRegistries.PARTICLE_TYPE, Create.asResource(name), this.typeFactory.get().createType());
 		}
 
 		@Environment(EnvType.CLIENT)

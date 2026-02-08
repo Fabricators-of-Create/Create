@@ -63,7 +63,7 @@ public class BlockCuttingCategory extends CreateRecipeCategory<CondensedBlockCut
 		List<ItemStack> outputs = new ArrayList<>();
 
 		public CondensedBlockCuttingRecipe(Ingredient ingredient) {
-			super(new ResourceLocation(""), "", ingredient, ItemStack.EMPTY);
+			super(ResourceLocation.fromNamespaceAndPath("create", "synthetic/rei/block_cutting"), "", ingredient, ItemStack.EMPTY);
 		}
 
 		public void addOutput(ItemStack stack) {

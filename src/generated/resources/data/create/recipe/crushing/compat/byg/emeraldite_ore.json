@@ -13,23 +13,31 @@
       "tag": "c:ores/emeraldite"
     }
   ],
-  "processingTime": 500,
+  "processing_time": 500,
   "results": [
     {
       "count": 2,
-      "item": "byg:emeraldite_shards"
+      "item": {
+        "id": "byg:emeraldite_shards"
+      }
     },
     {
       "chance": 0.25,
-      "item": "byg:emeraldite_shards"
+      "item": {
+        "id": "byg:emeraldite_shards"
+      }
     },
     {
       "chance": 0.75,
-      "item": "create:experience_nugget"
+      "item": {
+        "id": "create:experience_nugget"
+      }
     },
     {
       "chance": 0.125,
-      "item": "byg:scoria_cobblestone"
+      "item": {
+        "id": "byg:scoria_cobblestone"
+      }
     }
   ]
 }

@@ -7,7 +7,9 @@
   ],
   "results": [
     {
-      "item": "minecraft:glass_pane"
+      "item": {
+        "id": "minecraft:glass_pane"
+      }
     }
   ]
 }

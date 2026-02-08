@@ -1,6 +1,6 @@
 {
   "type": "create:mechanical_crafting",
-  "acceptMirrored": false,
+  "accept_mirrored": false,
   "key": {
     "H": {
       "item": "create:brass_hand"
@@ -12,7 +12,7 @@
       "item": "create:precision_mechanism"
     },
     "S": {
-      "tag": "c:wooden_rods"
+      "tag": "c:rods/wooden"
     }
   },
   "pattern": [
@@ -23,6 +23,6 @@
     " H "
   ],
   "result": {
-    "item": "create:extendo_grip"
+    "id": "create:extendo_grip"
   }
 }

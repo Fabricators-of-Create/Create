@@ -6,8 +6,6 @@ import java.util.Set;
 
 import net.fabricmc.fabric.api.object.builder.v1.entity.FabricEntityTypeBuilder;
 
-import net.neoforged.neoforge.entity.IEntityWithComplexSpawn;
-
 import org.jetbrains.annotations.NotNull;
 
 import com.simibubi.create.AllBlocks;
@@ -56,6 +54,8 @@ import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.material.PushReaction;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
+
+import io.github.fabricators_of_create.porting_lib.entity.IEntityWithComplexSpawn;
 
 public class SuperGlueEntity extends Entity implements IEntityWithComplexSpawn, SpecialEntityItemRequirement {
 

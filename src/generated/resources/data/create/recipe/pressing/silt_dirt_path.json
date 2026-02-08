@@ -15,7 +15,9 @@
   ],
   "results": [
     {
-      "item": "regions_unexplored:silt_dirt_path"
+      "item": {
+        "id": "regions_unexplored:silt_dirt_path"
+      }
     }
   ]
 }

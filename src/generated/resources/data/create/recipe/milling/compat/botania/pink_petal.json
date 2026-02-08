@@ -13,10 +13,12 @@
       "tag": "botania:petals/pink"
     }
   ],
-  "processingTime": 50,
+  "processing_time": 50,
   "results": [
     {
-      "item": "minecraft:pink_dye"
+      "item": {
+        "id": "minecraft:pink_dye"
+      }
     }
   ]
 }

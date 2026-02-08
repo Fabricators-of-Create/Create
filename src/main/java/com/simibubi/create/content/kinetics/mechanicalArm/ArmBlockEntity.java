@@ -309,9 +309,9 @@ public class ArmBlockEntity extends KineticBlockEntity implements TransformableB
 				if (!armInteractionPoint.isValid())
 					continue;
 
-			ItemStack remainder = armInteractionPoint.insert(held, true);
-			if (ItemStack.matches(remainder, heldItem))
-				continue;
+				ItemStack remainder = armInteractionPoint.insert(held, t);
+				if (ItemStack.matches(remainder, heldItem))
+					continue;
 
 				selectIndex(false, i);
 				foundOutput = true;

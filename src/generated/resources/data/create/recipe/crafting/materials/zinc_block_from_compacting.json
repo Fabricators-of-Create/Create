@@ -12,7 +12,7 @@
     "###"
   ],
   "result": {
-    "item": "create:zinc_block"
+    "id": "create:zinc_block"
   },
   "show_notification": true
 }

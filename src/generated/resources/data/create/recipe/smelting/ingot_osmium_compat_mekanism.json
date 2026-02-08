@@ -14,5 +14,7 @@
   "ingredient": {
     "item": "create:crushed_raw_osmium"
   },
-  "result": "mekanism:ingot_osmium"
+  "result": {
+    "id": "mekanism:ingot_osmium"
+  }
 }

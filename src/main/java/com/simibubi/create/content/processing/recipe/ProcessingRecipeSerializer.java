@@ -28,17 +28,17 @@ import com.simibubi.create.infrastructure.fabric.transfer.fluid.FluidStack;
 
 @MethodsReturnNonnullByDefault
 @ParametersAreNonnullByDefault
-public class ProcessingRecipeSerializer<T extends ProcessingRecipe<?>> implements RecipeSerializer<T> {
+	public class ProcessingRecipeSerializer<T extends ProcessingRecipe<?>> implements RecipeSerializer<T> {
 
-	private final ProcessingRecipeFactory<T> factory;
+		private final ProcessingRecipeFactory<T> factory;
+		private final MapCodec<T> codec;
 
-	public final MapCodec<T> CODEC = AllRecipeTypes.CODEC.dispatchMap(ProcessingRecipe::getRecipeType, AllRecipeTypes::processingCodec);
+		public final StreamCodec<RegistryFriendlyByteBuf, T> STREAM_CODEC = StreamCodec.of(this::toNetwork, this::fromNetwork);
 
-	public final StreamCodec<RegistryFriendlyByteBuf, T> STREAM_CODEC = StreamCodec.of(this::toNetwork, this::fromNetwork);
-
-	public ProcessingRecipeSerializer(ProcessingRecipeFactory<T> factory) {
-		this.factory = factory;
-	}
+		public ProcessingRecipeSerializer(ProcessingRecipeFactory<T> factory, AllRecipeTypes recipeType) {
+			this.factory = factory;
+			this.codec = codec(recipeType);
+		}
 
 	public static <T extends ProcessingRecipe<?>> MapCodec<T> codec(AllRecipeTypes recipeTypes) {
 		return RecordCodecBuilder.mapCodec(instance -> instance.group(
@@ -56,11 +56,11 @@ public class ProcessingRecipeSerializer<T extends ProcessingRecipe<?>> implement
 				}),
 			ExtraCodecs.NON_NEGATIVE_INT.optionalFieldOf("processing_time", 0).forGetter(T::getProcessingDuration),
 			HeatCondition.CODEC.optionalFieldOf("heat_requirement", HeatCondition.NONE).forGetter(T::getRequiredHeat)
-		).apply(instance, (ingredients, results, processingTime, heatRequirement) -> {
-			if (!(recipeTypes.serializerSupplier.get() instanceof ProcessingRecipeSerializer processingRecipeSerializer))
-				throw new RuntimeException("Not a processing recipe serializer " + recipeTypes.serializerSupplier.get());
+			).apply(instance, (ingredients, results, processingTime, heatRequirement) -> {
+				if (!(recipeTypes.getSerializer() instanceof ProcessingRecipeSerializer<?> processingRecipeSerializer))
+					throw new RuntimeException("Not a processing recipe serializer " + recipeTypes.getSerializer());
 
-			ProcessingRecipeBuilder<T> builder = new ProcessingRecipeBuilder<T>(processingRecipeSerializer.getFactory(), recipeTypes.id);
+				ProcessingRecipeBuilder<T> builder = new ProcessingRecipeBuilder<>((ProcessingRecipeFactory<T>) processingRecipeSerializer.getFactory(), recipeTypes.getId());
 
 			NonNullList<Ingredient> ingredientList = NonNullList.create();
 			NonNullList<FluidIngredient> fluidIngredientList = NonNullList.create();
@@ -124,7 +124,7 @@ public class ProcessingRecipeSerializer<T extends ProcessingRecipe<?>> implement
 
 	@Override
 	public MapCodec<T> codec() {
-		return CODEC;
+		return codec;
 	}
 
 	@Override

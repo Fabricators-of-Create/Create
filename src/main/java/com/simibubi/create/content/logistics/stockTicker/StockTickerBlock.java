@@ -76,32 +76,32 @@ public class StockTickerBlock extends HorizontalDirectionalBlock implements IBE<
 		if (stack.getItem() instanceof LogisticallyLinkedBlockItem)
 			return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
 
-		return onBlockEntityUseItemOn(level, pos, stbe -> {
-			if (!stbe.behaviour.mayInteractMessage(player))
-				return ItemInteractionResult.SUCCESS;
+			return onBlockEntityUseItemOn(level, pos, stbe -> {
+				if (!stbe.behaviour.mayInteractMessage(player))
+					return ItemInteractionResult.SUCCESS;
 
-			if (!pLevel.isClientSide() && !stbe.receivedPayments.isEmpty()) {
-				try (Transaction t = Transaction.openOuter()) {
-					for (StorageView<ItemVariant> view : stbe.receivedPayments.nonEmptyViews()) {
-						ItemVariant resource = view.getResource();
-						long extracted = view.extract(resource, view.getAmount(), t);
-						if (extracted > 0) {
-							ItemStack stack = resource.toStack(TransferUtil.truncateLong(extracted));
-							pPlayer.getInventory().placeItemBackInInventory(stack);
+				if (!level.isClientSide() && !stbe.receivedPayments.isEmpty()) {
+					try (Transaction t = Transaction.openOuter()) {
+						for (StorageView<ItemVariant> view : stbe.receivedPayments.nonEmptyViews()) {
+							ItemVariant resource = view.getResource();
+							long extracted = view.extract(resource, view.getAmount(), t);
+							if (extracted > 0) {
+								ItemStack paymentStack = resource.toStack(TransferUtil.truncateLong(extracted));
+								player.getInventory().placeItemBackInInventory(paymentStack);
+							}
 						}
+						t.commit();
 					}
-					t.commit();
+					AllSoundEvents.playItemPickup(player);
+					return ItemInteractionResult.SUCCESS;
 				}
-				AllSoundEvents.playItemPickup(pPlayer);
-				return ItemInteractionResult.SUCCESS;
-			}
 
-			if (player instanceof ServerPlayer sp) {
-				if (stbe.isKeeperPresent())
-					sp.openMenu(stbe.new CategoryMenuProvider(), stbe.getBlockPos());
-				else
-					CreateLang.translate("stock_ticker.keeper_missing")
-						.sendStatus(player);
+				if (player instanceof ServerPlayer sp) {
+					if (stbe.isKeeperPresent())
+						sp.openMenu(stbe.new CategoryMenuProvider());
+					else
+						CreateLang.translate("stock_ticker.keeper_missing")
+							.sendStatus(player);
 			}
 
 			return ItemInteractionResult.SUCCESS;

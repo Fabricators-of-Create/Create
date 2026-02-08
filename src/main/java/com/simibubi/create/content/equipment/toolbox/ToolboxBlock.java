@@ -13,7 +13,6 @@ import com.simibubi.create.AllDataComponents;
 import com.simibubi.create.AllShapes;
 import com.simibubi.create.foundation.block.IBE;
 import com.simibubi.create.foundation.item.ItemHelper;
-import com.simibubi.create.foundation.mixin.accessor.ItemStackHandlerAccessor;
 import com.simibubi.create.foundation.utility.BlockHelper;
 
 import net.minecraft.core.BlockPos;
@@ -48,7 +47,6 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 
 import net.fabricmc.fabric.api.entity.FakePlayer;
 
-import io.github.fabricators_of_create.porting_lib.util.NetworkHooks;
 import io.github.fabricators_of_create.porting_lib.util.TagUtil;
 
 public class ToolboxBlock extends HorizontalDirectionalBlock implements SimpleWaterloggedBlock, IBE<ToolboxBlockEntity> {
@@ -116,8 +114,12 @@ public class ToolboxBlock extends HorizontalDirectionalBlock implements SimpleWa
 		ItemStack item = new ItemStack(this);
 		Optional<ToolboxBlockEntity> blockEntityOptional = getBlockEntityOptional(level, pos);
 
-		NonNullList<ItemStack> stacks = blockEntityOptional.map(tb -> ((ItemStackHandlerAccessor) tb.inventory).create$getStacks())
-			.orElse(NonNullList.create());
+		NonNullList<ItemStack> stacks = NonNullList.create();
+		blockEntityOptional.ifPresent(tb -> {
+			for (int i = 0; i < tb.inventory.getSlotCount(); i++) {
+				stacks.add(tb.inventory.getStackInSlot(i));
+			}
+		});
 		item.set(AllDataComponents.TOOLBOX_INVENTORY, ItemContainerContents.fromItems(stacks));
 
 		blockEntityOptional.map(ToolboxBlockEntity::getUniqueId)
@@ -161,7 +163,7 @@ public class ToolboxBlock extends HorizontalDirectionalBlock implements SimpleWa
 			return ItemInteractionResult.SUCCESS;
 
 		withBlockEntityDo(level, pos,
-			toolbox -> player.openMenu(toolbox, toolbox::sendToMenu));
+			toolbox -> player.openMenu(toolbox));
 		return ItemInteractionResult.SUCCESS;
 	}
 

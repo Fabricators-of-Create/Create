@@ -16,7 +16,9 @@
   "results": [
     {
       "count": 9,
-      "item": "thermal:tin_nugget"
+      "item": {
+        "id": "thermal:tin_nugget"
+      }
     }
   ]
 }

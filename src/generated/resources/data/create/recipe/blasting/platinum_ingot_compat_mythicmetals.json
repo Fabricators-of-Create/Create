@@ -14,5 +14,7 @@
   "ingredient": {
     "item": "create:crushed_raw_platinum"
   },
-  "result": "mythicmetals:platinum_ingot"
+  "result": {
+    "id": "mythicmetals:platinum_ingot"
+  }
 }

@@ -1,15 +1,10 @@
 package com.simibubi.create.foundation.model;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import com.simibubi.create.foundation.block.render.CustomBlockModels;
 import com.simibubi.create.foundation.item.render.CustomItemModels;
-import com.simibubi.create.foundation.item.render.CustomRenderedItemModel;
-import com.simibubi.create.foundation.item.render.CustomRenderedItems;
-import com.tterrag.registrate.util.nullness.NonNullFunction;
 
 import net.createmod.catnip.registry.RegisteredObjectsHelper;
 import net.minecraft.client.renderer.block.BlockModelShaper;
@@ -27,8 +22,6 @@ public class ModelSwapper implements AfterBake {
 	protected CustomBlockModels customBlockModels = new CustomBlockModels();
 	protected CustomItemModels customItemModels = new CustomItemModels();
 
-	private Map<ResourceLocation, NonNullFunction<BakedModel, ? extends BakedModel>> swaps = null;
-
 	public CustomBlockModels getCustomBlockModels() {
 		return customBlockModels;
 	}
@@ -43,18 +36,7 @@ public class ModelSwapper implements AfterBake {
 
 	@Override
 	public BakedModel modifyModelAfterBake(BakedModel model, Context context) {
-		if (swaps == null)
-			collectSwaps();
-		NonNullFunction<BakedModel, ? extends BakedModel> swap = swaps.get(context.id());
-		return swap != null ? swap.apply(model) : model;
-	}
-
-	private void collectSwaps() {
-		this.swaps = new HashMap<>();
-
-		customBlockModels.forEach((block, swapper) -> getAllBlockStateModelLocations(block).forEach(id -> swaps.put(id, swapper)));
-		customItemModels.forEach((item, swapper) -> swaps.put(getItemModelLocation(item), swapper));
-		CustomRenderedItems.forEach(item -> swaps.put(getItemModelLocation(item), CustomRenderedItemModel::new));
+		return model;
 	}
 
 	public static List<ModelResourceLocation> getAllBlockStateModelLocations(Block block) {

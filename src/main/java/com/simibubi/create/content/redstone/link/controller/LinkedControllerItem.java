@@ -5,7 +5,6 @@ import com.simibubi.create.AllDataComponents;
 import com.simibubi.create.AllItems;
 import com.simibubi.create.content.redstone.link.RedstoneLinkNetworkHandler.Frequency;
 import com.simibubi.create.foundation.item.ItemHelper;
-import com.simibubi.create.foundation.item.render.SimpleCustomRenderer;
 
 import com.simibubi.create.foundation.utility.AdventureUtil;
 
@@ -39,7 +38,6 @@ import net.fabricmc.api.Environment;
 
 import io.github.fabricators_of_create.porting_lib.item.UseFirstBehaviorItem;
 import com.simibubi.create.infrastructure.fabric.transfer.item.ItemStackHandler;
-import io.github.fabricators_of_create.porting_lib.util.NetworkHooks;
 
 public class LinkedControllerItem extends Item implements MenuProvider, UseFirstBehaviorItem {
 
@@ -95,9 +93,7 @@ public class LinkedControllerItem extends Item implements MenuProvider, UseFirst
 
 		if (player.isShiftKeyDown() && hand == InteractionHand.MAIN_HAND) {
 			if (!world.isClientSide && player instanceof ServerPlayer && player.mayBuild())
-				player.openMenu(this, buf -> {
-					ItemStack.STREAM_CODEC.encode(buf, heldItem);
-				});
+				player.openMenu(this);
 			return InteractionResultHolder.success(heldItem);
 		}
 

@@ -125,9 +125,9 @@ public class BrassTunnelBlockEntity extends BeltTunnelBlockEntity implements IHa
 		syncedOutputActive = false;
 	}
 
-	public static void registerCapabilities(RegisterCapabilitiesEvent event) {
+	public static void registerCapabilities(net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent event) {
 		event.registerBlockEntity(
-				Capabilities.ItemHandler.BLOCK,
+				net.neoforged.neoforge.capabilities.Capabilities.ItemHandler.BLOCK,
 				AllBlockEntityTypes.BRASS_TUNNEL.get(),
 				(be, context) -> be.tunnelCapability
 		);

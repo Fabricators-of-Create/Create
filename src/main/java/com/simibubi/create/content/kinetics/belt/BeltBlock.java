@@ -74,8 +74,8 @@ import net.minecraft.world.level.block.state.properties.Property;
 import net.minecraft.world.level.levelgen.DebugLevelSource;
 import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.material.Fluids;
-import net.minecraft.world.level.pathfinder.BlockPathTypes;
 import net.minecraft.world.level.pathfinder.PathComputationType;
+import net.minecraft.world.level.pathfinder.PathType;
 import net.minecraft.world.level.storage.loot.LootParams;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.minecraft.world.phys.AABB;
@@ -112,7 +112,7 @@ public class BeltBlock extends HorizontalKineticBlock
 			.setValue(PART, BeltPart.START)
 			.setValue(CASING, false)
 			.setValue(WATERLOGGED, false));
-		LandPathNodeTypesRegistry.register(this, BlockPathTypes.RAIL, null);
+		LandPathNodeTypesRegistry.register(this, PathType.RAIL, null);
 	}
 
 	@Override
@@ -272,7 +272,7 @@ public class BeltBlock extends HorizontalKineticBlock
 
 		if (isDye || hasWater)
 			return onBlockEntityUseItemOn(level, pos,
-				be -> be.applyColor(TagUtil.getColorFromStack(heldItem)) ? ItemInteractionResult.SUCCESS : ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION);
+				be -> be.applyColor(TagUtil.getColorFromStack(stack)) ? ItemInteractionResult.SUCCESS : ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION);
 
 		if (isConnector)
 			return BeltSlicer.useConnector(state, level, pos, player, hand, hitResult, new Feedback());
@@ -327,7 +327,7 @@ public class BeltBlock extends HorizontalKineticBlock
 			updateCoverProperty(level, pos, level.getBlockState(pos));
 
 			SoundType soundType = AllBlocks.BRASS_CASING.getDefaultState()
-				.getSoundType(level, pos, player);
+				.getSoundType();
 			level.playSound(null, pos, soundType.getPlaceSound(), SoundSource.BLOCKS,
 				(soundType.getVolume() + 1.0F) / 2.0F, soundType.getPitch() * 0.8F);
 
@@ -339,7 +339,7 @@ public class BeltBlock extends HorizontalKineticBlock
 			updateCoverProperty(level, pos, level.getBlockState(pos));
 
 			SoundType soundType = AllBlocks.ANDESITE_CASING.getDefaultState()
-				.getSoundType(level, pos, player);
+				.getSoundType();
 			level.playSound(null, pos, soundType.getPlaceSound(), SoundSource.BLOCKS,
 				(soundType.getVolume() + 1.0F) / 2.0F, soundType.getPitch() * 0.8F);
 

@@ -6,12 +6,15 @@
     },
     {
       "amount": 27000,
-      "fluidTag": "c:milk"
+      "fluid_tag": "c:milk",
+      "type": "fluid_tag"
     }
   ],
   "results": [
     {
-      "item": "create:sweet_roll"
+      "item": {
+        "id": "create:sweet_roll"
+      }
     }
   ]
 }

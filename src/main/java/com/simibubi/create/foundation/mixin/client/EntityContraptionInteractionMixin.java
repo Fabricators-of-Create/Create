@@ -7,11 +7,8 @@ import java.util.stream.Stream;
 
 import io.github.fabricators_of_create.porting_lib.block.CustomRunningEffectsBlock;
 
-import org.apache.commons.lang3.mutable.MutableBoolean;
 import org.apache.logging.log4j.util.TriConsumer;
-import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -35,46 +32,24 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplate;
 import net.minecraft.world.phys.Vec3;
 
-import io.github.fabricators_of_create.porting_lib.block.CustomRunningEffectsBlock;
-
 @Mixin(Entity.class)
 public abstract class EntityContraptionInteractionMixin {
-	@Shadow
-	private Level level;
-
-	@Shadow
-	private Vec3 position;
-
-	@Shadow
-	private float nextStep;
-
-	@Shadow
-	@Final
-	protected RandomSource random;
-
-	@Shadow
-	private EntityDimensions dimensions;
-
-	@Shadow
-	protected abstract float nextStep();
-
-	@Shadow
-	protected abstract void playStepSound(BlockPos pos, BlockState state);
-
 	@Unique
 	private Stream<AbstractContraptionEntity> create$getIntersectionContraptionsStream() {
-		return ContraptionHandler.loadedContraptions.get(level)
+		Entity self = (Entity) (Object) this;
+		return ContraptionHandler.loadedContraptions.get(self.level())
 			.values()
 			.stream()
 			.map(Reference::get)
-			.filter(cEntity -> cEntity != null && cEntity.collidingEntities.containsKey((Entity) (Object) this));
+			.filter(cEntity -> cEntity != null && cEntity.collidingEntities.containsKey(self));
 	}
 
 	@Unique
 	private Set<AbstractContraptionEntity> create$getIntersectingContraptions() {
+		Entity self = (Entity) (Object) this;
 		Set<AbstractContraptionEntity> contraptions = create$getIntersectionContraptionsStream().collect(Collectors.toSet());
 
-		contraptions.addAll(level.getEntitiesOfClass(AbstractContraptionEntity.class, ((Entity) (Object) this).getBoundingBox()
+		contraptions.addAll(self.level().getEntitiesOfClass(AbstractContraptionEntity.class, self.getBoundingBox()
 			.inflate(1f)));
 		return contraptions;
 	}
@@ -96,35 +71,18 @@ public abstract class EntityContraptionInteractionMixin {
 		});
 	}
 
-	// involves block step sounds on contraptions
-	// injecting before `!blockstate1.isAir(this.world, blockpos)`
-	// `if (this.moveDist > this.nextStep && !blockstate1.isAir())
-	@Inject(method = "move", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/level/block/state/BlockState;isAir()Z", ordinal = 0))
-	private void create$contraptionStepSounds(MoverType mover, Vec3 movement, CallbackInfo ci) {
-		Vec3 worldPos = position.add(0, -0.2, 0);
-		MutableBoolean stepped = new MutableBoolean(false);
-
-		create$forCollision(worldPos, (contraption, state, pos) -> {
-			playStepSound(pos, state);
-			stepped.setTrue();
-		});
-
-		if (stepped.booleanValue())
-			nextStep = nextStep();
-	}
-
 	// involves client-side view bobbing animation on contraptions
 	@Inject(method = "move", at = @At(value = "TAIL"))
 	private void create$onMove(MoverType mover, Vec3 movement, CallbackInfo ci) {
-		if (!level.isClientSide)
-			return;
 		Entity self = (Entity) (Object) this;
+		if (!self.level().isClientSide)
+			return;
 		if (self.onGround())
 			return;
 		if (self.isPassenger())
 			return;
 
-		Vec3 worldPos = position.add(0, -0.2, 0);
+		Vec3 worldPos = self.position().add(0, -0.2, 0);
 		boolean onAtLeastOneContraption = create$getIntersectionContraptionsStream().anyMatch(cEntity -> {
 			Vec3 localPos = ContraptionCollider.worldToLocalPos(worldPos, cEntity);
 
@@ -151,8 +109,11 @@ public abstract class EntityContraptionInteractionMixin {
 	@Inject(method = "spawnSprintParticle", at = @At(value = "TAIL"))
 	private void create$onSpawnSprintParticle(CallbackInfo ci) {
 		Entity self = (Entity) (Object) this;
-		Vec3 worldPos = position.add(0, -0.2, 0);
+		Vec3 worldPos = self.position().add(0, -0.2, 0);
 		BlockPos particlePos = BlockPos.containing(worldPos); // pos where particles are spawned
+		EntityDimensions dimensions = self.getDimensions(self.getPose());
+		RandomSource random = self.level().getRandom();
+		Level level = self.level();
 
 		create$forCollision(worldPos, (contraption, state, pos) -> {
 			boolean particles = state.getRenderShape() != RenderShape.INVISIBLE;

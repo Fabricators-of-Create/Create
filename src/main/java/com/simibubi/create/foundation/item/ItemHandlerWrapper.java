@@ -2,8 +2,6 @@ package com.simibubi.create.foundation.item;
 
 import java.util.Iterator;
 
-import org.jetbrains.annotations.Nullable;
-
 import net.fabricmc.fabric.api.transfer.v1.item.ItemVariant;
 import net.fabricmc.fabric.api.transfer.v1.storage.Storage;
 import net.fabricmc.fabric.api.transfer.v1.storage.StorageView;
@@ -28,11 +26,6 @@ public class ItemHandlerWrapper implements Storage<ItemVariant> {
 	}
 
 	@Override
-	public long simulateInsert(ItemVariant resource, long maxAmount, @Nullable TransactionContext transaction) {
-		return wrapped.simulateInsert(resource, maxAmount, transaction);
-	}
-
-	@Override
 	public boolean supportsExtraction() {
 		return wrapped.supportsExtraction();
 	}
@@ -43,18 +36,8 @@ public class ItemHandlerWrapper implements Storage<ItemVariant> {
 	}
 
 	@Override
-	public long simulateExtract(ItemVariant resource, long maxAmount, @Nullable TransactionContext transaction) {
-		return wrapped.simulateExtract(resource, maxAmount, transaction);
-	}
-
-	@Override
 	public Iterator<StorageView<ItemVariant>> iterator() {
 		return wrapped.iterator();
-	}
-
-	@Override
-	public @Nullable StorageView<ItemVariant> exactView(ItemVariant resource) {
-		return wrapped.exactView(resource);
 	}
 
 	@Override

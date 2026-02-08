@@ -11,7 +11,7 @@ import net.minecraft.world.level.block.DirectionalBlock;
 import net.minecraft.world.level.block.state.BlockState;
 
 import io.github.fabricators_of_create.porting_lib.models.generators.ModelFile;
-import io.github.fabricators_of_create.porting_lib.models.generators.block.BlockModelProvider;
+import io.github.fabricators_of_create.porting_lib.models.generators.BlockModelProvider;
 
 public class SpecialCopycatPanelBlockState extends SpecialBlockStateGen {
 

@@ -63,7 +63,7 @@ public class LayerPattern {
 			return this;
 		}
 
-		public Builder layer(Consumer<Layer.@NotNull Builder> builder) {
+		public Builder layer(Consumer<Layer.Builder> builder) {
 			Layer.Builder layerBuilder = new Layer.Builder();
 			layerBuilder.netherMode = netherMode;
 			builder.accept(layerBuilder);

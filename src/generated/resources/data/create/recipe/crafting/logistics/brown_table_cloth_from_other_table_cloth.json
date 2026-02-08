@@ -3,13 +3,13 @@
   "category": "building",
   "ingredients": [
     {
-      "tag": "c:brown_dyes"
+      "tag": "c:dyes/brown"
     },
     {
       "tag": "create:dyed_table_cloths"
     }
   ],
   "result": {
-    "item": "create:brown_table_cloth"
+    "id": "create:brown_table_cloth"
   }
 }

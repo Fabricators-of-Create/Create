@@ -14,5 +14,7 @@
   "ingredient": {
     "item": "create:crushed_raw_silver"
   },
-  "result": "mythicmetals:silver_ingot"
+  "result": {
+    "id": "mythicmetals:silver_ingot"
+  }
 }

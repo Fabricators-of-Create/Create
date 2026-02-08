@@ -15,7 +15,9 @@
   ],
   "results": [
     {
-      "item": "immersiveengineering:plate_lead"
+      "item": {
+        "id": "immersiveengineering:plate_lead"
+      }
     }
   ]
 }

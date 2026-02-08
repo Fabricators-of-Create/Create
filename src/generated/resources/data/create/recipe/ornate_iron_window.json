@@ -15,7 +15,7 @@
   ],
   "result": {
     "count": 2,
-    "item": "create:ornate_iron_window"
+    "id": "create:ornate_iron_window"
   },
   "show_notification": true
 }

@@ -19,16 +19,13 @@ import com.simibubi.create.foundation.gui.widget.ScrollInput;
 import com.simibubi.create.foundation.gui.widget.SelectionScrollInput;
 import net.createmod.catnip.platform.CatnipServices;
 import com.simibubi.create.foundation.utility.CreateLang;
-import com.simibubi.create.infrastructure.ponder.AllCreatePonderTags;
 
 import dev.engine_room.flywheel.lib.transform.TransformStack;
 import net.createmod.catnip.data.Couple;
 import net.createmod.catnip.gui.AbstractSimiScreen;
-import net.createmod.catnip.gui.ScreenOpener;
 import net.createmod.catnip.gui.element.GuiGameElement;
 import net.createmod.catnip.gui.widget.AbstractSimiWidget;
 import net.createmod.catnip.gui.widget.ElementWidget;
-import net.createmod.ponder.foundation.ui.PonderTagScreen;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.events.GuiEventListener;
@@ -158,7 +155,6 @@ public class DisplayLinkScreen extends AbstractSimiScreen {
 		sourceWidget = new ElementWidget(x + 37, y + 26)
 			.showingElement(GuiGameElement.of(sourceIcon))
 			.withCallback((mX, mY) -> {
-				ScreenOpener.open(new PonderTagScreen(AllCreatePonderTags.DISPLAY_SOURCES));
 			});
 
 		sourceWidget.getToolTip().addAll(List.of(
@@ -175,7 +171,6 @@ public class DisplayLinkScreen extends AbstractSimiScreen {
 		targetWidget = new ElementWidget(x + 37, y + 105)
 			.showingElement(GuiGameElement.of(targetIcon))
 			.withCallback((mX, mY) -> {
-				ScreenOpener.open(new PonderTagScreen(AllCreatePonderTags.DISPLAY_TARGETS));
 			});
 
 		targetWidget.getToolTip().addAll(List.of(

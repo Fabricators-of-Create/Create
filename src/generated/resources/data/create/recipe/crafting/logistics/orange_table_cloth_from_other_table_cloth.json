@@ -3,13 +3,13 @@
   "category": "building",
   "ingredients": [
     {
-      "tag": "c:orange_dyes"
+      "tag": "c:dyes/orange"
     },
     {
       "tag": "create:dyed_table_cloths"
     }
   ],
   "result": {
-    "item": "create:orange_table_cloth"
+    "id": "create:orange_table_cloth"
   }
 }

@@ -16,7 +16,9 @@
   "results": [
     {
       "count": 9,
-      "item": "ic2:nugget_silver"
+      "item": {
+        "id": "ic2:nugget_silver"
+      }
     }
   ]
 }

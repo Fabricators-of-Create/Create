@@ -7,12 +7,14 @@
     {
       "amount": 27000,
       "fluid": "create:tea",
-      "nbt": {}
+      "type": "fluid_stack"
     }
   ],
   "results": [
     {
-      "item": "create:builders_tea"
+      "item": {
+        "id": "create:builders_tea"
+      }
     }
   ]
 }

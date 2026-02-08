@@ -41,7 +41,7 @@ public class EmptyingRecipeGen extends ProcessingRecipeGen {
 				.output(Fluids.LAVA, FluidConstants.BOTTLE)
 				.whenModLoaded(Mods.AM.getId())),
 
-		NEO_MILK = create(Mods.NEA.recipeId("milk_bottle"), b -> b.require(Mods.FD, "milk_bottle")
+		NEO_MILK = create(Mods.NEA.recipeId("milk_bottle"), b -> b.require(Mods.NEA, "milk_bottle")
 				.output(Milk.STILL_MILK, FluidConstants.BOTTLE)
 				.output(Items.GLASS_BOTTLE)
 				.whenModLoaded(Mods.NEA.getId()))

@@ -112,9 +112,9 @@ public class SawBlockEntity extends BlockBreakingKineticBlockEntity implements S
 		playEvent = ItemStack.EMPTY;
 	}
 
-	public static void registerCapabilities(RegisterCapabilitiesEvent event) {
+	public static void registerCapabilities(net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent event) {
 		event.registerBlockEntity(
-				Capabilities.ItemHandler.BLOCK,
+				net.neoforged.neoforge.capabilities.Capabilities.ItemHandler.BLOCK,
 				AllBlockEntityTypes.SAW.get(),
 				(be, context) -> {
 					if (context != Direction.DOWN)
@@ -167,12 +167,12 @@ public class SawBlockEntity extends BlockBreakingKineticBlockEntity implements S
 			return;
 
 		if (!playEvent.isEmpty()) {
-			boolean isWood = false;
-			Item item = playEvent.getItem();
-			if (item instanceof BlockItem) {
-				Block block = ((BlockItem) item).getBlock();
-				isWood = block.getSoundType(block.defaultBlockState()) == SoundType.WOOD;
-			}
+				boolean isWood = false;
+				Item item = playEvent.getItem();
+				if (item instanceof BlockItem) {
+					Block block = ((BlockItem) item).getBlock();
+					isWood = block.defaultBlockState().getSoundType() == SoundType.WOOD;
+				}
 			spawnEventParticles(playEvent);
 			playEvent = ItemStack.EMPTY;
 			if (!isWood)
@@ -432,13 +432,13 @@ public class SawBlockEntity extends BlockBreakingKineticBlockEntity implements S
 		try (Transaction t = Transaction.openOuter()) {
 			ItemStack contained = entity.getItem();
 			long inserted = inventory.insert(ItemVariant.of(contained), contained.getCount(), t);
-			if (contained.getCount() == inserted)
-				entity.discard();
-			else
-				entity.setItem(ItemHandlerHelper.copyStackWithSize(contained, (int) (contained.getCount() - inserted)));
-			t.commit();
+				if (contained.getCount() == inserted)
+					entity.discard();
+				else
+					entity.setItem(contained.copyWithCount((int) (contained.getCount() - inserted)));
+				t.commit();
+			}
 		}
-	}
 
 	public void start(ItemStack inserted) {
 		if (!canProcess())

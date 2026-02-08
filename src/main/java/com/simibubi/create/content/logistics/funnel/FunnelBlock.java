@@ -85,7 +85,7 @@ public abstract class FunnelBlock extends AbstractDirectionalFunnelBlock {
 	@Override
 	protected ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hitResult) {
 		if (AdventureUtil.isAdventure(player))
-			return ItemInteractionResult.PASS;
+			return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
 		boolean shouldntInsertItem = AllBlocks.MECHANICAL_ARM.isIn(stack) || !canInsertIntoFunnel(state);
 
 		if (AllItems.WRENCH.isIn(stack))

@@ -1,25 +1,29 @@
 {
-  "neoforge:conditions": [
-    {
-      "type": "neoforge:mod_loaded",
-      "modid": "exnihilosequentia"
-    }
-  ],
   "type": "create:crushing",
   "ingredients": [
     {
-      "type": "neoforge:compound",
       "ingredients": [
         {
           "item": "minecraft:diorite"
         }
-      ]
+      ],
+      "fabric:type": "fabric:any"
     }
   ],
   "processing_time": 350,
   "results": [
     {
-      "item": "exnihilosequentia:crushed_diorite"
+      "item": {
+        "id": "exnihilosequentia:crushed_diorite"
+      }
+    }
+  ],
+  "fabric:load_conditions": [
+    {
+      "condition": "fabric:all_mods_loaded",
+      "values": [
+        "exnihilosequentia"
+      ]
     }
   ]
 }

@@ -8,12 +8,11 @@ import org.apache.commons.lang3.tuple.Pair;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.CraftingInput;
 
-public class MechanicalCraftingInput extends CraftingInput {
-	private MechanicalCraftingInput(int width, int height, List<ItemStack> item) {
-		super(width, height, item);
+public class MechanicalCraftingInput {
+	private MechanicalCraftingInput() {
 	}
 
-	public static MechanicalCraftingInput of(RecipeGridHandler.GroupedItems items) {
+	public static CraftingInput of(RecipeGridHandler.GroupedItems items) {
 		List<ItemStack> list = new ArrayList<>(items.width * items.height);
 		int minX = Integer.MAX_VALUE;
 		int maxX = Integer.MIN_VALUE;
@@ -44,6 +43,6 @@ public class MechanicalCraftingInput extends CraftingInput {
 			}
 		}
 
-		return new MechanicalCraftingInput(w, h, list);
+		return CraftingInput.of(w, h, list);
 	}
 }

@@ -82,13 +82,13 @@ public class FrogportBlockEntity extends PackagePortBlockEntity implements IHave
 		goggles = false;
 	}
 
-	public static void registerCapabilities(RegisterCapabilitiesEvent event) {
-		event.registerBlockEntity(
-			Capabilities.ItemHandler.BLOCK,
-			AllBlockEntityTypes.PACKAGE_FROGPORT.get(),
-			(be, context) -> be.itemHandler
-		);
-	}
+	public static void registerCapabilities(net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent event) {
+			event.registerBlockEntity(
+				net.neoforged.neoforge.capabilities.Capabilities.ItemHandler.BLOCK,
+				AllBlockEntityTypes.PACKAGE_FROGPORT.get(),
+				(be, context) -> be.exposedInventory
+			);
+		}
 
 	@Override
 	public void addBehaviours(List<BlockEntityBehaviour> behaviours) {
@@ -246,9 +246,6 @@ public class FrogportBlockEntity extends PackagePortBlockEntity implements IHave
 	protected void tryPushingToAdjacentInventories() {
 		failedLastExport = false;
 		Storage<ItemVariant> inventory = this.exposedInventory;
-
-		if (itemHandler == null)
-			return;
 
 		if (!inventory.nonEmptyViews().iterator().hasNext())
 			return;
