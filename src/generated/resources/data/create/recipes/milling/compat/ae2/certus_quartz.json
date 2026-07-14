@@ -10,7 +10,7 @@
   "type": "create:milling",
   "ingredients": [
     {
-      "tag": "c:certus_quartz/gems"
+      "tag": "ae2:all_certus_quartz"
     }
   ],
   "processingTime": 200,
